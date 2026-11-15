@@ -79,7 +79,7 @@ function renderProducts() {
     rows
       .map(
         (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${esc(p.foto)}</td><td>${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${mostrarFoto(p.foto)}</td><td>${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
       )
       .join("") || empty(7);
 }
@@ -305,3 +305,22 @@ $("importIni").onclick = async () => {
 refresh().catch((e) =>
   toast("No se pudo conectar con el servidor: " + e.message),
 );
+
+function mostrarFoto(ruta) {
+  if (!ruta) {
+    return "<span>Sin fotografía</span>";
+  }
+
+  const img = document.createElement("img");
+
+  img.src = new URL(ruta, window.location.href).href;
+  img.alt = "Fotografía del producto";
+  img.className = "foto-producto";
+
+  img.onerror = () => {
+    img.alt = "Imagen no encontrada";
+    img.src = "./Imagenes/sin-imagen.png";
+  };
+
+  return img.outerHTML;
+}
