@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Control de Stock | Yerbas</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-icon">Y</div><div><b>Control de Stock</b><small>YERBAS</small></div></div>
+  <nav>
+    <button class="nav active" data-view="dashboard">▦ <span>Resumen</span></button>
+    <button class="nav" data-view="products">▤ <span>Productos</span></button>
+    <button class="nav" data-view="movements">⇄ <span>Movimientos</span></button>
+    <button class="nav" data-view="stock">▣ <span>Stock actual</span></button>
+    <button class="nav" data-view="files">⇧ <span>Importar / Exportar</span></button>
+  </nav>
+  <div class="side-foot"><span class="dot"></span> Datos guardados en el servidor</div>
+</aside>
+<main class="main">
+<header class="topbar"><div><span class="eyebrow">GESTIÓN DE INVENTARIO</span><h1 id="pageTitle">Resumen general</h1></div><div class="top-actions"><span class="server-status">● Servidor conectado</span><button class="primary" id="quickMovement">＋ Nuevo movimiento</button></div></header>
+<section id="dashboard" class="view active">
+  <div class="stats">
+    <article class="stat"><span>Productos cargados</span><strong id="statProducts">0</strong><small>Presentaciones en catálogo</small></article>
+    <article class="stat"><span>Unidades disponibles</span><strong id="statUnits">0</strong><small>Stock neto actual</small></article>
+    <article class="stat"><span>Stock total</span><strong id="statKg">0 kg</strong><small>Peso estimado disponible</small></article>
+    <article class="stat warning"><span>Stock negativo</span><strong id="statNegative">0</strong><small>Productos con faltante</small></article>
+  </div>
+  <div class="panel"><div class="panel-head"><div><h2>Stock por producto</h2><p>Vista rápida de las existencias actuales</p></div><button class="ghost" data-goto="stock">Ver todo →</button></div><div class="table-wrap"><table><thead><tr><th>Código</th><th>Marca</th><th>Variedad</th><th>Presentación</th><th>Stock</th><th>Kg</th></tr></thead><tbody id="dashStock"></tbody></table></div></div>
+  <div class="panel"><div class="panel-head"><div><h2>Últimos movimientos</h2><p>Ingresos y salidas recientes</p></div><button class="ghost" data-goto="movements">Ver movimientos →</button></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Código</th><th>Cantidad</th><th>Referencia</th></tr></thead><tbody id="dashMovements"></tbody></table></div></div>
+</section>
+<section id="products" class="view">
+  <div class="toolbar"><input id="productSearch" placeholder="Buscar por código, marca o variedad…"><button class="primary" id="newProduct">＋ Agregar producto</button></div>
+  <div class="panel"><div class="table-wrap"><table><thead><tr><th>Código</th><th>Marca</th><th>Nombre / variedad</th><th>Presentación</th><th>Peso (kg)</th><th>Observaciones</th><th></th></tr></thead><tbody id="productsBody"></tbody></table></div></div>
+</section>
+<section id="movements" class="view">
+  <div class="toolbar"><input id="movementSearch" placeholder="Buscar movimiento…"><button class="primary" id="newMovement">＋ Registrar movimiento</button></div>
+  <div class="panel"><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Tipo</th><th>Código</th><th>Producto</th><th>Cantidad</th><th>Referencia</th><th></th></tr></thead><tbody id="movementsBody"></tbody></table></div></div>
+</section>
+<section id="stock" class="view">
+  <div class="toolbar"><input id="stockSearch" placeholder="Buscar producto…"><span class="hint">Stock = ingresos − salidas</span></div>
+  <div class="panel"><div class="table-wrap"><table><thead><tr><th>Código</th><th>Marca</th><th>Variedad</th><th>Presentación</th><th>Peso unit.</th><th>Ingresos</th><th>Salidas</th><th>Stock</th><th>Stock (kg)</th></tr></thead><tbody id="stockBody"></tbody></table></div></div>
+</section>
+<section id="files" class="view">
+  <div class="file-grid">
+    <div class="panel file-card"><div class="file-icon">⇧</div><h2>Importar planilla Excel</h2><p>Importá un archivo XLSM o XLSX con las hojas Productos y Movimientos. Los datos importados reemplazarán los actuales del servidor.</p><label class="file-input">Seleccionar archivo<input type="file" id="excelFile" accept=".xlsm,.xlsx"></label><button class="primary full" id="importExcel">Importar planilla</button><div id="importResult" class="result"></div></div>
+    <div class="panel file-card"><div class="file-icon">⇩</div><h2>Exportar a Excel</h2><p>Descargá una copia XLSX con las hojas de productos, movimientos, stock calculado y resumen. El archivo original XLSM no se modifica.</p><button class="primary full" id="exportExcel">Descargar XLSX actualizado</button></div>
+    <div class="panel file-card"><div class="file-icon">☷</div><h2>Importar listados INI</h2><p>El INI contiene marcas, variedades y referencias de imágenes. Por ahora se usa para detectar variedades que todavía no están en el catálogo.</p><label class="file-input">Seleccionar INI<input type="file" id="iniFile" accept=".ini"></label><button class="secondary full" id="importIni">Analizar listado</button><div id="iniResult" class="result"></div></div>
+  </div>
+  <div class="notice"><b>Almacenamiento en servidor</b><br>Los cambios se guardan en <code>data/stock.json</code> en el equipo/servidor donde ejecutes Flask. Para acceder desde otros dispositivos, el servidor debe permanecer encendido y ser accesible por la red.</div>
+</section>
+</main>
+</div>
+<dialog id="productDialog"><form method="dialog" id="productForm"><div class="dialog-head"><div><span class="eyebrow">CATÁLOGO</span><h2 id="productDialogTitle">Nuevo producto</h2></div><button class="close" value="cancel">×</button></div><input type="hidden" id="originalCode"><div class="form-grid">
+<label>Código<input id="pCodigo" required></label><label>Marca<input id="pMarca" required></label>
+<label>Nombre / variedad<input id="pVariedad" required></label><label>Presentación<select id="pPresentacion"><option value="">Sin especificar</option><option>Pack</option><option>Bolson</option><option>Combo</option></select></label>
+<label>Peso por unidad (kg)<input id="pPeso" type="number" min="0.001" step="0.001" required></label><label>Foto / ruta<input id="pFoto"></label>
+<label class="wide">Observaciones<textarea id="pObservaciones" rows="2"></textarea></label>
+</div><div class="dialog-actions"><button class="secondary" value="cancel">Cancelar</button><button class="primary" id="saveProduct" value="default">Guardar producto</button></div></form></dialog>
+<dialog id="movementDialog"><form method="dialog" id="movementForm"><div class="dialog-head"><div><span class="eyebrow">INVENTARIO</span><h2>Registrar movimiento</h2></div><button class="close" value="cancel">×</button></div><div class="form-grid">
+<label>Fecha<input id="mFecha" type="date" required></label><label>Tipo<select id="mTipo"><option>INGRESO</option><option>SALIDA</option></select></label>
+<label class="wide">Producto<select id="mCodigo" required></select></label><label>Cantidad (unidades)<input id="mCantidad" type="number" min="1" step="1" required></label><label>Documento / referencia<input id="mDocumento"></label><label class="wide">Cliente / proveedor<input id="mContacto"></label><label class="wide">Observaciones<textarea id="mObservaciones" rows="2"></textarea></label>
+</div><div class="dialog-actions"><button class="secondary" value="cancel">Cancelar</button><button class="primary" id="saveMovement" value="default">Guardar movimiento</button></div></form></dialog>
+<div id="toast" class="toast"></div>
+<script src="./config.js"></script>
+<script src="./app.js"></script>
+</body></html>

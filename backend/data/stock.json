@@ -1,0 +1,420 @@
+{
+  "products": [
+    {
+      "codigo": "CBS-001-500",
+      "marca": "CBSé",
+      "variedad": "Hierbas Serranas",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-002-1000",
+      "marca": "CBSé",
+      "variedad": "Hierbas Serranas",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-003-500",
+      "marca": "CBSé",
+      "variedad": "Hierbas Cuyanas",
+      "presentacion": "Bolson",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-004-1000",
+      "marca": "CBSé",
+      "variedad": "Hierbas Cuyanas",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-005-500",
+      "marca": "CBSé",
+      "variedad": "Hierbas del Litoral",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-006-1000",
+      "marca": "CBSé",
+      "variedad": "Hierbas del Litoral",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-007-500",
+      "marca": "CBSé",
+      "variedad": "Guarana",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-008-1000",
+      "marca": "CBSé",
+      "variedad": "Guarana",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-009-500",
+      "marca": "CBSé",
+      "variedad": "Limon",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-010-1000",
+      "marca": "CBSé",
+      "variedad": "Limon",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-011-500",
+      "marca": "CBSé",
+      "variedad": "Naranja",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-012-1000",
+      "marca": "CBSé",
+      "variedad": "Naranja",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-013-500",
+      "marca": "CBSé",
+      "variedad": "Pomelo",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-014-1000",
+      "marca": "CBSé",
+      "variedad": "Pomelo",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-015-500",
+      "marca": "CBSé",
+      "variedad": "Miel",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-016-1000",
+      "marca": "CBSé",
+      "variedad": "Miel",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-017-500",
+      "marca": "CBSé",
+      "variedad": "Frutos del Bosque",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-018-1000",
+      "marca": "CBSé",
+      "variedad": "Frutos del Bosque",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-019-500",
+      "marca": "CBSé",
+      "variedad": "Frutos del Valle",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-020-1000",
+      "marca": "CBSé",
+      "variedad": "Frutos del Valle",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-021-500",
+      "marca": "CBSé",
+      "variedad": "Frutos Tropicales",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-022-1000",
+      "marca": "CBSé",
+      "variedad": "Frutos Tropicales",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-023-500",
+      "marca": "CBSé",
+      "variedad": "Silueta",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-024-1000",
+      "marca": "CBSé",
+      "variedad": "Silueta",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-025-500",
+      "marca": "CBSé",
+      "variedad": "Silueta Naranja",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-026-1000",
+      "marca": "CBSé",
+      "variedad": "Silueta Naranja",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-027-500",
+      "marca": "CBSé",
+      "variedad": "Regulase",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-028-1000",
+      "marca": "CBSé",
+      "variedad": "Regulase",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-029-500",
+      "marca": "CBSé",
+      "variedad": "Endulife",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-030-1000",
+      "marca": "CBSé",
+      "variedad": "Endulife",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-031-500",
+      "marca": "CBSé",
+      "variedad": "Jengibre",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-032-1000",
+      "marca": "CBSé",
+      "variedad": "Jengibre",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-033-500",
+      "marca": "CBSé",
+      "variedad": "Etiqueta Negra",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-034-1000",
+      "marca": "CBSé",
+      "variedad": "Etiqueta Negra",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-035-500",
+      "marca": "CBSé",
+      "variedad": "Mateando",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-036-1000",
+      "marca": "CBSé",
+      "variedad": "Mateando",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-001-500",
+      "marca": "PIPORE",
+      "variedad": "verde",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-002-1000",
+      "marca": "PIPORE",
+      "variedad": "verde",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-003-500",
+      "marca": "PIPORE",
+      "variedad": "roja",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-004-1000",
+      "marca": "PIPORE",
+      "variedad": "roja",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-001-500",
+      "marca": "ROSAMONTE",
+      "variedad": "suave",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-002-1000",
+      "marca": "ROSAMONTE",
+      "variedad": "suave",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-003-500",
+      "marca": "ROSAMONTE",
+      "variedad": "comun",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-004-1000",
+      "marca": "ROSAMONTE",
+      "variedad": "comun",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    }
+  ],
+  "movements": [
+    {
+      "fecha": "2026-11-15",
+      "tipo": "INGRESO",
+      "codigo": "CBS-001-500",
+      "cantidad": 6,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-15",
+      "tipo": "INGRESO",
+      "codigo": "CBS-002-1000",
+      "cantidad": 6,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    }
+  ]
+}
