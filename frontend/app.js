@@ -75,6 +75,7 @@ function renderProducts() {
   const rows = state.products.filter((p) =>
     [p.codigo, p.marca, p.variedad].join(" ").toLowerCase().includes(q),
   );
+
   $("productsBody").innerHTML =
     rows
       .map(
@@ -82,6 +83,7 @@ function renderProducts() {
           `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${mostrarFoto(p.foto)}</td><td>${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
       )
       .join("") || empty(7);
+  console.log(p.codigo);
 }
 function renderMovements() {
   const q = $("movementSearch").value.toLowerCase();

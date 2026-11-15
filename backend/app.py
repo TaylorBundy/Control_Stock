@@ -4,7 +4,7 @@ from pathlib import Path
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from datetime import datetime
-import json, os, io, configparser, re, shutil
+import json, os, io, configparser, re, shutil, unicodedata
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE / "data")))
@@ -25,13 +25,54 @@ def load_data():
             shutil.copy2(seed, DATA_FILE)
         else:
             return {"products": [], "movements": []}
-    return json.loads(DATA_FILE.read_text(encoding="utf-8"))
+    data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
+    data.setdefault("photo_map", {})
+    apply_photo_map(data)
+    return data
 
 def save_data(data):
     DATA_FILE.parent.mkdir(exist_ok=True)
     tmp = DATA_FILE.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(DATA_FILE)
+
+def normalize_key(value):
+    value = unicodedata.normalize("NFKD", str(value or ""))
+    value = "".join(ch for ch in value if not unicodedata.combining(ch))
+    return " ".join(value.casefold().strip().split())
+
+def load_photo_map(data):
+    return data.setdefault("photo_map", {})
+
+def photo_key(brand, variety):
+    return normalize_key(brand) + "|" + normalize_key(variety)
+
+def apply_photo_map(data):
+    mapping = load_photo_map(data)
+    for product in data.get("products", []):
+        path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
+        if path:
+            product["foto"] = path
+
+def parse_ini_photo_map(raw):
+    try:
+        content = raw.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        content = raw.decode("cp1252", errors="replace")
+    parser = configparser.ConfigParser(interpolation=None)
+    parser.optionxform = str
+    parser.read_string(content)
+    mapping = {}
+    for brand in parser.sections():
+        values = parser[brand]
+        for key, value in values.items():
+            if key.lower().startswith("imagen."):
+                variety = key[len("imagen.") :].strip()
+                path = value.strip().replace("\\\\", "/").replace("\\", "/")
+                path = path.lstrip("./")
+                if path:
+                    mapping[photo_key(brand, variety)] = "./" + path
+    return mapping
 
 def stock_rows(data):
     result = []
@@ -76,6 +117,9 @@ def api_import():
     if not f: return jsonify(error="Seleccioná un archivo XLSM o XLSX."),400
     try:
         data=parse_workbook(f)
+        existing = load_data()
+        data["photo_map"] = existing.get("photo_map", {})
+        apply_photo_map(data)
         save_data(data)
         return jsonify(ok=True, products=len(data["products"]), movements=len(data["movements"]))
     except Exception as e:
@@ -95,7 +139,7 @@ def add_product():
     item={"codigo":str(p["codigo"]).strip(),"marca":str(p["marca"]).strip(),
         "variedad":str(p["variedad"]).strip(),"presentacion":p.get("presentacion",""),
         "peso":peso,"foto":p.get("foto",""),"observaciones":p.get("observaciones","")}
-    data["products"].append(item); save_data(data)
+    data["products"].append(item); apply_photo_map(data); save_data(data)
     return jsonify(ok=True)
 
 @app.put("/api/products/<codigo>")
@@ -112,6 +156,7 @@ def edit_product(codigo):
     if old!=item["codigo"]:
         for m in data["movements"]:
             if m["codigo"]==old: m["codigo"]=item["codigo"]
+    apply_photo_map(data)
     save_data(data); return jsonify(ok=True)
 
 @app.delete("/api/products/<codigo>")
@@ -143,23 +188,23 @@ def delete_movement(index):
 
 @app.post("/api/import-ini")
 def import_ini():
-    f=request.files.get("file")
-    if not f: return jsonify(error="Seleccioná el archivo INI."),400
-    raw=f.read()
-    try: content=raw.decode("utf-8-sig")
-    except UnicodeDecodeError: content=raw.decode("cp1252",errors="replace")
-    parser=configparser.ConfigParser()
-    parser.read_string(content)
-    added=[]
-    data=load_data()
-    for brand, values in parser.items():
-        if brand=="DEFAULT": continue
-        varieties=[v.strip() for v in values.get("variedades","").split(",") if v.strip()]
-        for variety in varieties:
-            if not any(p["marca"].lower()==brand.lower() and p["variedad"].lower()==variety.lower() for p in data["products"]):
-                added.append({"codigo":"","marca":brand,"variedad":variety,"presentacion":"","peso":0.5,"foto":"","observaciones":""})
-    # INI sirve como listado auxiliar: devuelve sugerencias sin crear códigos ficticios.
-    return jsonify(suggestions=added, count=len(added))
+    f = request.files.get("file")
+    if not f:
+        return jsonify(error="Seleccioná el archivo INI."), 400
+    try:
+        data = load_data()
+        mapping = parse_ini_photo_map(f.read())
+        data["photo_map"] = mapping
+        before = sum(1 for p in data["products"] if p.get("foto"))
+        apply_photo_map(data)
+        updated = sum(1 for p in data["products"] if p.get("foto"))
+        matched = sum(1 for p in data["products"] if mapping.get(photo_key(p.get("marca"), p.get("variedad"))))
+        save_data(data)
+        return jsonify(ok=True, references=len(mapping), matched=matched, photos_assigned=matched,
+                       products_with_photo=updated,
+                       message=f"Se leyeron {len(mapping)} referencias y se asignaron fotografías a {matched} productos.")
+    except Exception as e:
+        return jsonify(error=f"No se pudo procesar el INI: {e}"), 400
 
 @app.get("/api/export")
 def export_xlsx():
