@@ -702,18 +702,34 @@ def uploaded_photo(filename):
     return send_from_directory(UPLOAD_DIR, filename)
 
 
+# @app.delete("/api/products/<codigo>")
+# def delete_product(codigo):
+#     data = load_data()
+#     if any(m["codigo"] == codigo for m in data["movements"]):
+#         return (
+#             jsonify(
+#                 error="No se puede eliminar: el producto tiene movimientos asociados."
+#             ),
+#             400,
+#         )
+#     data["products"] = [p for p in data["products"] if p["codigo"] != codigo]
+#     save_data(data)
+#     return jsonify(ok=True)
+
+
 @app.delete("/api/products/<codigo>")
 def delete_product(codigo):
     data = load_data()
-    if any(m["codigo"] == codigo for m in data["movements"]):
-        return (
-            jsonify(
-                error="No se puede eliminar: el producto tiene movimientos asociados."
-            ),
-            400,
-        )
+
+    producto = next((p for p in data["products"] if p["codigo"] == codigo), None)
+
+    if not producto:
+        return jsonify(error="Producto no encontrado."), 404
+
     data["products"] = [p for p in data["products"] if p["codigo"] != codigo]
+
     save_data(data)
+
     return jsonify(ok=True)
 
 
