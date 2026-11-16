@@ -1,16 +1,19 @@
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, send_from_directory
 from flask_cors import CORS
 from pathlib import Path
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from datetime import datetime
-import json, os, io, configparser, re, shutil, unicodedata
+import json, os, io, configparser, re, shutil, unicodedata, uuid
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE / "data")))
 DATA_FILE = DATA_DIR / "stock.json"
 TEMPLATE = BASE / "Control_Stock_Yerbas_plantilla.xlsm"
 app = Flask(__name__)
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
+UPLOAD_DIR = DATA_DIR / "uploads"
+ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 CORS(app, resources={r"/api/*": {"origins": os.environ.get("FRONTEND_ORIGIN", "*")}})
 
 @app.get("/health")
@@ -51,7 +54,7 @@ def apply_photo_map(data):
     mapping = load_photo_map(data)
     for product in data.get("products", []):
         path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
-        if path:
+        if path and not str(product.get("foto", "")).startswith("/uploads/"):
             product["foto"] = path
 
 def parse_ini_photo_map(raw):
@@ -158,6 +161,43 @@ def edit_product(codigo):
             if m["codigo"]==old: m["codigo"]=item["codigo"]
     apply_photo_map(data)
     save_data(data); return jsonify(ok=True)
+
+@app.post("/api/products/<codigo>/photo")
+def upload_product_photo(codigo):
+    data = load_data()
+    product = next((p for p in data["products"] if p["codigo"] == codigo), None)
+    if not product:
+        return jsonify(error="Producto no encontrado."), 404
+    image = request.files.get("image")
+    if not image or not image.filename:
+        return jsonify(error="Seleccioná una imagen."), 400
+    extension = Path(image.filename).suffix.lower()
+    if extension not in ALLOWED_IMAGE_EXTENSIONS:
+        return jsonify(error="Formato no permitido. Usá JPG, PNG o WEBP."), 400
+    if image.mimetype not in {"image/jpeg", "image/png", "image/webp"}:
+        return jsonify(error="El archivo seleccionado no parece ser una imagen válida."), 400
+
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    filename = f"{uuid.uuid4().hex}{extension}"
+    destination = UPLOAD_DIR / filename
+    image.save(destination)
+
+    old_photo = product.get("foto", "")
+    product["foto"] = f"/uploads/{filename}"
+    save_data(data)
+
+    # Borrar la fotografía anterior solo si también fue subida a este servidor.
+    if old_photo.startswith("/uploads/"):
+        old_name = Path(old_photo).name
+        old_path = (UPLOAD_DIR / old_name).resolve()
+        if old_path.parent == UPLOAD_DIR.resolve() and old_path.exists():
+            old_path.unlink()
+
+    return jsonify(ok=True, foto=product["foto"])
+
+@app.get("/uploads/<path:filename>")
+def uploaded_photo(filename):
+    return send_from_directory(UPLOAD_DIR, filename)
 
 @app.delete("/api/products/<codigo>")
 def delete_product(codigo):
