@@ -420,13 +420,13 @@
       "variedad": "comun_500",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+      "foto": "./Imagenes/CACHAMATE/cachamate_comun_500.avif",
       "observaciones": ""
     },
     {
       "codigo": "CHA-002-1000",
       "marca": "CACHAMATE",
-      "variedad": "Comun",
+      "variedad": "comun_1000",
       "presentacion": "Pack",
       "peso": 1.0,
       "foto": "./Imagenes/Cachamate/cachamate_comun_500.avif",
@@ -473,6 +473,7 @@
     "cbs�|hierbas del litoral": "./Imagenes/CBS�/hierbas_litoral.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
-    "cachamate|comun": "./Imagenes/Cachamate/cachamate_comun_500.avif"
+    "cachamate|comun": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "cachamate|comun_500": "./Imagenes/CACHAMATE/cachamate_comun_500.avif"
   }
 }
