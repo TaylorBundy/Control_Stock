@@ -33,7 +33,7 @@
       "variedad": "Hierbas Cuyanas",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/cuyana.avif",
       "observaciones": ""
     },
     {
@@ -42,7 +42,7 @@
       "variedad": "Hierbas del Litoral",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/hierbas_litoral.avif",
       "observaciones": ""
     },
     {
@@ -51,7 +51,7 @@
       "variedad": "Hierbas del Litoral",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/hierbas_litoral.avif",
       "observaciones": ""
     },
     {
@@ -60,7 +60,7 @@
       "variedad": "Guarana",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/guarana.avif",
       "observaciones": ""
     },
     {
@@ -69,7 +69,7 @@
       "variedad": "Guarana",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/guarana.avif",
       "observaciones": ""
     },
     {
@@ -78,7 +78,7 @@
       "variedad": "Limon",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/limon.avif",
       "observaciones": ""
     },
     {
@@ -87,7 +87,7 @@
       "variedad": "Limon",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/limon.avif",
       "observaciones": ""
     },
     {
@@ -96,7 +96,7 @@
       "variedad": "Naranja",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/naranja.avif",
       "observaciones": ""
     },
     {
@@ -105,7 +105,7 @@
       "variedad": "Naranja",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/naranja.avif",
       "observaciones": ""
     },
     {
@@ -114,7 +114,7 @@
       "variedad": "Pomelo",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/pomelo.avif",
       "observaciones": ""
     },
     {
@@ -123,7 +123,7 @@
       "variedad": "Pomelo",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/pomelo.avif",
       "observaciones": ""
     },
     {
@@ -132,7 +132,7 @@
       "variedad": "Miel",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/miel.avif",
       "observaciones": ""
     },
     {
@@ -141,7 +141,7 @@
       "variedad": "Miel",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/CBSé/miel.avif",
       "observaciones": ""
     },
     {
@@ -463,14 +463,14 @@
     }
   ],
   "photo_map": {
-    "cbs�|hierbas serranas": "./Imagenes/CBS�/hierbas_serranas.avif",
-    "cbs�|naranja": "./Imagenes/CBS�/naranja.avif",
-    "cbs�|limon": "./Imagenes/CBS�/limon.avif",
-    "cbs�|miel": "./Imagenes/CBS�/miel.avif",
-    "cbs�|pomelo": "./Imagenes/CBS�/pomelo.avif",
-    "cbs�|guarana": "./Imagenes/CBS�/guarana.avif",
-    "cbs�|hierbas cuyanas": "./Imagenes/CBS�/cuyana.avif",
-    "cbs�|hierbas del litoral": "./Imagenes/CBS�/hierbas_litoral.avif",
+    "cbse|hierbas serranas": "./Imagenes/CBSé/hierbas_serranas.avif",
+    "cbse|naranja": "./Imagenes/CBSé/naranja.avif",
+    "cbse|limon": "./Imagenes/CBSé/limon.avif",
+    "cbse|miel": "./Imagenes/CBSé/miel.avif",
+    "cbse|pomelo": "./Imagenes/CBSé/pomelo.avif",
+    "cbse|guarana": "./Imagenes/CBSé/guarana.avif",
+    "cbse|hierbas cuyanas": "./Imagenes/CBSé/cuyana.avif",
+    "cbse|hierbas del litoral": "./Imagenes/CBSé/hierbas_litoral.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
     "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
