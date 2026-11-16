@@ -289,8 +289,31 @@
               type="number"
               min="0.001"
               step="0.001"
-              required /></label
-          ><label>Foto / ruta<input id="pFoto" /></label>
+              required
+          /></label>
+          <div class="wide photo-editor">
+            <label>Fotografía del producto</label>
+            <div class="photo-editor-row">
+              <div class="photo-preview" id="productPhotoPreview">
+                <span>Sin fotografía</span>
+              </div>
+              <div class="photo-controls">
+                <label class="file-input photo-select"
+                  >Seleccionar fotografía
+                  <input
+                    type="file"
+                    id="pPhotoFile"
+                    accept="image/jpeg,image/png,image/webp"
+                  />
+                </label>
+                <small
+                  >JPG, PNG o WEBP. Máximo 8 MB. Si no seleccionás otra imagen,
+                  se conserva la actual.</small
+                >
+                <input type="hidden" id="pFoto" />
+              </div>
+            </div>
+          </div>
           <label class="wide"
             >Observaciones<textarea id="pObservaciones" rows="2"></textarea>
           </label>
