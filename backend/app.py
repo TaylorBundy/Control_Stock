@@ -255,8 +255,8 @@ def upload_product_photo(codigo):
         return jsonify(error="Seleccioná una imagen."), 400
     extension = Path(image.filename).suffix.lower()
     if extension not in ALLOWED_IMAGE_EXTENSIONS:
-        return jsonify(error="Formato no permitido. Usá JPG, PNG o WEBP."), 400
-    if image.mimetype not in {"image/jpeg", "image/png", "image/webp"}:
+        return jsonify(error="Formato no permitido. Usá JPG, PNG, AVIF o WEBP."), 400
+    if image.mimetype not in {"image/jpeg", "image/png", "image/webp", "image/avif"}:
         return (
             jsonify(error="El archivo seleccionado no parece ser una imagen válida."),
             400,
