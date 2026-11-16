@@ -420,7 +420,7 @@
       "variedad": "comun_500",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "./Imagenes/CACHAMATE/cachamate_comun_500.avif",
+      "foto": "./Imagenes/Cachamate/cachamate_comun_500.avif",
       "observaciones": ""
     },
     {
@@ -429,7 +429,7 @@
       "variedad": "comun_1000",
       "presentacion": "Pack",
       "peso": 1.0,
-      "foto": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+      "foto": "./Imagenes/Cachamate/cachamate_comun_1000.avif",
       "observaciones": ""
     },
     {
@@ -473,7 +473,7 @@
     "cbs�|hierbas del litoral": "./Imagenes/CBS�/hierbas_litoral.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
-    "cachamate|comun": "./Imagenes/Cachamate/cachamate_comun_500.avif",
-    "cachamate|comun_500": "./Imagenes/CACHAMATE/cachamate_comun_500.avif"
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "cachamate|comun_1000": "./Imagenes/Cachamate/cachamate_comun_1000.avif"
   }
 }
