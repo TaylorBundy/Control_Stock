@@ -29,17 +29,60 @@ def health():
     return jsonify(status="ok")
 
 
+# def load_data():
+#     if not DATA_FILE.exists():
+#         seed = BASE / "data" / "stock.json"
+#         if seed.exists():
+#             DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
+#             shutil.copy2(seed, DATA_FILE)
+#         else:
+#             return {"products": [], "movements": []}
+#     data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
+#     data.setdefault("photo_map", {})
+#     apply_photo_map(data)
+#     return data
+
+
 def load_data():
-    if not DATA_FILE.exists():
-        seed = BASE / "data" / "stock.json"
-        if seed.exists():
-            DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(seed, DATA_FILE)
+    try:
+        url = (
+            f"https://api.github.com/repos/"
+            f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
+            f"backend/data/stock.json"
+        )
+
+        headers = {
+            "Authorization": f"Bearer {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        }
+
+        response = requests.get(
+            url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+        )
+
+        response.raise_for_status()
+
+        contenido = response.json()
+
+        import base64
+
+        archivo = base64.b64decode(contenido["content"]).decode("utf-8")
+
+        data = json.loads(archivo)
+
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            data = {"products": [], "movements": [], "photo_map": {}}
         else:
-            return {"products": [], "movements": []}
-    data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
+            raise Exception(f"Error leyendo stock.json desde GitHub: {e}")
+
+    data.setdefault("products", [])
+    data.setdefault("movements", [])
     data.setdefault("photo_map", {})
+
     apply_photo_map(data)
+
     return data
 
 
