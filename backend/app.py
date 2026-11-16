@@ -264,6 +264,91 @@ def update_ini_photo_map(marca, variedad, foto):
     return result.json()
 
 
+def delete_ini_photo_map(marca, variedad):
+    token = os.getenv("GITHUB_TOKEN")
+    owner = os.getenv("GITHUB_OWNER")
+    repo = os.getenv("GITHUB_REPO")
+    branch = os.getenv("GITHUB_BRANCH", "main")
+
+    path = "backend/LISTADOS YERBAS.ini"
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+    }
+
+    response = requests.get(url, headers=headers, params={"ref": branch})
+    response.raise_for_status()
+
+    file_data = response.json()
+    content = base64.b64decode(file_data["content"]).decode("utf-8-sig")
+
+    section = f"[{marca}]"
+    key = f"imagen.{variedad}".lower()
+
+    lines = content.splitlines()
+
+    section_start = next(
+        (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
+        None,
+    )
+
+    if section_start is None:
+        return
+
+    section_end = next(
+        (
+            i
+            for i in range(section_start + 1, len(lines))
+            if lines[i].strip().startswith("[") and lines[i].strip().endswith("]")
+        ),
+        len(lines),
+    )
+
+    lines = [
+        line
+        for i, line in enumerate(lines)
+        if not (
+            section_start < i < section_end
+            and line.strip().split("=", 1)[0].strip().lower() == key
+        )
+    ]
+
+    # Eliminar sección si quedó vacía
+    section_start = next(
+        (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
+        None,
+    )
+
+    if section_start is not None:
+        section_end = next(
+            (
+                i
+                for i in range(section_start + 1, len(lines))
+                if lines[i].strip().startswith("[") and lines[i].strip().endswith("]")
+            ),
+            len(lines),
+        )
+
+        if not any(line.strip() for line in lines[section_start + 1 : section_end]):
+            del lines[section_start:section_end]
+
+    new_content = "\n".join(lines).rstrip() + "\n"
+
+    payload = {
+        "message": f"Eliminar foto: {marca} - {variedad}",
+        "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
+        "sha": file_data["sha"],
+        "branch": branch,
+    }
+
+    result = requests.put(url, headers=headers, json=payload)
+    result.raise_for_status()
+
+    return result.json()
+
+
 def normalize_key(value):
     value = unicodedata.normalize("NFKD", str(value or ""))
     value = "".join(ch for ch in value if not unicodedata.combining(ch))
@@ -726,9 +811,21 @@ def delete_product(codigo):
     if not producto:
         return jsonify(error="Producto no encontrado."), 404
 
+    # Eliminar referencia del archivo INI
+    marca = producto.get("marca", "")
+    variedad = producto.get("variedad", "")
+
+    if marca and variedad:
+        try:
+            delete_ini_photo_map(marca, variedad)
+        except Exception as e:
+            return jsonify(error=f"Error al actualizar el INI: {str(e)}"), 500
+
+    # Eliminar producto de la lista
     data["products"] = [p for p in data["products"] if p["codigo"] != codigo]
 
-    save_data(data)
+    # Guardar JSON
+    save_file(data)
 
     return jsonify(ok=True)
 
