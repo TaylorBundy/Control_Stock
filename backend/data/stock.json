@@ -431,6 +431,15 @@
       "peso": 1.0,
       "foto": "./Imagenes/Cachamate/cachamate.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-001-500",
+      "marca": "VERDEFLOR",
+      "variedad": "Naranja",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
