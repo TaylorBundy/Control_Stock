@@ -5,6 +5,9 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from datetime import datetime
 import json, os, io, configparser, re, shutil, unicodedata, uuid
+import base64
+import requests
+from urllib.parse import quote
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE / "data")))
@@ -14,6 +17,10 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 UPLOAD_DIR = DATA_DIR / "uploads"
 ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+GITHUB_OWNER = os.getenv("GITHUB_OWNER")
+GITHUB_REPO = os.getenv("GITHUB_REPO")
+GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
 CORS(app, resources={r"/api/*": {"origins": os.environ.get("FRONTEND_ORIGIN", "*")}})
 
 
@@ -41,6 +48,93 @@ def save_data(data):
     tmp = DATA_FILE.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(DATA_FILE)
+
+
+def save_file(path, content, message=None):
+    """
+    Guarda o actualiza cualquier archivo directamente en GitHub.
+
+    path:
+        Ruta del archivo dentro del repositorio.
+
+    content:
+        dict/list = JSON
+        str       = texto (INI, TXT, etc.)
+        bytes     = imágenes u otros archivos binarios
+    """
+
+    if not all([GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO]):
+        raise Exception("Faltan las variables de configuración de GitHub.")
+
+    # Convertir el contenido a bytes
+    if isinstance(content, (dict, list)):
+        content = json.dumps(content, ensure_ascii=False, indent=2).encode("utf-8")
+
+    elif isinstance(content, str):
+        content = content.encode("utf-8")
+
+    elif not isinstance(content, bytes):
+        raise TypeError("Tipo de contenido no soportado.")
+
+    # Codificar contenido en Base64
+    encoded_content = base64.b64encode(content).decode("utf-8")
+
+    # API de GitHub
+    api_url = (
+        f"https://api.github.com/repos/"
+        f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
+        f"{quote(path, safe='/')}"
+    )
+
+    headers = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    # Consultar si el archivo ya existe
+    response = requests.get(
+        api_url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+    )
+
+    if response.status_code == 200:
+        sha = response.json()["sha"]
+
+    elif response.status_code == 404:
+        sha = None
+
+    else:
+        raise Exception(
+            f"Error consultando GitHub: {response.status_code} " f"{response.text}"
+        )
+
+    # Preparar actualización
+    payload = {
+        "message": message or f"Actualizar {path}",
+        "content": encoded_content,
+        "branch": GITHUB_BRANCH,
+    }
+
+    # GitHub exige SHA para modificar archivos existentes
+    if sha:
+        payload["sha"] = sha
+
+    # Crear o actualizar archivo
+    response = requests.put(api_url, headers=headers, json=payload, timeout=60)
+
+    if response.status_code not in (200, 201):
+        raise Exception(
+            f"Error guardando en GitHub: {response.status_code} " f"{response.text}"
+        )
+
+    result = response.json()
+
+    return {
+        "success": True,
+        "path": path,
+        "sha": result["content"]["sha"],
+        "commit": result["commit"]["html_url"],
+    }
 
 
 def normalize_key(value):
@@ -177,24 +271,63 @@ def api_import():
         return jsonify(error=f"No se pudo importar el archivo: {e}"), 400
 
 
+# @app.post("/api/products")
+# def add_product():
+#     data = load_data()
+#     p = request.get_json(force=True)
+#     required = ["codigo", "marca", "variedad", "peso"]
+#     if any(not str(p.get(k, "")).strip() for k in required):
+#         return jsonify(error="Completá código, marca, variedad y peso."), 400
+#     if any(
+#         x["codigo"].lower() == str(p["codigo"]).strip().lower()
+#         for x in data["products"]
+#     ):
+#         return jsonify(error="Ya existe un producto con ese código."), 400
+#     try:
+#         peso = float(p["peso"])
+#     except:
+#         return jsonify(error="El peso debe ser numérico."), 400
+#     if peso <= 0:
+#         return jsonify(error="El peso debe ser mayor que cero."), 400
+#     item = {
+#         "codigo": str(p["codigo"]).strip(),
+#         "marca": str(p["marca"]).strip(),
+#         "variedad": str(p["variedad"]).strip(),
+#         "presentacion": p.get("presentacion", ""),
+#         "peso": peso,
+#         "foto": p.get("foto", ""),
+#         "observaciones": p.get("observaciones", ""),
+#     }
+#     data["products"].append(item)
+#     apply_photo_map(data)
+#     save_data(data)
+#     return jsonify(ok=True)
+
+
 @app.post("/api/products")
 def add_product():
     data = load_data()
     p = request.get_json(force=True)
+
     required = ["codigo", "marca", "variedad", "peso"]
+
     if any(not str(p.get(k, "")).strip() for k in required):
         return jsonify(error="Completá código, marca, variedad y peso."), 400
+
     if any(
         x["codigo"].lower() == str(p["codigo"]).strip().lower()
         for x in data["products"]
     ):
         return jsonify(error="Ya existe un producto con ese código."), 400
+
     try:
         peso = float(p["peso"])
-    except:
+    except (ValueError, TypeError):
         return jsonify(error="El peso debe ser numérico."), 400
+
     if peso <= 0:
         return jsonify(error="El peso debe ser mayor que cero."), 400
+
     item = {
         "codigo": str(p["codigo"]).strip(),
         "marca": str(p["marca"]).strip(),
@@ -204,10 +337,25 @@ def add_product():
         "foto": p.get("foto", ""),
         "observaciones": p.get("observaciones", ""),
     }
+
     data["products"].append(item)
+
     apply_photo_map(data)
-    save_data(data)
-    return jsonify(ok=True)
+
+    try:
+        resultado = save_file(
+            "backend/data/stock.json", data, "Agregar producto: " + item["codigo"]
+        )
+
+        return jsonify(ok=True, producto=item, github=resultado)
+
+    except Exception as e:
+        return (
+            jsonify(
+                ok=False, error=f"No se pudo guardar el producto en GitHub: {str(e)}"
+            ),
+            500,
+        )
 
 
 @app.put("/api/products/<codigo>")
@@ -367,24 +515,45 @@ def import_ini():
         )
     except Exception as e:
         return jsonify(error=f"No se pudo procesar el INI: {e}"), 400
-    
+
+
 @app.post("/api/import-ini-products")
 def import_ini_products():
-    f=request.files.get("file")
-    if not f: return jsonify(error="Seleccioná el archivo INI."),400
-    raw=f.read()
-    try: content=raw.decode("utf-8-sig")
-    except UnicodeDecodeError: content=raw.decode("cp1252",errors="replace")
-    parser=configparser.ConfigParser()
+    f = request.files.get("file")
+    if not f:
+        return jsonify(error="Seleccioná el archivo INI."), 400
+    raw = f.read()
+    try:
+        content = raw.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        content = raw.decode("cp1252", errors="replace")
+    parser = configparser.ConfigParser()
     parser.read_string(content)
-    added=[]
-    data=load_data()
+    added = []
+    data = load_data()
     for brand, values in parser.items():
-        if brand=="DEFAULT": continue
-        varieties=[v.strip() for v in values.get("variedades","").split(",") if v.strip()]
+        if brand == "DEFAULT":
+            continue
+        varieties = [
+            v.strip() for v in values.get("variedades", "").split(",") if v.strip()
+        ]
         for variety in varieties:
-            if not any(p["marca"].lower()==brand.lower() and p["variedad"].lower()==variety.lower() for p in data["products"]):
-                added.append({"codigo":"","marca":brand,"variedad":variety,"presentacion":"","peso":0.5,"foto":"","observaciones":""})
+            if not any(
+                p["marca"].lower() == brand.lower()
+                and p["variedad"].lower() == variety.lower()
+                for p in data["products"]
+            ):
+                added.append(
+                    {
+                        "codigo": "",
+                        "marca": brand,
+                        "variedad": variety,
+                        "presentacion": "",
+                        "peso": 0.5,
+                        "foto": "",
+                        "observaciones": "",
+                    }
+                )
     # INI sirve como listado auxiliar: devuelve sugerencias sin crear códigos ficticios.
     return jsonify(suggestions=added, count=len(added))
 

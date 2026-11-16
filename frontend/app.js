@@ -12,20 +12,23 @@ const esc = (s) =>
         c
       ],
   );
+const API_BASE = (window.API_BASE || "").replace(/\/$/, "");
+const apiUrl = (path) => API_BASE + path;
+
 function toast(msg) {
   const t = $("toast");
   t.textContent = msg;
   t.classList.add("show");
   setTimeout(() => t.classList.remove("show"), 2600);
 }
-const API_BASE = (window.API_BASE || "").replace(/\/$/, "");
-const apiUrl = (path) => API_BASE + path;
+
 function photoSrc(path) {
   if (!path) return "";
   if (/^https?:\/\//i.test(path)) return path;
   if (path.startsWith("/uploads/")) return apiUrl(path);
   return new URL(path, document.baseURI).href;
 }
+
 function showProductPhoto(path) {
   const box = $("productPhotoPreview");
   if (path) {
@@ -34,6 +37,7 @@ function showProductPhoto(path) {
     box.innerHTML = "<span>Sin fotografía</span>";
   }
 }
+
 async function api(url, opts = {}) {
   const r = await fetch(apiUrl(url), {
     headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
@@ -46,10 +50,12 @@ async function api(url, opts = {}) {
   if (!r.ok) throw Error(d.error || "Error de servidor");
   return d;
 }
+
 async function refresh() {
   state = await api("/api/data");
   render();
 }
+
 function render() {
   const s = state.stock || [];
   $("statProducts").textContent = state.products.length;
@@ -89,12 +95,15 @@ function render() {
   renderStock();
   fillProductSelect();
 }
+
 function empty(n) {
   return `<tr><td colspan="${n}" class="empty">No hay registros para mostrar.</td></tr>`;
 }
+
 function typeBadge(t) {
   return `<span class="badge ${t === "INGRESO" ? "in" : "out"}">${esc(t)}</span>`;
 }
+
 function renderProducts() {
   const q = $("productSearch").value.toLowerCase();
   const rows = state.products.filter((p) =>
@@ -114,6 +123,7 @@ function renderProducts() {
       .forEach((td) => td.classList.add("hide"));
   }
 }
+
 function renderMovements() {
   const q = $("movementSearch").value.toLowerCase();
   const rows = state.movements
@@ -133,6 +143,7 @@ function renderMovements() {
       )
       .join("") || empty(7);
 }
+
 function renderStock() {
   const q = $("stockSearch").value.toLowerCase();
   const rows = state.stock.filter((p) =>
@@ -155,10 +166,12 @@ function renderStock() {
       .forEach((td) => td.classList.add("hide"));
   }
 }
+
 function productName(code) {
   let p = state.products.find((x) => x.codigo === code);
   return p ? `${p.marca} ${p.variedad}` : "";
 }
+
 function fillProductSelect() {
   $("mCodigo").innerHTML = state.products
     .map(
@@ -167,6 +180,7 @@ function fillProductSelect() {
     )
     .join("");
 }
+
 function showView(view) {
   document
     .querySelectorAll(".view")
@@ -183,6 +197,7 @@ function showView(view) {
   };
   $("pageTitle").textContent = titles[view] || "Control de Stock";
 }
+
 document
   .querySelectorAll(".nav")
   .forEach((b) => (b.onclick = () => showView(b.dataset.view)));
@@ -192,6 +207,7 @@ document
 $("productSearch").oninput = renderProducts;
 $("movementSearch").oninput = renderMovements;
 $("stockSearch").oninput = renderStock;
+
 function openProduct(p) {
   $("productForm").reset();
   $("originalCode").value = p?.codigo || "";
@@ -226,6 +242,7 @@ $("productsBody").onclick = async (e) => {
       toast(err.message);
     }
 };
+
 $("pPhotoFile").onchange = () => {
   const file = $("pPhotoFile").files[0];
   if (!file) {
@@ -248,6 +265,7 @@ $("pPhotoFile").onchange = () => {
   $("productPhotoPreview").innerHTML =
     `<img src="${previewUrl}" alt="Vista previa">`;
 };
+
 $("saveProduct").onclick = async (e) => {
   e.preventDefault();
   const p = {
@@ -284,6 +302,7 @@ $("saveProduct").onclick = async (e) => {
     toast(err.message);
   }
 };
+
 function openMovement() {
   $("movementForm").reset();
   $("mFecha").value = new Date().toISOString().slice(0, 10);
@@ -294,6 +313,7 @@ function openMovement() {
   }
   $("movementDialog").showModal();
 }
+
 $("saveMovement").onclick = async (e) => {
   e.preventDefault();
   const m = {
@@ -314,6 +334,7 @@ $("saveMovement").onclick = async (e) => {
     toast(err.message);
   }
 };
+
 $("movementsBody").onclick = async (e) => {
   const i = e.target.dataset.mdelete;
   if (i !== undefined && confirm("¿Eliminar este movimiento?"))
@@ -325,6 +346,7 @@ $("movementsBody").onclick = async (e) => {
       toast(err.message);
     }
 };
+
 $("importExcel").onclick = async () => {
   const f = $("excelFile").files[0];
   if (!f) {
@@ -352,9 +374,11 @@ $("importExcel").onclick = async () => {
     toast(e.message);
   }
 };
+
 $("exportExcel").onclick = () => {
   window.location.href = apiUrl("/api/export");
 };
+
 $("importIni").onclick = async () => {
   const f = $("iniFile").files[0];
   if (!f) {
@@ -378,6 +402,7 @@ $("importIni").onclick = async () => {
     $("iniResult").textContent = e.message;
   }
 };
+
 $("importIni2").onclick = async () => {
   const f = $("iniFile2").files[0];
   if (!f) {
@@ -400,6 +425,7 @@ $("importIni2").onclick = async () => {
     $("iniResult2").textContent = e.message;
   }
 };
+
 refresh().catch((e) =>
   toast("No se pudo conectar con el servidor: " + e.message),
 );
