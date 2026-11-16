@@ -1,3 +1,5 @@
+const plataforma = navigator.userAgent;
+const presentacion = document.getElementById("presentation-th");
 let state = { products: [], movements: [], stock: [] };
 const $ = (id) => document.getElementById(id);
 const fmt = (n) =>
@@ -59,9 +61,18 @@ function render() {
       .slice(0, 8)
       .map(
         (p) =>
-          `<tr><td>${esc(p.codigo)}</td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${esc(p.presentacion)}</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)}</td><td>${fmt(p.stock_kg)}</td></tr>`,
+          `<tr><td>${esc(p.codigo)}</td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)}</td><td>${fmt(p.stock_kg)}</td></tr>`,
       )
       .join("") || empty(6);
+  if (plataforma.includes("Android")) {
+    //presentacion.classList.add("hide");
+    document
+      .querySelectorAll("#presentation-th")
+      .forEach((th) => th.classList.add("hide"));
+    document
+      .querySelectorAll("#presentacion-td")
+      .forEach((td) => td.classList.add("hide"));
+  }
   const recent = [...state.movements]
     .map((m, i) => ({ ...m, index: i }))
     .reverse()
@@ -93,9 +104,15 @@ function renderProducts() {
     rows
       .map(
         (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td id="product-td">${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td id="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
       )
       .join("") || empty(8);
+  if (plataforma.includes("Android")) {
+    presentacion.classList.add("hide");
+    document
+      .querySelectorAll("#presentacion-td")
+      .forEach((td) => td.classList.add("hide"));
+  }
 }
 function renderMovements() {
   const q = $("movementSearch").value.toLowerCase();
@@ -125,9 +142,18 @@ function renderStock() {
     rows
       .map(
         (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${fmt(p.ingresos)}</td><td>${fmt(p.salidas)}</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)}</td><td>${fmt(p.stock_kg)}</td></tr>`,
+          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${fmt(p.ingresos)}</td><td>${fmt(p.salidas)}</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)}</td><td>${fmt(p.stock_kg)}</td></tr>`,
       )
       .join("") || empty(9);
+  if (plataforma.includes("Android")) {
+    //presentacion.classList.add("hide");
+    document
+      .querySelectorAll("#presentation-th")
+      .forEach((th) => th.classList.add("hide"));
+    document
+      .querySelectorAll("#presentacion-td")
+      .forEach((td) => td.classList.add("hide"));
+  }
 }
 function productName(code) {
   let p = state.products.find((x) => x.codigo === code);
