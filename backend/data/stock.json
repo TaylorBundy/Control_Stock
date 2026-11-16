@@ -413,6 +413,15 @@
       "peso": 0.5,
       "foto": "",
       "observaciones": ""
+    },
+    {
+      "codigo": "CHA-001-500",
+      "marca": "CACHAMATE",
+      "variedad": "Comun",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
@@ -434,5 +443,6 @@
       "contacto": "",
       "observaciones": ""
     }
-  ]
+  ],
+  "photo_map": {}
 }
