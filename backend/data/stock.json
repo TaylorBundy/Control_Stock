@@ -402,7 +402,7 @@
       "variedad": "comun",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Amanda/amanda.avif",
       "observaciones": ""
     },
     {
@@ -411,7 +411,7 @@
       "variedad": "comun",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Amanda/amanda.avif",
       "observaciones": ""
     },
     {
@@ -444,5 +444,15 @@
       "observaciones": ""
     }
   ],
-  "photo_map": {}
+  "photo_map": {
+    "cbs�|hierbas serranas": "./Imagenes/CBS�/hierbas_serranas.avif",
+    "cbs�|naranja": "./Imagenes/CBS�/naranja.avif",
+    "cbs�|limon": "./Imagenes/CBS�/limon.avif",
+    "cbs�|miel": "./Imagenes/CBS�/miel.avif",
+    "cbs�|pomelo": "./Imagenes/CBS�/pomelo.avif",
+    "cbs�|guarana": "./Imagenes/CBS�/guarana.avif",
+    "cbs�|hierbas cuyanas": "./Imagenes/CBS�/cuyana.avif",
+    "cbs�|hierbas del litoral": "./Imagenes/CBS�/hierbas_litoral.avif",
+    "amanda|comun": "./Imagenes/Amanda/amanda.avif"
+  }
 }
