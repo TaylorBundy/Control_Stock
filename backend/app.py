@@ -180,6 +180,90 @@ def save_file(path, content, message=None):
     }
 
 
+def update_ini_photo_map(marca, variedad, foto):
+    if not foto:
+        return
+
+    token = os.getenv("GITHUB_TOKEN")
+    owner = os.getenv("GITHUB_OWNER")
+    repo = os.getenv("GITHUB_REPO")
+    branch = os.getenv("GITHUB_BRANCH", "main")
+
+    path = "backend/LISTADOS YERBAS.ini"
+
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+    }
+
+    response = requests.get(url, headers=headers, params={"ref": branch})
+    response.raise_for_status()
+
+    file_data = response.json()
+    content = base64.b64decode(file_data["content"]).decode("utf-8-sig")
+
+    filename = os.path.basename(foto.replace("\\", "/"))
+
+    relative_path = f"Imagenes\\{marca}\\{filename}"
+
+    section = f"[{marca}]"
+    key = f"imagen.{variedad}"
+
+    lines = content.splitlines()
+
+    section_start = next(
+        (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
+        None,
+    )
+
+    if section_start is None:
+        if lines and lines[-1].strip():
+            lines.append("")
+
+        lines.extend([section, f"{key}={relative_path}"])
+
+    else:
+        section_end = next(
+            (
+                i
+                for i in range(section_start + 1, len(lines))
+                if lines[i].strip().startswith("[") and lines[i].strip().endswith("]")
+            ),
+            len(lines),
+        )
+
+        existing = next(
+            (
+                i
+                for i in range(section_start + 1, section_end)
+                if lines[i].strip().split("=", 1)[0].strip().lower() == key.lower()
+            ),
+            None,
+        )
+
+        if existing is not None:
+            lines[existing] = f"{key}={relative_path}"
+        else:
+            lines.insert(section_end, f"{key}={relative_path}")
+
+    new_content = "\n".join(lines) + "\n"
+
+    payload = {
+        "message": f"Actualizar foto: {marca} - {variedad}",
+        "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
+        "sha": file_data["sha"],
+        "branch": branch,
+    }
+
+    result = requests.put(url, headers=headers, json=payload)
+
+    result.raise_for_status()
+
+    return result.json()
+
+
 def normalize_key(value):
     value = unicodedata.normalize("NFKD", str(value or ""))
     value = "".join(ch for ch in value if not unicodedata.combining(ch))
@@ -462,6 +546,8 @@ def add_product():
         resultado = save_file(
             "backend/data/stock.json", data, "Agregar producto: " + item["codigo"]
         )
+        if item["foto"]:
+            update_ini_photo_map(item["marca"], item["variedad"], item["foto"])
 
         return jsonify(ok=True, producto=item, github=resultado)
 
