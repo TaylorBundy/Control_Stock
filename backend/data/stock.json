@@ -395,6 +395,24 @@
       "peso": 1.0,
       "foto": "",
       "observaciones": ""
+    },
+    {
+      "codigo": "AMA-001-500",
+      "marca": "AMANDA",
+      "variedad": "comun",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
+    },
+    {
+      "codigo": "AMA-002-1000",
+      "marca": "AMANDA",
+      "variedad": "comun",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
