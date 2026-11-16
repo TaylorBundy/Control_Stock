@@ -367,6 +367,26 @@ def import_ini():
         )
     except Exception as e:
         return jsonify(error=f"No se pudo procesar el INI: {e}"), 400
+    
+@app.post("/api/import-ini-products")
+def import_ini_products():
+    f=request.files.get("file")
+    if not f: return jsonify(error="Seleccioná el archivo INI."),400
+    raw=f.read()
+    try: content=raw.decode("utf-8-sig")
+    except UnicodeDecodeError: content=raw.decode("cp1252",errors="replace")
+    parser=configparser.ConfigParser()
+    parser.read_string(content)
+    added=[]
+    data=load_data()
+    for brand, values in parser.items():
+        if brand=="DEFAULT": continue
+        varieties=[v.strip() for v in values.get("variedades","").split(",") if v.strip()]
+        for variety in varieties:
+            if not any(p["marca"].lower()==brand.lower() and p["variedad"].lower()==variety.lower() for p in data["products"]):
+                added.append({"codigo":"","marca":brand,"variedad":variety,"presentacion":"","peso":0.5,"foto":"","observaciones":""})
+    # INI sirve como listado auxiliar: devuelve sugerencias sin crear códigos ficticios.
+    return jsonify(suggestions=added, count=len(added))
 
 
 @app.get("/api/export")

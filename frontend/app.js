@@ -378,6 +378,28 @@ $("importIni").onclick = async () => {
     $("iniResult").textContent = e.message;
   }
 };
+$("importIni2").onclick = async () => {
+  const f = $("iniFile2").files[0];
+  if (!f) {
+    toast("Seleccioná el archivo INI.");
+    return;
+  }
+  const fd = new FormData();
+  fd.append("file", f);
+  try {
+    const r = await fetch(apiUrl("/api/import-ini-products"), {
+      method: "POST",
+      body: fd,
+    });
+    const d = await r.json();
+    if (!r.ok) throw Error(d.error);
+    $("iniResult2").textContent =
+      `Se encontraron ${d.count} variedades que no están en el catálogo. La importación todavía no genera códigos automáticamente.`;
+    toast("Listado analizado");
+  } catch (e) {
+    $("iniResult2").textContent = e.message;
+  }
+};
 refresh().catch((e) =>
   toast("No se pudo conectar con el servidor: " + e.message),
 );
