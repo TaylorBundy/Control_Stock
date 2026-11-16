@@ -18,6 +18,20 @@ function toast(msg) {
 }
 const API_BASE = (window.API_BASE || "").replace(/\/$/, "");
 const apiUrl = (path) => API_BASE + path;
+function photoSrc(path) {
+  if (!path) return "";
+  if (/^https?:\/\//i.test(path)) return path;
+  if (path.startsWith("/uploads/")) return apiUrl(path);
+  return new URL(path, document.baseURI).href;
+}
+function showProductPhoto(path) {
+  const box = $("productPhotoPreview");
+  if (path) {
+    box.innerHTML = `<img src="${esc(photoSrc(path))}" alt="Fotografía del producto" onerror="this.parentElement.innerHTML='<span>Imagen no encontrada</span>'">`;
+  } else {
+    box.innerHTML = "<span>Sin fotografía</span>";
+  }
+}
 async function api(url, opts = {}) {
   const r = await fetch(apiUrl(url), {
     headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
@@ -75,14 +89,13 @@ function renderProducts() {
   const rows = state.products.filter((p) =>
     [p.codigo, p.marca, p.variedad].join(" ").toLowerCase().includes(q),
   );
-
   $("productsBody").innerHTML =
     rows
       .map(
         (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${mostrarFoto(p.foto)}</td><td>${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td>${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
       )
-      .join("") || empty(7);
+      .join("") || empty(8);
 }
 function renderMovements() {
   const q = $("movementSearch").value.toLowerCase();
@@ -166,6 +179,7 @@ function openProduct(p) {
   $("pPeso").value = p?.peso || 0.5;
   $("pFoto").value = p?.foto || "";
   $("pObservaciones").value = p?.observaciones || "";
+  showProductPhoto(p?.foto || "");
   $("productDialog").showModal();
 }
 $("newProduct").onclick = () => openProduct();
@@ -186,6 +200,28 @@ $("productsBody").onclick = async (e) => {
       toast(err.message);
     }
 };
+$("pPhotoFile").onchange = () => {
+  const file = $("pPhotoFile").files[0];
+  if (!file) {
+    showProductPhoto($("pFoto").value);
+    return;
+  }
+  if (file.size > 8 * 1024 * 1024) {
+    $("pPhotoFile").value = "";
+    toast("La imagen supera el límite de 8 MB.");
+    return;
+  }
+  if (
+    !["image/jpeg", "image/png", "image/webp", "image/avif"].includes(file.type)
+  ) {
+    $("pPhotoFile").value = "";
+    toast("Formato no válido. Usá JPG, PNG o WEBP.");
+    return;
+  }
+  const previewUrl = URL.createObjectURL(file);
+  $("productPhotoPreview").innerHTML =
+    `<img src="${previewUrl}" alt="Vista previa">`;
+};
 $("saveProduct").onclick = async (e) => {
   e.preventDefault();
   const p = {
@@ -203,9 +239,21 @@ $("saveProduct").onclick = async (e) => {
       old ? "/api/products/" + encodeURIComponent(old) : "/api/products",
       { method: old ? "PUT" : "POST", body: JSON.stringify(p) },
     );
+    const photoFile = $("pPhotoFile").files[0];
+    if (photoFile) {
+      const fd = new FormData();
+      fd.append("image", photoFile);
+      const response = await fetch(
+        apiUrl("/api/products/" + encodeURIComponent(p.codigo) + "/photo"),
+        { method: "POST", body: fd },
+      );
+      const result = await response.json();
+      if (!response.ok)
+        throw Error(result.error || "No se pudo subir la fotografía.");
+    }
     $("productDialog").close();
     await refresh();
-    toast("Producto guardado");
+    toast(photoFile ? "Producto y fotografía guardados" : "Producto guardado");
   } catch (err) {
     toast(err.message);
   }
@@ -297,8 +345,9 @@ $("importIni").onclick = async () => {
     const d = await r.json();
     if (!r.ok) throw Error(d.error);
     $("iniResult").textContent =
-      `Se encontraron ${d.count} variedades que no están en el catálogo. La importación todavía no genera códigos automáticamente.`;
-    toast("Listado analizado");
+      d.message ||
+      `Se asignaron fotografías a ${d.photos_assigned || 0} productos.`;
+    toast("Referencias de fotografías importadas");
   } catch (e) {
     $("iniResult").textContent = e.message;
   }
@@ -306,22 +355,3 @@ $("importIni").onclick = async () => {
 refresh().catch((e) =>
   toast("No se pudo conectar con el servidor: " + e.message),
 );
-
-function mostrarFoto(ruta) {
-  if (!ruta) {
-    return "<span>Sin fotografía</span>";
-  }
-
-  const img = document.createElement("img");
-
-  img.src = new URL(ruta, window.location.href).href;
-  img.alt = "Fotografía del producto";
-  img.className = "foto-producto";
-
-  img.onerror = () => {
-    img.alt = "Imagen no encontrada";
-    img.src = "./Imagenes/sin-imagen.png";
-  };
-
-  return img.outerHTML;
-}
