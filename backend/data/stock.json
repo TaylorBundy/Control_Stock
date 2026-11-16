@@ -24,7 +24,7 @@
       "variedad": "Hierbas Cuyanas",
       "presentacion": "Bolson",
       "peso": 0.5,
-      "foto": "",
+      "foto": "/uploads/7751050412d047c88b25370c7bff3280.avif",
       "observaciones": ""
     },
     {
@@ -473,7 +473,6 @@
     "cbs�|hierbas del litoral": "./Imagenes/CBS�/hierbas_litoral.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
-    "cachamate|comun_1000": "./Imagenes/Cachamate/cachamate_comun_1000.avif"
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
   }
 }
