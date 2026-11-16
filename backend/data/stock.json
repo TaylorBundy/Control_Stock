@@ -6,7 +6,7 @@
       "variedad": "Hierbas Serranas",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "./Imagenes/CBSé/hierbas_serranas.png",
+      "foto": "../frontend/Imagenes/CBSé/hierbas_serranas.avif",
       "observaciones": ""
     },
     {
@@ -15,7 +15,7 @@
       "variedad": "Hierbas Serranas",
       "presentacion": "Pack",
       "peso": 1.0,
-      "foto": "",
+      "foto": "../frontend/Imagenes/CBSé/hierbas_serranas.avif",
       "observaciones": ""
     },
     {

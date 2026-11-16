@@ -186,20 +186,84 @@ def normalize_key(value):
     return " ".join(value.casefold().strip().split())
 
 
-def load_photo_map(data):
-    return data.setdefault("photo_map", {})
+# def load_photo_map(data):
+#     return data.setdefault("photo_map", {})
 
 
 def photo_key(brand, variety):
     return normalize_key(brand) + "|" + normalize_key(variety)
 
 
+# def apply_photo_map(data):
+#     mapping = load_photo_map(data)
+#     for product in data.get("products", []):
+#         path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
+#         if path and not str(product.get("foto", "")).startswith("/uploads/"):
+#             product["foto"] = path
+
+
+# def parse_ini_photo_map(raw):
+#     try:
+#         content = raw.decode("utf-8-sig")
+#     except UnicodeDecodeError:
+#         content = raw.decode("cp1252", errors="replace")
+#     parser = configparser.ConfigParser(interpolation=None)
+#     parser.optionxform = str
+#     parser.read_string(content)
+#     mapping = {}
+#     for brand in parser.sections():
+#         values = parser[brand]
+#         for key, value in values.items():
+#             if key.lower().startswith("imagen."):
+#                 variety = key[len("imagen.") :].strip()
+#                 path = value.strip().replace("\\\\", "/").replace("\\", "/")
+#                 path = path.lstrip("./")
+#                 if path:
+#                     mapping[photo_key(brand, variety)] = "./" + path
+#     return mapping
+
+
+def load_photo_map(data):
+    """
+    Descarga el mapa de fotografías desde el INI de GitHub.
+    """
+    url = (
+        f"https://api.github.com/repos/"
+        f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
+        f"backend/LISTADOS%20YERBAS.ini"
+    )
+
+    headers = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    response = requests.get(
+        url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+    )
+
+    response.raise_for_status()
+
+    content = base64.b64decode(response.json()["content"])
+
+    mapping = parse_ini_photo_map(content)
+
+    data["photo_map"] = mapping
+
+    return mapping
+
+
 def apply_photo_map(data):
     mapping = load_photo_map(data)
+
     for product in data.get("products", []):
         path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
+
         if path and not str(product.get("foto", "")).startswith("/uploads/"):
             product["foto"] = path
+
+    return data
 
 
 def parse_ini_photo_map(raw):
@@ -207,19 +271,28 @@ def parse_ini_photo_map(raw):
         content = raw.decode("utf-8-sig")
     except UnicodeDecodeError:
         content = raw.decode("cp1252", errors="replace")
+
     parser = configparser.ConfigParser(interpolation=None)
+
     parser.optionxform = str
     parser.read_string(content)
+
     mapping = {}
+
     for brand in parser.sections():
         values = parser[brand]
+
         for key, value in values.items():
             if key.lower().startswith("imagen."):
                 variety = key[len("imagen.") :].strip()
+
                 path = value.strip().replace("\\\\", "/").replace("\\", "/")
+
                 path = path.lstrip("./")
+
                 if path:
                     mapping[photo_key(brand, variety)] = "./" + path
+
     return mapping
 
 
