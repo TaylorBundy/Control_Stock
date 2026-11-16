@@ -560,20 +560,64 @@ def add_product():
         )
 
 
+# @app.put("/api/products/<codigo>")
+# def edit_product(codigo):
+#     data = load_data()
+#     p = request.get_json(force=True)
+#     item = next((x for x in data["products"] if x["codigo"] == codigo), None)
+#     if not item:
+#         return jsonify(error="Producto no encontrado."), 404
+#     newcode = str(p.get("codigo", codigo)).strip()
+#     if any(
+#         x["codigo"].lower() == newcode.lower() and x is not item
+#         for x in data["products"]
+#     ):
+#         return jsonify(error="El código ya está utilizado."), 400
+#     old = item["codigo"]
+#     for k in [
+#         "codigo",
+#         "marca",
+#         "variedad",
+#         "presentacion",
+#         "peso",
+#         "foto",
+#         "observaciones",
+#     ]:
+#         if k in p:
+#             item[k] = float(p[k]) if k == "peso" else p[k]
+#     if old != item["codigo"]:
+#         for m in data["movements"]:
+#             if m["codigo"] == old:
+#                 m["codigo"] = item["codigo"]
+#     apply_photo_map(data)
+#     save_data(data)
+#     return jsonify(ok=True)
+
+
 @app.put("/api/products/<codigo>")
 def edit_product(codigo):
     data = load_data()
     p = request.get_json(force=True)
+
     item = next((x for x in data["products"] if x["codigo"] == codigo), None)
+
     if not item:
         return jsonify(error="Producto no encontrado."), 404
+
     newcode = str(p.get("codigo", codigo)).strip()
+
     if any(
         x["codigo"].lower() == newcode.lower() and x is not item
         for x in data["products"]
     ):
         return jsonify(error="El código ya está utilizado."), 400
+
     old = item["codigo"]
+
+    old_marca = item.get("marca", "")
+    old_variedad = item.get("variedad", "")
+    old_foto = item.get("foto", "")
+
     for k in [
         "codigo",
         "marca",
@@ -585,13 +629,35 @@ def edit_product(codigo):
     ]:
         if k in p:
             item[k] = float(p[k]) if k == "peso" else p[k]
+
     if old != item["codigo"]:
         for m in data["movements"]:
             if m["codigo"] == old:
                 m["codigo"] = item["codigo"]
+
     apply_photo_map(data)
-    save_data(data)
-    return jsonify(ok=True)
+
+    try:
+        # Guardar JSON en GitHub
+        resultado = save_file(
+            "backend/data/stock.json", data, "Editar producto: " + item["codigo"]
+        )
+
+        # Actualizar INI si cambió la información de la foto
+        if (
+            old_marca != item.get("marca", "")
+            or old_variedad != item.get("variedad", "")
+            or old_foto != item.get("foto", "")
+        ):
+            update_ini_photo_map(item["marca"], item["variedad"], item["foto"])
+
+        return jsonify(ok=True, producto=item, github=resultado)
+
+    except Exception as e:
+        return (
+            jsonify(ok=False, error=f"No se pudieron guardar los cambios: {str(e)}"),
+            500,
+        )
 
 
 @app.post("/api/products/<codigo>/photo")
