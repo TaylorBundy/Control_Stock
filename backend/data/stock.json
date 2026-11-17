@@ -442,15 +442,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-002-1000",
-      "marca": "VERDEFLOR",
-      "variedad": "Naranja_1000",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "/uploads/4cb6ecc85f954ca79a708d8c83a86249.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "VER-003-500",
       "marca": "VERDEFLOR",
       "variedad": "menta_500",
@@ -490,9 +481,7 @@
     "cbse|hierbas cuyanas": "./Imagenes/CBSé/061be87c109b4004a290094035253cd6.avif",
     "cbse|hierbas del litoral": "./Imagenes/CBSé/hierbas_litoral.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
-    "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
-    "verdeflor|naranja_1000": "./Imagenes/VERDEFLOR/4cb6ecc85f954ca79a708d8c83a86249.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
-    "verdeflor|menta_500": "./Imagenes/Verdeflor/menta500.avif"
+    "verdeflor|menta_500": "./Imagenes/Verdeflor/menta500.avif",
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
   }
 }
