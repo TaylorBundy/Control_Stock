@@ -474,7 +474,7 @@
       "variedad": "boldo_500",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Verdeflor/210a5a46a1704bb6b4f80b2be4d657e8.avif",
       "observaciones": ""
     }
   ],
@@ -511,6 +511,7 @@
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
     "verdeflor|naranja_1000": "./Imagenes/VERDEFLOR/4cb6ecc85f954ca79a708d8c83a86249.avif",
     "verdeflor|menta_1000": "./Imagenes/Verdeflor/bfe43d5343ba4b9cbc8d8b467ba3a63f.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "verdeflor|boldo_500": "./Imagenes/Verdeflor/210a5a46a1704bb6b4f80b2be4d657e8.avif"
   }
 }
