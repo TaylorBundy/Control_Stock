@@ -265,17 +265,18 @@ $("pPhotoFile").onchange = () => {
   $("productPhotoPreview").innerHTML =
     `<img src="${previewUrl}" alt="Vista previa">`;
 };
-const elCodigo = $("pCodigo");
-let elReCodigo;
-elCodigo.addEventListener("input", () => {
-  const code = elCodigo.value.trim();
-  elReCodigo = code.toUpperCase();
+const elCodigo = document.getElementById("pCodigo");
+//let elReCodigo;
+elCodigo.addEventListener("input", function () {
+  this.value = this.value.toUpperCase();
+  //const code = elCodigo.value.trim();
+  //elReCodigo = code.toUpperCase();
 });
-console.log(elCodigo);
+//console.log(elCodigo);
 $("saveProduct").onclick = async (e) => {
   e.preventDefault();
   const p = {
-    codigo: elReCodigo, //$("pCodigo").value,
+    codigo: $("pCodigo").value,
     marca: $("pMarca").value,
     variedad: $("pVariedad").value,
     presentacion: $("pPresentacion").value,
