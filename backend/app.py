@@ -1025,6 +1025,7 @@ def upload_product_photo(codigo):
             folder = secure_filename(marca.title()) or "Otros"
 
         folder = normalize_name(folder)
+        print(folder)
 
         # Nombre único
         filename = f"{uuid.uuid4().hex}{extension}"
