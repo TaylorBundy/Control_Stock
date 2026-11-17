@@ -1017,18 +1017,20 @@ def upload_product_photo(codigo):
 
         if "Imagenes" in parts:
             index = parts.index("Imagenes")
-            folder = parts[index + 1] if index + 1 < len(parts) else ""
+            folder2 = parts[index + 1] if index + 1 < len(parts) else ""
         else:
-            folder = ""
+            folder2 = ""
 
-        if not folder:
-            folder = secure_filename(marca.title()) or "Otros"
+        if not folder2:
+            folder2 = secure_filename(marca.title()) or "Otros"
 
-        folder = normalize_name(folder)
+        folder = normalize_name(folder2)
         print(folder)
 
         # Nombre único
-        filename = f"{uuid.uuid4().hex}{extension}"
+        # filename = f"{uuid.uuid4().hex}{extension}"
+        # Normalizar nombre del archivo
+        filename = f"{normalize_name(variedad, camel_case=True)}{extension}"
 
         # Ruta dentro del repositorio
         repo_path = f"frontend/Imagenes/{folder}/{filename}"
