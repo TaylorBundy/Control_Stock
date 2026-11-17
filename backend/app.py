@@ -22,6 +22,7 @@ GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_OWNER = os.getenv("GITHUB_OWNER")
 GITHUB_REPO = os.getenv("GITHUB_REPO")
 GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
+BACKEND_URL = "https://control-stock-yerbas-api.onrender.com"
 CORS(app, resources={r"/api/*": {"origins": os.environ.get("FRONTEND_ORIGIN", "*")}})
 
 
@@ -781,7 +782,9 @@ def load_photo_map(data):
 
             path = image["path"]
 
-            mapping.setdefault(key, "/api/github-image?path=" + quote(path, safe=""))
+            mapping.setdefault(
+                key, f"{BACKEND_URL}/api/github-image?path={quote(path, safe='')}"
+            )  # "/api/github-image?path=" + quote(path, safe=""))
 
     # # 2. Obtener marcas existentes en los productos
     # brands = {}
