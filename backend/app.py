@@ -1005,7 +1005,7 @@ def upload_product_photo(codigo):
         filename = f"{uuid.uuid4().hex}{extension}"
 
         # Ruta dentro del repositorio
-        repo_path = f"backend/Imagenes/{folder}/{filename}"
+        repo_path = f"frontend/Imagenes/{folder}/{filename}"
 
         # Leer imagen
         image_data = image.read()
