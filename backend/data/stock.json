@@ -449,6 +449,15 @@
       "peso": 1.0,
       "foto": "/uploads/4cb6ecc85f954ca79a708d8c83a86249.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-003-500",
+      "marca": "VERDEFLOR",
+      "variedad": "menta_500",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/menta500.avif",
+      "observaciones": ""
     }
   ],
   "movements": [
@@ -483,6 +492,7 @@
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
     "verdeflor|naranja_1000": "./Imagenes/VERDEFLOR/4cb6ecc85f954ca79a708d8c83a86249.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "verdeflor|menta_500": "./Imagenes/Verdeflor/menta500.avif"
   }
 }
