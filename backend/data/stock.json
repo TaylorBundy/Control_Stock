@@ -447,7 +447,7 @@
       "variedad": "naranja_1000",
       "presentacion": "Pack",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Verdeflor/naranja1000.avif",
       "observaciones": ""
     }
   ],
@@ -482,6 +482,7 @@
     "cbse|hierbas del litoral": "./Imagenes/CBSé/hierbas_litoral.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja_500": "./Imagenes/Verdeflor/naranja500.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "verdeflor|naranja_1000": "./Imagenes/Verdeflor/naranja1000.avif"
   }
 }
