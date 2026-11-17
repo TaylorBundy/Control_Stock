@@ -718,7 +718,7 @@ def load_photo_map(data):
             brands[normalize_photo_name(brand)] = brand
 
     # 3. Consultar carpetas de imágenes
-    url = base_url + "/Imagenes"
+    url = base_url + "Imagenes"
 
     response = requests.get(
         url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
@@ -934,7 +934,7 @@ def github_image():
     path = request.args.get("path", "")
 
     # Seguridad: permitir únicamente imágenes del catálogo
-    if not path.startswith("/Imagenes/"):
+    if not path.startswith("Imagenes/"):
         abort(403)
 
     if ".." in path.split("/"):
