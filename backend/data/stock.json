@@ -364,7 +364,7 @@
       "codigo": "ROS-001-500",
       "marca": "ROSAMONTE",
       "variedad": "suave",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "",
       "observaciones": ""
@@ -492,7 +492,7 @@
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja_500": "./Imagenes/Verdeflor/naranja500.avif",
     "verdeflor|naranja_1000": "./Imagenes/Verdeflor/naranja1000.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
-    "verdeflor|menta_500": "./Imagenes/Verdeflor/menta500.avif"
+    "verdeflor|menta_500": "./Imagenes/Verdeflor/menta500.avif",
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
   }
 }
