@@ -447,6 +447,29 @@ def normalize_key(value):
     return " ".join(value.casefold().strip().split())
 
 
+# def normalize_name(value, camel_case=False):
+#     value = str(value or "").strip()
+
+#     # Eliminar acentos
+#     value = unicodedata.normalize("NFKD", value)
+#     value = "".join(c for c in value if not unicodedata.combining(c))
+
+#     # Separar palabras y eliminar caracteres especiales
+#     words = re.findall(r"[a-zA-Z0-9]+", value.lower())
+
+#     if not words:
+#         return ""
+
+#     # PascalCase
+#     result = "".join(word.capitalize() for word in words)
+
+#     # camelCase
+#     if camel_case:
+#         result = result[0].lower() + result[1:]
+
+#     return result
+
+
 def normalize_name(value, camel_case=False):
     value = str(value or "").strip()
 
@@ -454,17 +477,18 @@ def normalize_name(value, camel_case=False):
     value = unicodedata.normalize("NFKD", value)
     value = "".join(c for c in value if not unicodedata.combining(c))
 
-    # Separar palabras y eliminar caracteres especiales
-    words = re.findall(r"[a-zA-Z0-9]+", value.lower())
+    # Separar palabras por espacios, guiones y otros caracteres
+    words = re.findall(r"[A-Z]+(?=[A-Z][a-z]|\d|$)|[A-Z]?[a-z]+|\d+", value)
 
     if not words:
-        return ""
+        words = re.findall(r"[a-zA-Z0-9]+", value)
 
-    # PascalCase
+    words = [word.lower() for word in words]
+
     result = "".join(word.capitalize() for word in words)
 
     # camelCase
-    if camel_case:
+    if camel_case and result:
         result = result[0].lower() + result[1:]
 
     return result
