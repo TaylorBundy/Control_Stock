@@ -456,7 +456,7 @@
       "variedad": "menta_500",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Verdeflor/3da06e403d4047d9a3a1a0847f3eb288.avif",
       "observaciones": ""
     }
   ],
@@ -492,6 +492,7 @@
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
     "verdeflor|naranja_1000": "./Imagenes/VERDEFLOR/4cb6ecc85f954ca79a708d8c83a86249.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif"
+    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "verdeflor|menta_500": "./Imagenes/Verdeflor/3da06e403d4047d9a3a1a0847f3eb288.avif"
   }
 }
