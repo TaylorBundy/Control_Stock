@@ -485,6 +485,15 @@
       "peso": 1.0,
       "foto": "./Imagenes/Verdeflor/boldo1000.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-007-500",
+      "marca": "VERDEFLOR",
+      "variedad": "cedron",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
@@ -524,6 +533,7 @@
     "verdeflor|menta500": "./Imagenes/Verdeflor/menta500.avif",
     "verdeflor|menta1000": "./Imagenes/Verdeflor/menta1000.avif",
     "verdeflor|boldo500": "./Imagenes/Verdeflor/boldo500.avif",
+    "verdeflor|boldo1000": "./Imagenes/Verdeflor/boldo1000.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
@@ -537,7 +547,6 @@
     "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
-    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
-    "verdeflor|boldo_1000": "./Imagenes/Verdeflor/boldo1000.avif"
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif"
   }
 }
