@@ -1208,7 +1208,10 @@ def delete_product(codigo):
                 del photo_map[key]
 
         # Guardar JSON
-        save_file(data)
+        # save_file(data)
+        save_file(
+            "backend/data/stock.json", data, "Eliminar producto: " + producto["codigo"]
+        )
 
         return jsonify(ok=True)
 
