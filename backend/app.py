@@ -709,13 +709,13 @@ def load_photo_map(data):
     mapping = parse_ini_photo_map(content)
 
     # 2. Obtener marcas existentes en los productos
-    brands = {}
-
-    for product in data.get("products", []):
-        brand = product.get("marca", "").strip()
-
-        if brand:
-            brands[normalize_photo_name(brand)] = brand
+    brands = list(
+        dict.fromkeys(
+            p.get("marca", "").strip()
+            for p in data.get("products", [])
+            if p.get("marca", "").strip()
+        )
+    )
 
     # 3. Consultar carpetas de imágenes
     url = base_url + "frontend/Imagenes"
@@ -734,15 +734,29 @@ def load_photo_map(data):
             continue
 
         folder_name = folder["name"]
-        normalized_brand = normalize_photo_name(folder_name)
 
-        # Buscar solamente carpetas de marcas existentes
-        if normalized_brand not in brands:
-            continue
+        # Primero buscar coincidencia exacta
+        exact = [
+            brand for brand in brands if brand.casefold() == folder_name.casefold()
+        ]
 
-        brand = brands[normalized_brand]
+        if len(exact) == 1:
+            brand = exact[0]
 
-        # 4. Obtener fotografías de la carpeta
+        else:
+            # Buscar coincidencia normalizada solamente si es única
+            candidates = [
+                brand
+                for brand in brands
+                if normalize_photo_name(brand) == normalize_photo_name(folder_name)
+            ]
+
+            if len(candidates) != 1:
+                continue
+
+            brand = candidates[0]
+
+        # 4. Obtener fotografías
         response = requests.get(
             folder["url"], headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
         )
@@ -767,8 +781,69 @@ def load_photo_map(data):
 
             path = image["path"]
 
-            # El INI tiene prioridad sobre la búsqueda automática
             mapping.setdefault(key, "/api/github-image?path=" + quote(path, safe=""))
+
+    # # 2. Obtener marcas existentes en los productos
+    # brands = {}
+
+    # for product in data.get("products", []):
+    #     brand = product.get("marca", "").strip()
+
+    #     if brand:
+    #         brands[normalize_photo_name(brand)] = brand
+
+    # # 3. Consultar carpetas de imágenes
+    # url = base_url + "frontend/Imagenes"
+
+    # response = requests.get(
+    #     url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+    # )
+
+    # response.raise_for_status()
+
+    # folders = response.json()
+
+    # for folder in folders:
+
+    #     if folder.get("type") != "dir":
+    #         continue
+
+    #     folder_name = folder["name"]
+    #     normalized_brand = normalize_photo_name(folder_name)
+
+    #     # Buscar solamente carpetas de marcas existentes
+    #     if normalized_brand not in brands:
+    #         continue
+
+    #     brand = brands[normalized_brand]
+
+    #     # 4. Obtener fotografías de la carpeta
+    #     response = requests.get(
+    #         folder["url"], headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+    #     )
+
+    #     response.raise_for_status()
+
+    #     for image in response.json():
+
+    #         if image.get("type") != "file":
+    #             continue
+
+    #         filename = image["name"]
+
+    #         if not filename.lower().endswith(
+    #             (".jpg", ".jpeg", ".png", ".webp", ".avif")
+    #         ):
+    #             continue
+
+    #         variety = filename.rsplit(".", 1)[0]
+
+    #         key = photo_key(brand, normalize_photo_name(variety))
+
+    #         path = image["path"]
+
+    #         # El INI tiene prioridad sobre la búsqueda automática
+    #         mapping.setdefault(key, "/api/github-image?path=" + quote(path, safe=""))
 
     data["photo_map"] = mapping
 
@@ -955,6 +1030,14 @@ def github_image():
     response = requests.get(
         url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
     )
+    if response.status_code != 200:
+        print("ERROR GITHUB IMAGEN")
+        print("Ruta:", path)
+        print("URL:", response.url)
+        print("Status:", response.status_code)
+        print("Respuesta:", response.text[:500])
+
+        abort(response.status_code)
 
     response.raise_for_status()
 
