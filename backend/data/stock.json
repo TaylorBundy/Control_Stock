@@ -449,6 +449,15 @@
       "peso": 1.0,
       "foto": "/uploads/4cb6ecc85f954ca79a708d8c83a86249.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-003-500",
+      "marca": "VERDEFLOR",
+      "variedad": "menta_500",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
