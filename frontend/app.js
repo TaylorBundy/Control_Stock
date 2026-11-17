@@ -265,11 +265,17 @@ $("pPhotoFile").onchange = () => {
   $("productPhotoPreview").innerHTML =
     `<img src="${previewUrl}" alt="Vista previa">`;
 };
-
+const elCodigo = $("pCodigo");
+let elReCodigo;
+elCodigo.addEventListener("input", () => {
+  const code = elCodigo.value.trim();
+  elReCodigo = code.toUpperCase();
+});
+console.log(elCodigo);
 $("saveProduct").onclick = async (e) => {
   e.preventDefault();
   const p = {
-    codigo: $("pCodigo").value,
+    codigo: elReCodigo, //$("pCodigo").value,
     marca: $("pMarca").value,
     variedad: $("pVariedad").value,
     presentacion: $("pPresentacion").value,
