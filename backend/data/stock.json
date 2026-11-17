@@ -33,7 +33,7 @@
       "variedad": "Hierbas Cuyanas",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "./Imagenes/CBSé/cuyana.avif",
+      "foto": "./Imagenes/CBSé/3340e910a08345f8b97ba3b8d510eb23.avif",
       "observaciones": ""
     },
     {
@@ -440,6 +440,15 @@
       "peso": 0.5,
       "foto": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-002-1000",
+      "marca": "VERDEFLOR",
+      "variedad": "Naranja_1000",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
@@ -469,7 +478,7 @@
     "cbse|miel": "./Imagenes/CBSé/miel.avif",
     "cbse|pomelo": "./Imagenes/CBSé/pomelo.avif",
     "cbse|guarana": "./Imagenes/CBSé/guarana.avif",
-    "cbse|hierbas cuyanas": "./Imagenes/CBSé/cuyana.avif",
+    "cbse|hierbas cuyanas": "./Imagenes/CBSé/3340e910a08345f8b97ba3b8d510eb23.avif",
     "cbse|hierbas del litoral": "./Imagenes/CBSé/hierbas_litoral.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
     "verdeflor|naranja": "./Imagenes/VerdeFlor/VerdeFlor_Naranja.avif",
