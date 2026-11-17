@@ -8,6 +8,7 @@ import json, os, io, configparser, re, shutil, unicodedata, uuid
 import base64
 import requests
 from urllib.parse import quote
+from flask import Response, abort
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE / "data")))
@@ -601,6 +602,15 @@ def normalize_name(value, camel_case=False):
     return result
 
 
+def normalize_photo_name(value):
+    value = str(value or "").strip().lower()
+
+    value = unicodedata.normalize("NFD", value)
+    value = "".join(c for c in value if unicodedata.category(c) != "Mn")
+
+    return "".join(c for c in value if c.isalnum())
+
+
 # def load_photo_map(data):
 #     return data.setdefault("photo_map", {})
 
@@ -638,21 +648,55 @@ def photo_key(brand, variety):
 #     return mapping
 
 
+# def load_photo_map(data):
+#     """
+#     Descarga el mapa de fotografías desde el INI de GitHub.
+#     """
+#     url = (
+#         f"https://api.github.com/repos/"
+#         f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
+#         f"backend/LISTADOS%20YERBAS.ini"
+#     )
+
+#     headers = {
+#         "Authorization": f"Bearer {GITHUB_TOKEN}",
+#         "Accept": "application/vnd.github+json",
+#         "X-GitHub-Api-Version": "2022-11-28",
+#     }
+
+#     response = requests.get(
+#         url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+#     )
+
+#     response.raise_for_status()
+
+#     content = base64.b64decode(response.json()["content"])
+
+#     mapping = parse_ini_photo_map(content)
+
+#     data["photo_map"] = mapping
+
+#     return mapping
+
+
 def load_photo_map(data):
     """
-    Descarga el mapa de fotografías desde el INI de GitHub.
+    Descarga el mapa del INI y busca fotografías automáticamente
+    dentro de frontend/Imagenes en GitHub.
     """
-    url = (
-        f"https://api.github.com/repos/"
-        f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
-        f"backend/LISTADOS%20YERBAS.ini"
-    )
 
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
+
+    base_url = (
+        f"https://api.github.com/repos/" f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
+    )
+
+    # 1. Cargar mapa existente del INI
+    url = base_url + "backend/LISTADOS%20YERBAS.ini"
 
     response = requests.get(
         url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
@@ -664,16 +708,95 @@ def load_photo_map(data):
 
     mapping = parse_ini_photo_map(content)
 
+    # 2. Obtener marcas existentes en los productos
+    brands = {}
+
+    for product in data.get("products", []):
+        brand = product.get("marca", "").strip()
+
+        if brand:
+            brands[normalize_photo_name(brand)] = brand
+
+    # 3. Consultar carpetas de imágenes
+    url = base_url + "frontend/Imagenes"
+
+    response = requests.get(
+        url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+    )
+
+    response.raise_for_status()
+
+    folders = response.json()
+
+    for folder in folders:
+
+        if folder.get("type") != "dir":
+            continue
+
+        folder_name = folder["name"]
+        normalized_brand = normalize_photo_name(folder_name)
+
+        # Buscar solamente carpetas de marcas existentes
+        if normalized_brand not in brands:
+            continue
+
+        brand = brands[normalized_brand]
+
+        # 4. Obtener fotografías de la carpeta
+        response = requests.get(
+            folder["url"], headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+        )
+
+        response.raise_for_status()
+
+        for image in response.json():
+
+            if image.get("type") != "file":
+                continue
+
+            filename = image["name"]
+
+            if not filename.lower().endswith(
+                (".jpg", ".jpeg", ".png", ".webp", ".avif")
+            ):
+                continue
+
+            variety = filename.rsplit(".", 1)[0]
+
+            key = photo_key(brand, normalize_photo_name(variety))
+
+            path = image["path"]
+
+            # El INI tiene prioridad sobre la búsqueda automática
+            mapping.setdefault(key, "/api/github-image?path=" + quote(path, safe=""))
+
     data["photo_map"] = mapping
 
     return mapping
+
+
+# def apply_photo_map(data):
+#     mapping = load_photo_map(data)
+
+#     for product in data.get("products", []):
+#         path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
+
+#         if path and not str(product.get("foto", "")).startswith("/uploads/"):
+#             product["foto"] = path
+
+#     return data
 
 
 def apply_photo_map(data):
     mapping = load_photo_map(data)
 
     for product in data.get("products", []):
-        path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
+
+        key = photo_key(
+            product.get("marca"), normalize_photo_name(product.get("variedad"))
+        )
+
+        path = mapping.get(key)
 
         if path and not str(product.get("foto", "")).startswith("/uploads/"):
             product["foto"] = path
@@ -706,7 +829,10 @@ def parse_ini_photo_map(raw):
                 path = path.lstrip("./")
 
                 if path:
-                    mapping[photo_key(brand, variety)] = "./" + path
+                    # mapping[photo_key(brand, variety)] = "./" + path
+                    mapping[photo_key(brand, normalize_photo_name(variety))] = (
+                        "./" + path
+                    )
 
     return mapping
 
@@ -800,6 +926,43 @@ def api_import():
         )
     except Exception as e:
         return jsonify(error=f"No se pudo importar el archivo: {e}"), 400
+
+
+@app.get("/api/github-image")
+def github_image():
+
+    path = request.args.get("path", "")
+
+    # Seguridad: permitir únicamente imágenes del catálogo
+    if not path.startswith("frontend/Imagenes/"):
+        abort(403)
+
+    if ".." in path.split("/"):
+        abort(403)
+
+    url = (
+        f"https://api.github.com/repos/"
+        f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
+        f"{quote(path, safe='/')}"
+    )
+
+    headers = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.raw",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    response = requests.get(
+        url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+    )
+
+    response.raise_for_status()
+
+    return Response(
+        response.content,
+        content_type=response.headers.get("Content-Type", "application/octet-stream"),
+        headers={"Cache-Control": "public, max-age=3600"},
+    )
 
 
 # @app.post("/api/products")
