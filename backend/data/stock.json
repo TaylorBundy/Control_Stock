@@ -440,6 +440,15 @@
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/menta500.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-001-500",
+      "marca": "VERDEFLOR",
+      "variedad": "naranja_500",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
