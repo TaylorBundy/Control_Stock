@@ -180,9 +180,95 @@ def save_file(path, content, message=None):
     }
 
 
+# def update_ini_photo_map(marca, variedad, foto):
+#     if not foto:
+#         return
+
+#     token = os.getenv("GITHUB_TOKEN")
+#     owner = os.getenv("GITHUB_OWNER")
+#     repo = os.getenv("GITHUB_REPO")
+#     branch = os.getenv("GITHUB_BRANCH", "main")
+
+#     path = "backend/LISTADOS YERBAS.ini"
+
+#     url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
+
+#     headers = {
+#         "Authorization": f"Bearer {token}",
+#         "Accept": "application/vnd.github+json",
+#     }
+
+#     response = requests.get(url, headers=headers, params={"ref": branch})
+#     response.raise_for_status()
+
+#     file_data = response.json()
+#     content = base64.b64decode(file_data["content"]).decode("utf-8-sig")
+
+#     filename = os.path.basename(foto.replace("\\", "/"))
+
+#     # relative_path = f"Imagenes\\{marca}\\{filename}"
+#     relative_path = str(foto).replace("./", "", 1).replace("/", "\\")
+
+#     section = f"[{marca}]"
+#     key = f"imagen.{variedad}"
+
+#     lines = content.splitlines()
+
+#     section_start = next(
+#         (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
+#         None,
+#     )
+
+#     if section_start is None:
+#         if lines and lines[-1].strip():
+#             lines.append("")
+
+#         lines.extend([section, f"{key}={relative_path}"])
+
+#     else:
+#         section_end = next(
+#             (
+#                 i
+#                 for i in range(section_start + 1, len(lines))
+#                 if lines[i].strip().startswith("[") and lines[i].strip().endswith("]")
+#             ),
+#             len(lines),
+#         )
+
+#         existing = next(
+#             (
+#                 i
+#                 for i in range(section_start + 1, section_end)
+#                 if lines[i].strip().split("=", 1)[0].strip().lower() == key.lower()
+#             ),
+#             None,
+#         )
+
+#         if existing is not None:
+#             lines[existing] = f"{key}={relative_path}"
+#         else:
+#             lines.insert(section_end, f"{key}={relative_path}")
+
+#     new_content = "\n".join(lines) + "\n"
+
+#     payload = {
+#         "message": f"Actualizar foto: {marca} - {variedad}",
+#         "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
+#         "sha": file_data["sha"],
+#         "branch": branch,
+#     }
+
+#     result = requests.put(url, headers=headers, json=payload)
+
+#     result.raise_for_status()
+
+#     return result.json()
+
+
 def update_ini_photo_map(marca, variedad, foto):
-    if not foto:
-        return
+    import os
+    import requests
+    import base64
 
     token = os.getenv("GITHUB_TOKEN")
     owner = os.getenv("GITHUB_OWNER")
@@ -202,28 +288,26 @@ def update_ini_photo_map(marca, variedad, foto):
     response.raise_for_status()
 
     file_data = response.json()
+
     content = base64.b64decode(file_data["content"]).decode("utf-8-sig")
 
-    filename = os.path.basename(foto.replace("\\", "/"))
-
-    # relative_path = f"Imagenes\\{marca}\\{filename}"
-    relative_path = str(foto).replace("./", "", 1).replace("/", "\\")
+    lines = content.splitlines()
 
     section = f"[{marca}]"
-    key = f"imagen.{variedad}"
-
-    lines = content.splitlines()
+    image_key = f"imagen.{variedad}"
+    image_path = str(foto).replace("./", "", 1).replace("/", "\\")
 
     section_start = next(
         (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
         None,
     )
 
+    # Crear sección si no existe
     if section_start is None:
         if lines and lines[-1].strip():
             lines.append("")
 
-        lines.extend([section, f"{key}={relative_path}"])
+        lines.extend([section, f"variedades={variedad}", f"{image_key}={image_path}"])
 
     else:
         section_end = next(
@@ -235,24 +319,47 @@ def update_ini_photo_map(marca, variedad, foto):
             len(lines),
         )
 
-        existing = next(
-            (
-                i
-                for i in range(section_start + 1, section_end)
-                if lines[i].strip().split("=", 1)[0].strip().lower() == key.lower()
-            ),
-            None,
-        )
+        variedades_found = False
+        image_found = False
 
-        if existing is not None:
-            lines[existing] = f"{key}={relative_path}"
-        else:
-            lines.insert(section_end, f"{key}={relative_path}")
+        for i in range(section_start + 1, section_end):
+
+            if "=" not in lines[i]:
+                continue
+
+            key, value = lines[i].split("=", 1)
+            key = key.strip().lower()
+
+            # Comprobar y agregar variedad
+            if key == "variedades":
+                variedades_found = True
+
+                variedades = [v.strip() for v in value.split(",") if v.strip()]
+
+                if not any(v.lower() == variedad.strip().lower() for v in variedades):
+                    variedades.append(variedad.strip())
+
+                lines[i] = f"variedades={','.join(variedades)}"
+
+            # Actualizar o agregar imagen
+            elif key == image_key.lower():
+                lines[i] = f"{image_key}={image_path}"
+                image_found = True
+
+        # Crear listado de variedades si no existe
+        if not variedades_found:
+            lines.insert(section_end, f"variedades={variedad}")
+
+            section_end += 1
+
+        # Agregar imagen si no existe
+        if not image_found:
+            lines.insert(section_end, f"{image_key}={image_path}")
 
     new_content = "\n".join(lines) + "\n"
 
     payload = {
-        "message": f"Actualizar foto: {marca} - {variedad}",
+        "message": f"Actualizar variedad: {marca} - {variedad}",
         "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
         "sha": file_data["sha"],
         "branch": branch,
