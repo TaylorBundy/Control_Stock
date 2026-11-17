@@ -447,6 +447,29 @@ def normalize_key(value):
     return " ".join(value.casefold().strip().split())
 
 
+def normalize_name(value, camel_case=False):
+    value = str(value or "").strip()
+
+    # Eliminar acentos
+    value = unicodedata.normalize("NFKD", value)
+    value = "".join(c for c in value if not unicodedata.combining(c))
+
+    # Separar palabras y eliminar caracteres especiales
+    words = re.findall(r"[a-zA-Z0-9]+", value.lower())
+
+    if not words:
+        return ""
+
+    # PascalCase
+    result = "".join(word.capitalize() for word in words)
+
+    # camelCase
+    if camel_case:
+        result = result[0].lower() + result[1:]
+
+    return result
+
+
 # def load_photo_map(data):
 #     return data.setdefault("photo_map", {})
 
@@ -1000,6 +1023,8 @@ def upload_product_photo(codigo):
 
         if not folder:
             folder = secure_filename(marca.title()) or "Otros"
+
+        folder = normalize_name(folder)
 
         # Nombre único
         filename = f"{uuid.uuid4().hex}{extension}"
