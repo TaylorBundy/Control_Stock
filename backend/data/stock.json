@@ -503,6 +503,15 @@
       "peso": 1.0,
       "foto": "./Imagenes/Verdeflor/cedron.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-009-500",
+      "marca": "VERDEFLOR",
+      "variedad": "peperina",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
