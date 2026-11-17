@@ -440,6 +440,15 @@
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/naranja500.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-002-1000",
+      "marca": "VERDEFLOR",
+      "variedad": "naranja_1000",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
