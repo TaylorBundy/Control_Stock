@@ -71,6 +71,14 @@ function render() {
       )
       .join("") || empty(6);
   if (plataforma.includes("Android")) {
+    $("dashStock").innerHTML =
+    s
+      .slice(0, 8)
+      .map(
+        (p) =>
+          `<tr><td data-label="Código">${esc(p.codigo)}</td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)}</td><td data-label="Stock (kg)">${fmt(p.stock_kg)}</td></tr>`,
+      )
+      .join("") || empty(6);
     //presentacion.classList.add("hide");
     document
       .querySelectorAll("#presentation-th")
@@ -113,13 +121,28 @@ function renderProducts() {
     rows
       .map(
         (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td id="product-td">${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td id="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td>${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td id="product-td">${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td id="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
       )
       .join("") || empty(8);
   if (plataforma.includes("Android")) {
+    $("productsBody").innerHTML =
+    rows
+      .map(
+        (p) =>
+          `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad" id="product-td">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td id="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td data-label="Observaciones" id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+      )
+      .join("") || empty(8);
     presentacion.classList.add("hide");
+    document.querySelector("#observaciones-th").classList.add("hide");
+    //$("btnDelete").classList.add("hide");
+    document
+      .querySelectorAll("#btnDelete")
+      .forEach((td) => td.classList.add("hide"));
     document
       .querySelectorAll("#presentacion-td")
+      .forEach((td) => td.classList.add("hide"));
+    document
+      .querySelectorAll("#observaciones-td")
       .forEach((td) => td.classList.add("hide"));
   }
 }
@@ -157,6 +180,13 @@ function renderStock() {
       )
       .join("") || empty(9);
   if (plataforma.includes("Android")) {
+    $("stockBody").innerHTML =
+    rows
+      .map(
+        (p) =>
+          `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td data-label="Ingresos">${fmt(p.ingresos)}</td><td data-label="Salidas">${fmt(p.salidas)}</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)}</td><td data-label="Stock (kg)">${fmt(p.stock_kg)}</td></tr>`,
+      )
+      .join("") || empty(9);
     //presentacion.classList.add("hide");
     document
       .querySelectorAll("#presentation-th")
@@ -266,13 +296,16 @@ $("pPhotoFile").onchange = () => {
     `<img src="${previewUrl}" alt="Vista previa">`;
 };
 const elCodigo = document.getElementById("pCodigo");
-//let elReCodigo;
+const buscamos = document.getElementById("productSearch");
+
 elCodigo.addEventListener("input", function () {
   this.value = this.value.toUpperCase();
-  //const code = elCodigo.value.trim();
-  //elReCodigo = code.toUpperCase();
 });
-//console.log(elCodigo);
+
+buscamos.addEventListener("input", function () {
+  this.value = this.value.toUpperCase();
+});
+
 $("saveProduct").onclick = async (e) => {
   e.preventDefault();
   const p = {
