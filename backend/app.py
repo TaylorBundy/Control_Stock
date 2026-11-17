@@ -206,7 +206,8 @@ def update_ini_photo_map(marca, variedad, foto):
 
     filename = os.path.basename(foto.replace("\\", "/"))
 
-    relative_path = f"Imagenes\\{marca}\\{filename}"
+    # relative_path = f"Imagenes\\{marca}\\{filename}"
+    relative_path = str(foto).replace("./", "", 1).replace("/", "\\")
 
     section = f"[{marca}]"
     key = f"imagen.{variedad}"
@@ -873,6 +874,74 @@ def edit_product(codigo):
 #     return jsonify(ok=True, foto=product["foto"])
 
 
+# @app.post("/api/products/<codigo>/photo")
+# def upload_product_photo(codigo):
+#     data = load_data()
+
+#     product = next((p for p in data["products"] if p["codigo"] == codigo), None)
+
+#     if not product:
+#         return jsonify(error="Producto no encontrado."), 404
+
+#     image = request.files.get("image")
+
+#     if not image or not image.filename:
+#         return jsonify(error="Seleccioná una imagen."), 400
+
+#     extension = Path(image.filename).suffix.lower()
+
+#     if extension not in ALLOWED_IMAGE_EXTENSIONS:
+#         return jsonify(error="Formato no permitido. Usá JPG, PNG, AVIF o WEBP."), 400
+
+#     if image.mimetype not in {"image/jpeg", "image/png", "image/webp", "image/avif"}:
+#         return (
+#             jsonify(error="El archivo seleccionado no parece ser una imagen válida."),
+#             400,
+#         )
+
+#     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+#     filename = f"{uuid.uuid4().hex}{extension}"
+#     destination = UPLOAD_DIR / filename
+
+#     image.save(destination)
+
+#     old_photo = product.get("foto", "")
+
+#     product["foto"] = f"/uploads/{filename}"
+
+#     try:
+#         # Guardar JSON
+#         resultado = save_file(
+#             "backend/data/stock.json",
+#             data,
+#             "Actualizar fotografía: " + product["codigo"],
+#         )
+
+#         # Actualizar INI
+#         update_ini_photo_map(product["marca"], product["variedad"], product["foto"])
+
+#         # Borrar fotografía anterior si pertenece al servidor
+#         if old_photo.startswith("/uploads/"):
+#             old_name = Path(old_photo).name
+#             old_path = (UPLOAD_DIR / old_name).resolve()
+
+#             if old_path.parent == UPLOAD_DIR.resolve() and old_path.exists():
+#                 old_path.unlink()
+
+#         return jsonify(ok=True, foto=product["foto"], github=resultado)
+
+#     except Exception as e:
+#         # Si falla el guardado, eliminar la imagen recién subida
+#         if destination.exists():
+#             destination.unlink()
+
+#         return (
+#             jsonify(ok=False, error=f"No se pudo actualizar la fotografía: {str(e)}"),
+#             500,
+#         )
+
+
 @app.post("/api/products/<codigo>/photo")
 def upload_product_photo(codigo):
     data = load_data()
@@ -898,18 +967,65 @@ def upload_product_photo(codigo):
             400,
         )
 
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-
-    filename = f"{uuid.uuid4().hex}{extension}"
-    destination = UPLOAD_DIR / filename
-
-    image.save(destination)
-
-    old_photo = product.get("foto", "")
-
-    product["foto"] = f"/uploads/{filename}"
-
     try:
+        import uuid
+        from werkzeug.utils import secure_filename
+
+        marca = product["marca"]
+        variedad = product["variedad"]
+
+        # Buscar la carpeta original de la marca
+        photo_key = f"{marca}|{variedad}".lower()
+
+        old_photo = product.get("foto", "")
+
+        mapped_photo = next(
+            (
+                value
+                for key, value in data.get("photo_map", {}).items()
+                if key.strip().lower() == photo_key
+            ),
+            "",
+        )
+
+        reference = mapped_photo or old_photo
+
+        parts = Path(str(reference).replace("\\", "/")).parts
+
+        if "Imagenes" in parts:
+            index = parts.index("Imagenes")
+            folder = parts[index + 1] if index + 1 < len(parts) else ""
+        else:
+            folder = ""
+
+        if not folder:
+            folder = secure_filename(marca.title()) or "Otros"
+
+        # Nombre único
+        filename = f"{uuid.uuid4().hex}{extension}"
+
+        # Ruta dentro del repositorio
+        repo_path = f"backend/Imagenes/{folder}/{filename}"
+
+        # Leer imagen
+        image_data = image.read()
+
+        # Subir fotografía a GitHub
+        github_result = upload_photo_to_github(
+            image_data, repo_path, f"Subir fotografía: {marca} - {variedad}"
+        )
+
+        # Ruta utilizada por la aplicación
+        foto = f"./Imagenes/{folder}/{filename}"
+
+        product["foto"] = foto
+
+        # Actualizar photo_map
+        data.setdefault("photo_map", {})[photo_key] = foto
+
+        # Actualizar INI
+        update_ini_photo_map(marca, variedad, foto)
+
         # Guardar JSON
         resultado = save_file(
             "backend/data/stock.json",
@@ -917,24 +1033,9 @@ def upload_product_photo(codigo):
             "Actualizar fotografía: " + product["codigo"],
         )
 
-        # Actualizar INI
-        update_ini_photo_map(product["marca"], product["variedad"], product["foto"])
-
-        # Borrar fotografía anterior si pertenece al servidor
-        if old_photo.startswith("/uploads/"):
-            old_name = Path(old_photo).name
-            old_path = (UPLOAD_DIR / old_name).resolve()
-
-            if old_path.parent == UPLOAD_DIR.resolve() and old_path.exists():
-                old_path.unlink()
-
-        return jsonify(ok=True, foto=product["foto"], github=resultado)
+        return jsonify(ok=True, foto=foto, github=resultado)
 
     except Exception as e:
-        # Si falla el guardado, eliminar la imagen recién subida
-        if destination.exists():
-            destination.unlink()
-
         return (
             jsonify(ok=False, error=f"No se pudo actualizar la fotografía: {str(e)}"),
             500,
@@ -944,6 +1045,37 @@ def upload_product_photo(codigo):
 @app.get("/uploads/<path:filename>")
 def uploaded_photo(filename):
     return send_from_directory(UPLOAD_DIR, filename)
+
+
+def upload_photo_to_github(image, repo_path, message):
+    import base64
+    import os
+    import requests
+
+    token = os.getenv("GITHUB_TOKEN")
+    owner = os.getenv("GITHUB_OWNER")
+    repo = os.getenv("GITHUB_REPO")
+    branch = os.getenv("GITHUB_BRANCH", "main")
+
+    if not all([token, owner, repo]):
+        raise Exception("Faltan las credenciales de GitHub.")
+
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/{repo_path}"
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+    }
+
+    content = base64.b64encode(image).decode("utf-8")
+
+    payload = {"message": message, "content": content, "branch": branch}
+
+    response = requests.put(url, headers=headers, json=payload)
+
+    response.raise_for_status()
+
+    return response.json()
 
 
 # @app.get("/uploads/<path:filename>")
