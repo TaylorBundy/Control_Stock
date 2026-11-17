@@ -150,7 +150,7 @@
       "variedad": "Frutos del Bosque",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_bosque.avif",
       "observaciones": ""
     },
     {
@@ -159,7 +159,7 @@
       "variedad": "Frutos del Bosque",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_bosque.avif",
       "observaciones": ""
     },
     {
@@ -168,7 +168,7 @@
       "variedad": "Frutos del Valle",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_valle.avif",
       "observaciones": ""
     },
     {
@@ -177,7 +177,7 @@
       "variedad": "Frutos del Valle",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_valle.avif",
       "observaciones": ""
     },
     {
@@ -186,7 +186,7 @@
       "variedad": "Frutos Tropicales",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_tropicales.avif",
       "observaciones": ""
     },
     {
@@ -195,7 +195,7 @@
       "variedad": "Frutos Tropicales",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_tropicales.avif",
       "observaciones": ""
     },
     {
@@ -204,7 +204,7 @@
       "variedad": "Silueta",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fsilueta.avif",
       "observaciones": ""
     },
     {
@@ -213,7 +213,7 @@
       "variedad": "Silueta",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fsilueta.avif",
       "observaciones": ""
     },
     {
@@ -330,7 +330,7 @@
       "variedad": "verde",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
       "observaciones": ""
     },
     {
@@ -339,7 +339,7 @@
       "variedad": "verde",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
       "observaciones": ""
     },
     {
@@ -348,7 +348,7 @@
       "variedad": "roja",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
       "observaciones": ""
     },
     {
@@ -357,7 +357,7 @@
       "variedad": "roja",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
       "observaciones": ""
     },
     {
@@ -467,6 +467,51 @@
       "peso": 1.0,
       "foto": "./Imagenes/Verdeflor/menta1000.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "VER-005-500",
+      "marca": "VERDEFLOR",
+      "variedad": "boldo_500",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/boldo500.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-006-1000",
+      "marca": "VERDEFLOR",
+      "variedad": "boldo_1000",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "./Imagenes/Verdeflor/boldo1000.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-007-500",
+      "marca": "VERDEFLOR",
+      "variedad": "cedron",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/cedron.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-008-1000",
+      "marca": "VERDEFLOR",
+      "variedad": "cedron",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "./Imagenes/Verdeflor/cedron.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-009-500",
+      "marca": "VERDEFLOR",
+      "variedad": "peperina",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/peperina.avif",
+      "observaciones": ""
     }
   ],
   "movements": [
@@ -490,21 +535,38 @@
     }
   ],
   "photo_map": {
-    "cbse|hierbas serranas": "./Imagenes/CbSe/hierbas_serranas.avif",
+    "cbse|hierbasserranas": "./Imagenes/CbSe/hierbas_serranas.avif",
     "cbse|naranja": "./Imagenes/CbSe/naranja.avif",
     "cbse|limon": "./Imagenes/CbSe/limon.avif",
     "cbse|miel": "./Imagenes/CbSe/miel.avif",
     "cbse|pomelo": "./Imagenes/CbSe/pomelo.avif",
     "cbse|guarana": "./Imagenes/CbSe/guarana.avif",
-    "cbse|hierbas cuyanas": "./Imagenes/CbSe/hierbasCuyanas.avif",
-    "cbse|hierbas del litoral": "./Imagenes/CbSe/hierbas_litoral.avif",
+    "cbse|hierbascuyanas": "./Imagenes/CbSe/hierbasCuyanas.avif",
+    "cbse|hierbasdellitoral": "./Imagenes/CbSe/hierbas_litoral.avif",
     "rosamonte|suave": "./Imagenes/Rosamonte/suave.avif",
     "rosamonte|comun": "./Imagenes/Rosamonte/comun.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
-    "verdeflor|naranja_500": "./Imagenes/Verdeflor/naranja500.avif",
-    "verdeflor|naranja_1000": "./Imagenes/Verdeflor/naranja1000.avif",
-    "verdeflor|menta_500": "./Imagenes/Verdeflor/menta500.avif",
-    "cachamate|comun_500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
-    "verdeflor|menta_1000": "./Imagenes/Verdeflor/menta1000.avif"
+    "verdeflor|naranja500": "./Imagenes/Verdeflor/naranja500.avif",
+    "verdeflor|naranja1000": "./Imagenes/Verdeflor/naranja1000.avif",
+    "verdeflor|menta500": "./Imagenes/Verdeflor/menta500.avif",
+    "verdeflor|menta1000": "./Imagenes/Verdeflor/menta1000.avif",
+    "verdeflor|boldo500": "./Imagenes/Verdeflor/boldo500.avif",
+    "verdeflor|boldo1000": "./Imagenes/Verdeflor/boldo1000.avif",
+    "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
+    "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
+    "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
+    "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
+    "cbse|cuyana": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fcuyana.avif",
+    "cbse|frutosdelbosque": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_bosque.avif",
+    "cbse|frutosdelvalle": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_valle.avif",
+    "cbse|frutostropicales": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_tropicales.avif",
+    "cbse|hierbaslitoral": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fhierbas_litoral.avif",
+    "cbse|silueta": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fsilueta.avif",
+    "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
+    "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
+    "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
+    "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif"
   }
 }
