@@ -15,6 +15,105 @@ const esc = (s) =>
 const API_BASE = (window.API_BASE || "").replace(/\/$/, "");
 const apiUrl = (path) => API_BASE + path;
 
+document.addEventListener("DOMContentLoaded", iniciarAplicacion);
+
+function iniciarAplicacion() {
+  cerrarImagenesAlScroll();
+  if (plataforma.includes("Android")) {
+    document
+      .querySelector("body > div.shell > aside > nav > button:nth-child(5)")
+      .classList.add("hide");
+    creaTop();
+    window.onscroll = function () {
+      scrollFunction();
+      //menuVisible2();
+      //sisi();
+    };
+  }
+}
+
+let a = "";
+let b = "";
+let scrolll = "";
+const inicios = 85;
+const target = 20;
+let final = "";
+//const TargetHeight = document.documentElement.offsetHeight - screen.height;
+const TargetHeight = document.documentElement.offsetHeight - window.innerHeight;
+//definimos la funcion que crea el boton de top para dispositivos moviles
+function creaTop() {
+  if (window.location.pathname.includes("about")) {
+    var destino = document.querySelector(".container");
+  } else {
+    destino = document.querySelector("#products");
+  }
+  if (destino === undefined) alert("No existe el bloque destino");
+  else {
+    var nodoTop = document.createElement("div");
+    nodoTop.className = "top";
+    destino.appendChild(nodoTop);
+    var nodo1 = document.querySelector(".top");
+    var nodoButton = document.createElement("button");
+    nodoButton.id = "myBtn";
+    nodoButton.addEventListener("click", topFunction);
+    nodo1.appendChild(nodoButton);
+  }
+}
+
+// When the user scrolls down 20px from the top of the document, show the button
+function scrollFunction() {
+  const mybutton = document.getElementById("myBtn");
+  const topp = document.querySelector(".top");
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    scrolll = window.scrollY;
+    mybutton.style.display = "block";
+    if (isBottomOfPage()) {
+      topp.style.bottom = 20 + "px";
+    } else if (
+      scrolll <=
+      Math.max(document.documentElement.scrollHeight) - window.innerHeight
+    ) {
+      final = inicios - (TargetHeight - scrolll);
+      if (final > target && final <= inicios) {
+        topp.style.bottom = Math.max(target, final) + "px";
+      } else {
+        topp.style.bottom = 20 + "px";
+      }
+    }
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+//funcion para determinar si llegamos al final de la pagina
+function isBottomOfPage() {
+  //return window.scrollY + window.innerHeight >= Math.round(document.documentElement.scrollHeight);
+  return (
+    window.scrollY + window.innerHeight >= document.documentElement.scrollHeight
+  );
+}
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  //const mybutton = document.getElementById("myBtn");
+  //document.body.scrollTop = 0; // For Safari
+  //document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  if ("scrollTo" in window) {
+    // Verifica si el navegador soporta scrollTo
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  } else {
+    // Fallback para navegadores más antiguos
+    let currentScroll =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (currentScroll > 0) {
+      window.requestAnimationFrame(topFunction);
+      window.scrollTo(0, currentScroll - currentScroll / 8); // Efecto suave manual
+    }
+  }
+}
+
 function toast(msg) {
   const t = $("toast");
   t.textContent = msg;
@@ -72,13 +171,13 @@ function render() {
       .join("") || empty(6);
   if (plataforma.includes("Android")) {
     $("dashStock").innerHTML =
-    s
-      .slice(0, 8)
-      .map(
-        (p) =>
-          `<tr><td data-label="Código">${esc(p.codigo)}</td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)}</td><td data-label="Stock (kg)">${fmt(p.stock_kg)}</td></tr>`,
-      )
-      .join("") || empty(6);
+      s
+        .slice(0, 8)
+        .map(
+          (p) =>
+            `<tr><td data-label="Código">${esc(p.codigo)}</td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)}</td><td data-label="Stock (kg)">${fmt(p.stock_kg)}</td></tr>`,
+        )
+        .join("") || empty(6);
     //presentacion.classList.add("hide");
     document
       .querySelectorAll("#presentation-th")
@@ -121,17 +220,17 @@ function renderProducts() {
     rows
       .map(
         (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td id="product-td">${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td id="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td id="product-td">${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
       )
       .join("") || empty(8);
   if (plataforma.includes("Android")) {
     $("productsBody").innerHTML =
-    rows
-      .map(
-        (p) =>
-          `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad" id="product-td">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td id="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td data-label="Observaciones" id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
-      )
-      .join("") || empty(8);
+      rows
+        .map(
+          (p) =>
+            `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad" id="product-td">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td data-label="Observaciones" id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+        )
+        .join("") || empty(8);
     presentacion.classList.add("hide");
     document.querySelector("#observaciones-th").classList.add("hide");
     //$("btnDelete").classList.add("hide");
@@ -144,7 +243,79 @@ function renderProducts() {
     document
       .querySelectorAll("#observaciones-td")
       .forEach((td) => td.classList.add("hide"));
+    document.querySelectorAll(".foto-td").forEach((td) => {
+      td.addEventListener("click", () => {
+        const img = td.querySelector("img");
+
+        if (img) {
+          if (imagenExpandida) {
+            cerrarImagen();
+          } else {
+            expandirImagenUnica(img);
+          }
+        }
+      });
+    });
+  } else {
+    document.querySelectorAll(".foto-td").forEach((td) => {
+      td.addEventListener("click", () => {
+        const img = td.querySelector("img");
+
+        if (img) {
+          if (imagenExpandida) {
+            cerrarImagen();
+          } else {
+            expandirImagenUnica(img);
+          }
+        }
+      });
+    });
   }
+}
+let imagenExpandida = false;
+function expandirImagenUnica(img) {
+  // const actual = document.querySelector(".img-expandida");
+  // const actualTexto = document.querySelector("h3");
+  // const actualPrice = document.querySelector("p");
+
+  // if (actual && actual !== img) {
+  //   actual.classList.remove("img-expandida");
+  // }
+  // if (actualTexto && actualTexto !== texto) {
+  //   actualTexto.classList.remove("texto-expandido");
+  // }
+  // if (actualPrice && actualPrice !== texto) {
+  //   actualPrice.classList.remove("p-expandido");
+  // }
+
+  img.classList.add("img-expandida");
+  // texto.classList.add("texto-expandido");
+  // precio.classList.remove(".price");
+  // precio.classList.add("p-expandido");
+  imagenExpandida = true;
+}
+
+function cerrarImagen() {
+  const img = document.querySelector(".img-expandida");
+  // const texto = document.querySelector(".texto-expandido");
+  // const precio = document.querySelector(".p-expandido");
+  if (img) img.classList.remove("img-expandida");
+  // if (texto) texto.classList.remove("texto-expandido");
+  // if (precio) precio.classList.remove("p-expandido");
+  imagenExpandida = false;
+}
+
+function cerrarImagenesAlScroll() {
+  window.addEventListener("scroll", () => {
+    if (imagenExpandida) {
+      cerrarImagen();
+    }
+    // const imgExpandida = document.querySelector(".img-expandida");
+    // if (imgExpandida) {
+    //   imgExpandida.classList.remove("img-expandida");
+    //   imagenExpandida = false;
+    // }
+  });
 }
 
 function renderMovements() {
@@ -162,9 +333,18 @@ function renderMovements() {
     rows
       .map(
         (m) =>
-          `<tr><td>${esc(m.fecha)}</td><td>${typeBadge(m.tipo)}</td><td>${esc(m.codigo)}</td><td>${esc(productName(m.codigo))}</td><td>${fmt(m.cantidad)}</td><td>${esc(m.documento)}</td><td><button class="small-btn" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
+          `<tr><td>${esc(m.fecha)}</td><td>${typeBadge(m.tipo)}</td><td>${esc(m.codigo)}</td><td>${esc(productName(m.codigo))}</td><td>${fmt(m.cantidad)} Un</td><td>${esc(m.documento)}</td><td><button class="small-btn" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
       )
       .join("") || empty(7);
+  if (plataforma.includes("Android")) {
+    $("movementsBody").innerHTML =
+      rows
+        .map(
+          (m) =>
+            `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Producto">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td><td><button class="small-btn" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
+        )
+        .join("") || empty(7);
+  }
 }
 
 function renderStock() {
@@ -176,17 +356,17 @@ function renderStock() {
     rows
       .map(
         (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)}</td><td>${fmt(p.ingresos)}</td><td>${fmt(p.salidas)}</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)}</td><td>${fmt(p.stock_kg)}</td></tr>`,
+          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)} Kg</td><td>${fmt(p.ingresos)} Un</td><td>${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)} Un</td><td>${fmt(p.stock_kg)} Kg</td></tr>`,
       )
       .join("") || empty(9);
   if (plataforma.includes("Android")) {
     $("stockBody").innerHTML =
-    rows
-      .map(
-        (p) =>
-          `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td data-label="Ingresos">${fmt(p.ingresos)}</td><td data-label="Salidas">${fmt(p.salidas)}</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)}</td><td data-label="Stock (kg)">${fmt(p.stock_kg)}</td></tr>`,
-      )
-      .join("") || empty(9);
+      rows
+        .map(
+          (p) =>
+            `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td data-label="Ingresos">${fmt(p.ingresos)} Un</td><td data-label="Salidas">${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td><td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td></tr>`,
+        )
+        .join("") || empty(9);
     //presentacion.classList.add("hide");
     document
       .querySelectorAll("#presentation-th")
