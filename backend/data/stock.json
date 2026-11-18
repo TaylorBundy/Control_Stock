@@ -222,7 +222,7 @@
       "variedad": "Silueta Naranja",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/siluetaNaranja.avif",
       "observaciones": ""
     },
     {
@@ -231,7 +231,7 @@
       "variedad": "Silueta Naranja",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/siluetaNaranja.avif",
       "observaciones": ""
     },
     {
@@ -240,7 +240,7 @@
       "variedad": "Regulase",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/regulase.avif",
       "observaciones": ""
     },
     {
@@ -249,7 +249,7 @@
       "variedad": "Regulase",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/regulase.avif",
       "observaciones": ""
     },
     {
@@ -258,7 +258,7 @@
       "variedad": "Endulife",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/endulife.avif",
       "observaciones": ""
     },
     {
@@ -267,7 +267,7 @@
       "variedad": "Endulife",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/endulife.avif",
       "observaciones": ""
     },
     {
@@ -276,7 +276,7 @@
       "variedad": "Jengibre",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/jengibre.avif",
       "observaciones": ""
     },
     {
@@ -285,7 +285,7 @@
       "variedad": "Jengibre",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/jengibre.avif",
       "observaciones": ""
     },
     {
@@ -294,7 +294,7 @@
       "variedad": "Etiqueta Negra",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/etiquetaNegra.avif",
       "observaciones": ""
     },
     {
@@ -303,7 +303,7 @@
       "variedad": "Etiqueta Negra",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/etiquetaNegra.avif",
       "observaciones": ""
     },
     {
@@ -312,7 +312,7 @@
       "variedad": "Mateando",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/mateando.avif",
       "observaciones": ""
     },
     {
@@ -543,6 +543,11 @@
     "cbse|guarana": "./Imagenes/CbSe/guarana.avif",
     "cbse|hierbascuyanas": "./Imagenes/CbSe/hierbasCuyanas.avif",
     "cbse|hierbasdellitoral": "./Imagenes/CbSe/hierbas_litoral.avif",
+    "cbse|siluetanaranja": "./Imagenes/Cbse/siluetaNaranja.avif",
+    "cbse|regulase": "./Imagenes/Cbse/regulase.avif",
+    "cbse|endulife": "./Imagenes/Cbse/endulife.avif",
+    "cbse|jengibre": "./Imagenes/Cbse/jengibre.avif",
+    "cbse|etiquetanegra": "./Imagenes/Cbse/etiquetaNegra.avif",
     "rosamonte|suave": "./Imagenes/Rosamonte/suave.avif",
     "rosamonte|comun": "./Imagenes/Rosamonte/comun.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
@@ -553,6 +558,7 @@
     "verdeflor|boldo500": "./Imagenes/Verdeflor/boldo500.avif",
     "verdeflor|boldo1000": "./Imagenes/Verdeflor/boldo1000.avif",
     "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
+    "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
@@ -567,6 +573,6 @@
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
     "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
-    "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif"
+    "cbsé|mateando": "./Imagenes/Cbse/mateando.avif"
   }
 }
