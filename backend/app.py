@@ -1575,20 +1575,52 @@ def delete_product(codigo):
         return jsonify(error=f"No se pudo eliminar el producto: {str(e)}"), 500
 
 
+# @app.post("/api/movements")
+# def add_movement():
+#     data = load_data()
+#     m = request.get_json(force=True)
+#     if m.get("tipo") not in ["INGRESO", "SALIDA"]:
+#         return jsonify(error="Tipo de movimiento inválido."), 400
+#     if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
+#         return jsonify(error="El código no existe en Productos."), 400
+#     try:
+#         qty = int(m.get("cantidad", 0))
+#     except:
+#         qty = 0
+#     if qty <= 0:
+#         return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
+#     item = {
+#         "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
+#         "tipo": m["tipo"],
+#         "codigo": m["codigo"],
+#         "cantidad": qty,
+#         "documento": m.get("documento", ""),
+#         "contacto": m.get("contacto", ""),
+#         "observaciones": m.get("observaciones", ""),
+#     }
+#     data["movements"].append(item)
+#     save_data(data)
+#     return jsonify(ok=True)
+
 @app.post("/api/movements")
 def add_movement():
     data = load_data()
     m = request.get_json(force=True)
+
     if m.get("tipo") not in ["INGRESO", "SALIDA"]:
         return jsonify(error="Tipo de movimiento inválido."), 400
+
     if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
         return jsonify(error="El código no existe en Productos."), 400
+
     try:
         qty = int(m.get("cantidad", 0))
     except:
         qty = 0
+
     if qty <= 0:
         return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
+
     item = {
         "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
         "tipo": m["tipo"],
@@ -1598,18 +1630,44 @@ def add_movement():
         "contacto": m.get("contacto", ""),
         "observaciones": m.get("observaciones", ""),
     }
+
     data["movements"].append(item)
-    save_data(data)
+
+    # Guardar directamente en GitHub
+    save_file(
+        "backend/data/stock.json",
+        data,
+        "Agregar movimiento"
+    )
+
     return jsonify(ok=True)
 
+
+# @app.delete("/api/movements/<int:index>")
+# def delete_movement(index):
+#     data = load_data()
+#     if index < 0 or index >= len(data["movements"]):
+#         return jsonify(error="Movimiento no encontrado."), 404
+#     data["movements"].pop(index)
+#     save_data(data)
+#     return jsonify(ok=True)
 
 @app.delete("/api/movements/<int:index>")
 def delete_movement(index):
     data = load_data()
+
     if index < 0 or index >= len(data["movements"]):
         return jsonify(error="Movimiento no encontrado."), 404
+
     data["movements"].pop(index)
-    save_data(data)
+
+    # Guardar directamente en GitHub
+    save_file(
+        "backend/data/stock.json",
+        data,
+        "Eliminar movimiento"
+    )
+
     return jsonify(ok=True)
 
 
