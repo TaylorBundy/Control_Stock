@@ -285,7 +285,7 @@
       "variedad": "Jengibre",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/jengibre.avif",
       "observaciones": ""
     },
     {
@@ -546,6 +546,7 @@
     "cbse|siluetanaranja": "./Imagenes/Cbse/siluetaNaranja.avif",
     "cbse|regulase": "./Imagenes/Cbse/regulase.avif",
     "cbse|endulife": "./Imagenes/Cbse/endulife.avif",
+    "cbse|jengibre": "./Imagenes/Cbse/jengibre.avif",
     "rosamonte|suave": "./Imagenes/Rosamonte/suave.avif",
     "rosamonte|comun": "./Imagenes/Rosamonte/comun.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
@@ -570,7 +571,6 @@
     "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
-    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
-    "cbsé|jengibre": "./Imagenes/Cbse/jengibre.avif"
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif"
   }
 }
