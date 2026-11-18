@@ -321,7 +321,7 @@
       "variedad": "Mateando",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Cbse/mateando.avif",
       "observaciones": ""
     },
     {
@@ -532,6 +532,24 @@
       "documento": "",
       "contacto": "",
       "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-18",
+      "tipo": "INGRESO",
+      "codigo": "CBS-001-500",
+      "cantidad": 10,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-18",
+      "tipo": "SALIDA",
+      "codigo": "CBS-001-500",
+      "cantidad": 5,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
     }
   ],
   "photo_map": {
@@ -548,6 +566,7 @@
     "cbse|endulife": "./Imagenes/Cbse/endulife.avif",
     "cbse|jengibre": "./Imagenes/Cbse/jengibre.avif",
     "cbse|etiquetanegra": "./Imagenes/Cbse/etiquetaNegra.avif",
+    "cbse|mateando": "./Imagenes/Cbse/mateando.avif",
     "rosamonte|suave": "./Imagenes/Rosamonte/suave.avif",
     "rosamonte|comun": "./Imagenes/Rosamonte/comun.avif",
     "amanda|comun": "./Imagenes/Amanda/amanda.avif",
@@ -572,7 +591,6 @@
     "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
-    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
-    "cbsé|mateando": "./Imagenes/Cbse/mateando.avif"
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif"
   }
 }
