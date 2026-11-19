@@ -52,9 +52,9 @@
   <body>
     <div class="shell">
       <aside class="sidebar">
-        <img class="logo" src="./Imagenes/logo.avif" alt="Logo" />
+        <!-- <img class="logo" src="./Imagenes/logo.avif" alt="Logo" /> -->
         <div class="brand">
-          <div class="brand-icon">Y</div>
+          <div class="brand-icon"><img class="logo" src="./Imagenes/logo.avif" alt="Logo" /></div>
           <div><b>Control de Stock</b><small>YERBAS</small></div>
         </div>
         <nav>
@@ -330,7 +330,7 @@
             <span class="eyebrow">CATÁLOGO</span>
             <h2 id="productDialogTitle">Nuevo producto</h2>
           </div>
-          <button class="close" value="cancel">×</button>
+          <button type="button" class="close" value="cancel" onclick="closeProduct()">×</button>
         </div>
         <input type="hidden" id="originalCode" />
         <div class="form-grid">
@@ -381,7 +381,7 @@
           </label>
         </div>
         <div class="dialog-actions">
-          <button class="secondary" value="cancel">Cancelar</button
+          <button type="button" class="secondary" value="cancel" onclick="closeProduct()">Cancelar</button
           ><button class="primary" id="saveProduct" value="default">
             Guardar producto
           </button>
@@ -395,7 +395,7 @@
             <span class="eyebrow">INVENTARIO</span>
             <h2>Registrar movimiento</h2>
           </div>
-          <button class="close" value="cancel">×</button>
+          <button type="button" class="close" value="cancel" onclick="closeProduct()">×</button>
         </div>
         <div class="form-grid">
           <label>Fecha<input id="mFecha" type="date" required /></label
@@ -422,8 +422,10 @@
           </label>
         </div>
         <div class="dialog-actions">
-          <button class="secondary" value="cancel">Cancelar</button
-          ><button class="primary" id="saveMovement" value="default">
+          <button type="button" class="secondary" value="cancel" onclick="closeProduct()">
+            Cancelar
+          </button>
+          <button class="primary" id="saveMovement" value="default">
             Guardar movimiento
           </button>
         </div>

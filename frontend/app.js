@@ -1,5 +1,16 @@
 const plataforma = navigator.userAgent;
 const presentacion = document.getElementById("presentation-th");
+let imagenExpandida = false;
+let vistaActual;
+let destino;
+let a = "";
+let b = "";
+let scrolll = "";
+const inicios = 85;
+const target = 20;
+let final = "";
+//const TargetHeight = document.documentElement.offsetHeight - screen.height;
+const TargetHeight = document.documentElement.offsetHeight - window.innerHeight;
 let state = { products: [], movements: [], stock: [] };
 const $ = (id) => document.getElementById(id);
 const fmt = (n) =>
@@ -15,43 +26,42 @@ const esc = (s) =>
 const API_BASE = (window.API_BASE || "").replace(/\/$/, "");
 const apiUrl = (path) => API_BASE + path;
 
+// Funcion que carga al cargar la pagina
 document.addEventListener("DOMContentLoaded", iniciarAplicacion);
 
+// Funcion para iniciar aplicacion
 function iniciarAplicacion() {
   cerrarImagenesAlScroll();
   if (plataforma.includes("Android")) {
+    vistaActual = "dashboard";
+    document.querySelector(
+      "body > div.shell > aside > div.brand > div.brand-icon > img",
+    ).src = "./Imagenes/logo2.avif";
     document
       .querySelector("body > div.shell > aside > nav > button:nth-child(5)")
       .classList.add("hide");
-    creaTop();
+    creaTop(destino);
     window.onscroll = function () {
       scrollFunction();
-      //menuVisible2();
-      //sisi();
     };
   }
 }
 
-let a = "";
-let b = "";
-let scrolll = "";
-const inicios = 85;
-const target = 20;
-let final = "";
-//const TargetHeight = document.documentElement.offsetHeight - screen.height;
-const TargetHeight = document.documentElement.offsetHeight - window.innerHeight;
+// Funcion que se ejecuta al hacer scroll
+window.onscroll = function () {
+  scrollFunction();
+};
+
 //definimos la funcion que crea el boton de top para dispositivos moviles
-function creaTop() {
-  if (window.location.pathname.includes("about")) {
-    var destino = document.querySelector(".container");
-  } else {
-    destino = document.querySelector("#products");
-  }
-  if (destino === undefined) alert("No existe el bloque destino");
+function creaTop(contenedor) {
+  document.querySelectorAll(".top").forEach((nodo) => nodo.remove());
+  const laSeccion = document.getElementById(vistaActual);
+  contenedor = laSeccion;
+  if (contenedor === undefined) alert("No existe el bloque destino");
   else {
     var nodoTop = document.createElement("div");
     nodoTop.className = "top";
-    destino.appendChild(nodoTop);
+    contenedor.appendChild(nodoTop);
     var nodo1 = document.querySelector(".top");
     var nodoButton = document.createElement("button");
     nodoButton.id = "myBtn";
@@ -92,6 +102,7 @@ function isBottomOfPage() {
     window.scrollY + window.innerHeight >= document.documentElement.scrollHeight
   );
 }
+
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
   //const mybutton = document.getElementById("myBtn");
@@ -211,6 +222,7 @@ function typeBadge(t) {
   return `<span class="badge ${t === "INGRESO" ? "in" : "out"}">${esc(t)}</span>`;
 }
 
+// Funcion que renderiza los productos
 function renderProducts() {
   const q = $("productSearch").value.toLowerCase();
   const rows = state.products.filter((p) =>
@@ -272,52 +284,36 @@ function renderProducts() {
     });
   }
 }
-let imagenExpandida = false;
-function expandirImagenUnica(img) {
-  // const actual = document.querySelector(".img-expandida");
-  // const actualTexto = document.querySelector("h3");
-  // const actualPrice = document.querySelector("p");
 
-  // if (actual && actual !== img) {
-  //   actual.classList.remove("img-expandida");
-  // }
-  // if (actualTexto && actualTexto !== texto) {
-  //   actualTexto.classList.remove("texto-expandido");
-  // }
-  // if (actualPrice && actualPrice !== texto) {
-  //   actualPrice.classList.remove("p-expandido");
-  // }
+// Funcion que expande la imagen y cierra la anterior si hay una abierta
+function expandirImagenUnica(img) {
+  const actual = document.querySelector(".img-expandida");
+
+  if (actual && actual !== img) {
+    actual.classList.remove("img-expandida");
+  }
 
   img.classList.add("img-expandida");
-  // texto.classList.add("texto-expandido");
-  // precio.classList.remove(".price");
-  // precio.classList.add("p-expandido");
   imagenExpandida = true;
 }
 
+// Funcion que cierra la imagen expandida
 function cerrarImagen() {
   const img = document.querySelector(".img-expandida");
-  // const texto = document.querySelector(".texto-expandido");
-  // const precio = document.querySelector(".p-expandido");
   if (img) img.classList.remove("img-expandida");
-  // if (texto) texto.classList.remove("texto-expandido");
-  // if (precio) precio.classList.remove("p-expandido");
   imagenExpandida = false;
 }
 
+// Funcion que cierra las imagenes que estan expandidas al hacer scroll
 function cerrarImagenesAlScroll() {
   window.addEventListener("scroll", () => {
     if (imagenExpandida) {
       cerrarImagen();
     }
-    // const imgExpandida = document.querySelector(".img-expandida");
-    // if (imgExpandida) {
-    //   imgExpandida.classList.remove("img-expandida");
-    //   imagenExpandida = false;
-    // }
   });
 }
 
+// Funcion que renderiza los movimientos
 function renderMovements() {
   const q = $("movementSearch").value.toLowerCase();
   const rows = state.movements
@@ -347,6 +343,7 @@ function renderMovements() {
   }
 }
 
+// Funcion que renderiza el stock
 function renderStock() {
   const q = $("stockSearch").value.toLowerCase();
   const rows = state.stock.filter((p) =>
@@ -364,7 +361,7 @@ function renderStock() {
       rows
         .map(
           (p) =>
-            `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td data-label="Ingresos">${fmt(p.ingresos)} Un</td><td data-label="Salidas">${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td><td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td></tr>`,
+            `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td data-label="Ingresos">${fmt(p.ingresos)} Un</td><td data-label="Salidas">${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td><td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td></tr>`,
         )
         .join("") || empty(9);
     //presentacion.classList.add("hide");
@@ -374,6 +371,19 @@ function renderStock() {
     document
       .querySelectorAll("#presentacion-td")
       .forEach((td) => td.classList.add("hide"));
+    document.querySelectorAll(".foto-td").forEach((td) => {
+      td.addEventListener("click", () => {
+        const img = td.querySelector("img");
+
+        if (img) {
+          if (imagenExpandida) {
+            cerrarImagen();
+          } else {
+            expandirImagenUnica(img);
+          }
+        }
+      });
+    });
   }
 }
 
@@ -392,6 +402,7 @@ function fillProductSelect() {
 }
 
 function showView(view) {
+  vistaActual = view;
   document
     .querySelectorAll(".view")
     .forEach((x) => x.classList.toggle("active", x.id === view));
@@ -406,6 +417,7 @@ function showView(view) {
     files: "Importar y exportar",
   };
   $("pageTitle").textContent = titles[view] || "Control de Stock";
+  creaTop(vistaActual);
 }
 
 document
@@ -418,6 +430,18 @@ $("productSearch").oninput = renderProducts;
 $("movementSearch").oninput = renderMovements;
 $("stockSearch").oninput = renderStock;
 
+// Funcion que cierra los modales
+function closeProduct() {
+  // $("productDialog").close();
+  if ($("productDialog").open) {
+    $("productDialog").close();
+  }
+  if ($("movementDialog").open) {
+    $("movementDialog").close();
+  }
+}
+
+// Funcion para abrir los productos
 function openProduct(p) {
   $("productForm").reset();
   $("originalCode").value = p?.codigo || "";
@@ -475,8 +499,13 @@ $("pPhotoFile").onchange = () => {
   $("productPhotoPreview").innerHTML =
     `<img src="${previewUrl}" alt="Vista previa">`;
 };
+const laMarca = document.getElementById("pMarca");
 const elCodigo = document.getElementById("pCodigo");
 const buscamos = document.getElementById("productSearch");
+
+laMarca.addEventListener("input", function () {
+  this.value = this.value.toUpperCase();
+});
 
 elCodigo.addEventListener("input", function () {
   this.value = this.value.toUpperCase();
@@ -523,6 +552,7 @@ $("saveProduct").onclick = async (e) => {
   }
 };
 
+// Funcion para abrir los movimientos
 function openMovement() {
   $("movementForm").reset();
   $("mFecha").value = new Date().toISOString().slice(0, 10);
