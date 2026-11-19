@@ -31,20 +31,6 @@ def health():
     return jsonify(status="ok")
 
 
-# def load_data():
-#     if not DATA_FILE.exists():
-#         seed = BASE / "data" / "stock.json"
-#         if seed.exists():
-#             DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
-#             shutil.copy2(seed, DATA_FILE)
-#         else:
-#             return {"products": [], "movements": []}
-#     data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
-#     data.setdefault("photo_map", {})
-#     apply_photo_map(data)
-#     return data
-
-
 def load_data():
     try:
         url = (
@@ -180,91 +166,6 @@ def save_file(path, content, message=None):
         "sha": result["content"]["sha"],
         "commit": result["commit"]["html_url"],
     }
-
-
-# def update_ini_photo_map(marca, variedad, foto):
-#     if not foto:
-#         return
-
-#     token = os.getenv("GITHUB_TOKEN")
-#     owner = os.getenv("GITHUB_OWNER")
-#     repo = os.getenv("GITHUB_REPO")
-#     branch = os.getenv("GITHUB_BRANCH", "main")
-
-#     path = "backend/LISTADOS YERBAS.ini"
-
-#     url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
-
-#     headers = {
-#         "Authorization": f"Bearer {token}",
-#         "Accept": "application/vnd.github+json",
-#     }
-
-#     response = requests.get(url, headers=headers, params={"ref": branch})
-#     response.raise_for_status()
-
-#     file_data = response.json()
-#     content = base64.b64decode(file_data["content"]).decode("utf-8-sig")
-
-#     filename = os.path.basename(foto.replace("\\", "/"))
-
-#     # relative_path = f"Imagenes\\{marca}\\{filename}"
-#     relative_path = str(foto).replace("./", "", 1).replace("/", "\\")
-
-#     section = f"[{marca}]"
-#     key = f"imagen.{variedad}"
-
-#     lines = content.splitlines()
-
-#     section_start = next(
-#         (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
-#         None,
-#     )
-
-#     if section_start is None:
-#         if lines and lines[-1].strip():
-#             lines.append("")
-
-#         lines.extend([section, f"{key}={relative_path}"])
-
-#     else:
-#         section_end = next(
-#             (
-#                 i
-#                 for i in range(section_start + 1, len(lines))
-#                 if lines[i].strip().startswith("[") and lines[i].strip().endswith("]")
-#             ),
-#             len(lines),
-#         )
-
-#         existing = next(
-#             (
-#                 i
-#                 for i in range(section_start + 1, section_end)
-#                 if lines[i].strip().split("=", 1)[0].strip().lower() == key.lower()
-#             ),
-#             None,
-#         )
-
-#         if existing is not None:
-#             lines[existing] = f"{key}={relative_path}"
-#         else:
-#             lines.insert(section_end, f"{key}={relative_path}")
-
-#     new_content = "\n".join(lines) + "\n"
-
-#     payload = {
-#         "message": f"Actualizar foto: {marca} - {variedad}",
-#         "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
-#         "sha": file_data["sha"],
-#         "branch": branch,
-#     }
-
-#     result = requests.put(url, headers=headers, json=payload)
-
-#     result.raise_for_status()
-
-#     return result.json()
 
 
 def update_ini_photo_map(marca, variedad, foto):
@@ -465,118 +366,10 @@ def delete_ini_photo_map(marca, variedad):
     return result.json()
 
 
-# def delete_ini_photo_map(marca, variedad):
-#     token = os.getenv("GITHUB_TOKEN")
-#     owner = os.getenv("GITHUB_OWNER")
-#     repo = os.getenv("GITHUB_REPO")
-#     branch = os.getenv("GITHUB_BRANCH", "main")
-
-#     path = "backend/LISTADOS YERBAS.ini"
-#     url = f"https://api.github.com/repos/{owner}/{repo}/contents/{path}"
-
-#     headers = {
-#         "Authorization": f"Bearer {token}",
-#         "Accept": "application/vnd.github+json",
-#     }
-
-#     response = requests.get(url, headers=headers, params={"ref": branch})
-#     response.raise_for_status()
-
-#     file_data = response.json()
-#     content = base64.b64decode(file_data["content"]).decode("utf-8-sig")
-
-#     section = f"[{marca}]"
-#     key = f"imagen.{variedad}".lower()
-
-#     lines = content.splitlines()
-
-#     section_start = next(
-#         (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
-#         None,
-#     )
-
-#     if section_start is None:
-#         return
-
-#     section_end = next(
-#         (
-#             i
-#             for i in range(section_start + 1, len(lines))
-#             if lines[i].strip().startswith("[") and lines[i].strip().endswith("]")
-#         ),
-#         len(lines),
-#     )
-
-#     lines = [
-#         line
-#         for i, line in enumerate(lines)
-#         if not (
-#             section_start < i < section_end
-#             and line.strip().split("=", 1)[0].strip().lower() == key
-#         )
-#     ]
-
-#     # Eliminar sección si quedó vacía
-#     section_start = next(
-#         (i for i, line in enumerate(lines) if line.strip().lower() == section.lower()),
-#         None,
-#     )
-
-#     if section_start is not None:
-#         section_end = next(
-#             (
-#                 i
-#                 for i in range(section_start + 1, len(lines))
-#                 if lines[i].strip().startswith("[") and lines[i].strip().endswith("]")
-#             ),
-#             len(lines),
-#         )
-
-#         if not any(line.strip() for line in lines[section_start + 1 : section_end]):
-#             del lines[section_start:section_end]
-
-#     new_content = "\n".join(lines).rstrip() + "\n"
-
-#     payload = {
-#         "message": f"Eliminar foto: {marca} - {variedad}",
-#         "content": base64.b64encode(new_content.encode("utf-8")).decode("utf-8"),
-#         "sha": file_data["sha"],
-#         "branch": branch,
-#     }
-
-#     result = requests.put(url, headers=headers, json=payload)
-#     result.raise_for_status()
-
-#     return result.json()
-
-
 def normalize_key(value):
     value = unicodedata.normalize("NFKD", str(value or ""))
     value = "".join(ch for ch in value if not unicodedata.combining(ch))
     return " ".join(value.casefold().strip().split())
-
-
-# def normalize_name(value, camel_case=False):
-#     value = str(value or "").strip()
-
-#     # Eliminar acentos
-#     value = unicodedata.normalize("NFKD", value)
-#     value = "".join(c for c in value if not unicodedata.combining(c))
-
-#     # Separar palabras y eliminar caracteres especiales
-#     words = re.findall(r"[a-zA-Z0-9]+", value.lower())
-
-#     if not words:
-#         return ""
-
-#     # PascalCase
-#     result = "".join(word.capitalize() for word in words)
-
-#     # camelCase
-#     if camel_case:
-#         result = result[0].lower() + result[1:]
-
-#     return result
 
 
 def normalize_name(value, camel_case=False):
@@ -612,72 +405,8 @@ def normalize_photo_name(value):
     return "".join(c for c in value if c.isalnum())
 
 
-# def load_photo_map(data):
-#     return data.setdefault("photo_map", {})
-
-
 def photo_key(brand, variety):
     return normalize_key(brand) + "|" + normalize_key(variety)
-
-
-# def apply_photo_map(data):
-#     mapping = load_photo_map(data)
-#     for product in data.get("products", []):
-#         path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
-#         if path and not str(product.get("foto", "")).startswith("/uploads/"):
-#             product["foto"] = path
-
-
-# def parse_ini_photo_map(raw):
-#     try:
-#         content = raw.decode("utf-8-sig")
-#     except UnicodeDecodeError:
-#         content = raw.decode("cp1252", errors="replace")
-#     parser = configparser.ConfigParser(interpolation=None)
-#     parser.optionxform = str
-#     parser.read_string(content)
-#     mapping = {}
-#     for brand in parser.sections():
-#         values = parser[brand]
-#         for key, value in values.items():
-#             if key.lower().startswith("imagen."):
-#                 variety = key[len("imagen.") :].strip()
-#                 path = value.strip().replace("\\\\", "/").replace("\\", "/")
-#                 path = path.lstrip("./")
-#                 if path:
-#                     mapping[photo_key(brand, variety)] = "./" + path
-#     return mapping
-
-
-# def load_photo_map(data):
-#     """
-#     Descarga el mapa de fotografías desde el INI de GitHub.
-#     """
-#     url = (
-#         f"https://api.github.com/repos/"
-#         f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
-#         f"backend/LISTADOS%20YERBAS.ini"
-#     )
-
-#     headers = {
-#         "Authorization": f"Bearer {GITHUB_TOKEN}",
-#         "Accept": "application/vnd.github+json",
-#         "X-GitHub-Api-Version": "2022-11-28",
-#     }
-
-#     response = requests.get(
-#         url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
-#     )
-
-#     response.raise_for_status()
-
-#     content = base64.b64decode(response.json()["content"])
-
-#     mapping = parse_ini_photo_map(content)
-
-#     data["photo_map"] = mapping
-
-#     return mapping
 
 
 def load_photo_map(data):
@@ -851,18 +580,6 @@ def load_photo_map(data):
     data["photo_map"] = mapping
 
     return mapping
-
-
-# def apply_photo_map(data):
-#     mapping = load_photo_map(data)
-
-#     for product in data.get("products", []):
-#         path = mapping.get(photo_key(product.get("marca"), product.get("variedad")))
-
-#         if path and not str(product.get("foto", "")).startswith("/uploads/"):
-#             product["foto"] = path
-
-#     return data
 
 
 def apply_photo_map(data):
@@ -1051,39 +768,6 @@ def github_image():
     )
 
 
-# @app.post("/api/products")
-# def add_product():
-#     data = load_data()
-#     p = request.get_json(force=True)
-#     required = ["codigo", "marca", "variedad", "peso"]
-#     if any(not str(p.get(k, "")).strip() for k in required):
-#         return jsonify(error="Completá código, marca, variedad y peso."), 400
-#     if any(
-#         x["codigo"].lower() == str(p["codigo"]).strip().lower()
-#         for x in data["products"]
-#     ):
-#         return jsonify(error="Ya existe un producto con ese código."), 400
-#     try:
-#         peso = float(p["peso"])
-#     except:
-#         return jsonify(error="El peso debe ser numérico."), 400
-#     if peso <= 0:
-#         return jsonify(error="El peso debe ser mayor que cero."), 400
-#     item = {
-#         "codigo": str(p["codigo"]).strip(),
-#         "marca": str(p["marca"]).strip(),
-#         "variedad": str(p["variedad"]).strip(),
-#         "presentacion": p.get("presentacion", ""),
-#         "peso": peso,
-#         "foto": p.get("foto", ""),
-#         "observaciones": p.get("observaciones", ""),
-#     }
-#     data["products"].append(item)
-#     apply_photo_map(data)
-#     save_data(data)
-#     return jsonify(ok=True)
-
-
 @app.post("/api/products")
 def add_product():
     data = load_data()
@@ -1138,40 +822,6 @@ def add_product():
             ),
             500,
         )
-
-
-# @app.put("/api/products/<codigo>")
-# def edit_product(codigo):
-#     data = load_data()
-#     p = request.get_json(force=True)
-#     item = next((x for x in data["products"] if x["codigo"] == codigo), None)
-#     if not item:
-#         return jsonify(error="Producto no encontrado."), 404
-#     newcode = str(p.get("codigo", codigo)).strip()
-#     if any(
-#         x["codigo"].lower() == newcode.lower() and x is not item
-#         for x in data["products"]
-#     ):
-#         return jsonify(error="El código ya está utilizado."), 400
-#     old = item["codigo"]
-#     for k in [
-#         "codigo",
-#         "marca",
-#         "variedad",
-#         "presentacion",
-#         "peso",
-#         "foto",
-#         "observaciones",
-#     ]:
-#         if k in p:
-#             item[k] = float(p[k]) if k == "peso" else p[k]
-#     if old != item["codigo"]:
-#         for m in data["movements"]:
-#             if m["codigo"] == old:
-#                 m["codigo"] = item["codigo"]
-#     apply_photo_map(data)
-#     save_data(data)
-#     return jsonify(ok=True)
 
 
 @app.put("/api/products/<codigo>")
@@ -1238,111 +888,6 @@ def edit_product(codigo):
             jsonify(ok=False, error=f"No se pudieron guardar los cambios: {str(e)}"),
             500,
         )
-
-
-# @app.post("/api/products/<codigo>/photo")
-# def upload_product_photo(codigo):
-#     data = load_data()
-#     product = next((p for p in data["products"] if p["codigo"] == codigo), None)
-#     if not product:
-#         return jsonify(error="Producto no encontrado."), 404
-#     image = request.files.get("image")
-#     if not image or not image.filename:
-#         return jsonify(error="Seleccioná una imagen."), 400
-#     extension = Path(image.filename).suffix.lower()
-#     if extension not in ALLOWED_IMAGE_EXTENSIONS:
-#         return jsonify(error="Formato no permitido. Usá JPG, PNG, AVIF o WEBP."), 400
-#     if image.mimetype not in {"image/jpeg", "image/png", "image/webp", "image/avif"}:
-#         return (
-#             jsonify(error="El archivo seleccionado no parece ser una imagen válida."),
-#             400,
-#         )
-
-#     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-#     filename = f"{uuid.uuid4().hex}{extension}"
-#     destination = UPLOAD_DIR / filename
-#     image.save(destination)
-
-#     old_photo = product.get("foto", "")
-#     product["foto"] = f"/uploads/{filename}"
-#     save_data(data)
-
-#     # Borrar la fotografía anterior solo si también fue subida a este servidor.
-#     if old_photo.startswith("/uploads/"):
-#         old_name = Path(old_photo).name
-#         old_path = (UPLOAD_DIR / old_name).resolve()
-#         if old_path.parent == UPLOAD_DIR.resolve() and old_path.exists():
-#             old_path.unlink()
-
-#     return jsonify(ok=True, foto=product["foto"])
-
-
-# @app.post("/api/products/<codigo>/photo")
-# def upload_product_photo(codigo):
-#     data = load_data()
-
-#     product = next((p for p in data["products"] if p["codigo"] == codigo), None)
-
-#     if not product:
-#         return jsonify(error="Producto no encontrado."), 404
-
-#     image = request.files.get("image")
-
-#     if not image or not image.filename:
-#         return jsonify(error="Seleccioná una imagen."), 400
-
-#     extension = Path(image.filename).suffix.lower()
-
-#     if extension not in ALLOWED_IMAGE_EXTENSIONS:
-#         return jsonify(error="Formato no permitido. Usá JPG, PNG, AVIF o WEBP."), 400
-
-#     if image.mimetype not in {"image/jpeg", "image/png", "image/webp", "image/avif"}:
-#         return (
-#             jsonify(error="El archivo seleccionado no parece ser una imagen válida."),
-#             400,
-#         )
-
-#     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-
-#     filename = f"{uuid.uuid4().hex}{extension}"
-#     destination = UPLOAD_DIR / filename
-
-#     image.save(destination)
-
-#     old_photo = product.get("foto", "")
-
-#     product["foto"] = f"/uploads/{filename}"
-
-#     try:
-#         # Guardar JSON
-#         resultado = save_file(
-#             "backend/data/stock.json",
-#             data,
-#             "Actualizar fotografía: " + product["codigo"],
-#         )
-
-#         # Actualizar INI
-#         update_ini_photo_map(product["marca"], product["variedad"], product["foto"])
-
-#         # Borrar fotografía anterior si pertenece al servidor
-#         if old_photo.startswith("/uploads/"):
-#             old_name = Path(old_photo).name
-#             old_path = (UPLOAD_DIR / old_name).resolve()
-
-#             if old_path.parent == UPLOAD_DIR.resolve() and old_path.exists():
-#                 old_path.unlink()
-
-#         return jsonify(ok=True, foto=product["foto"], github=resultado)
-
-#     except Exception as e:
-#         # Si falla el guardado, eliminar la imagen recién subida
-#         if destination.exists():
-#             destination.unlink()
-
-#         return (
-#             jsonify(ok=False, error=f"No se pudo actualizar la fotografía: {str(e)}"),
-#             500,
-#         )
 
 
 @app.post("/api/products/<codigo>/photo")
@@ -1486,54 +1031,6 @@ def upload_photo_to_github(image, repo_path, message):
     return response.json()
 
 
-# @app.get("/uploads/<path:filename>")
-# def uploaded_photo(filename):
-#     return send_from_directory(UPLOAD_DIR, filename)
-
-
-# @app.delete("/api/products/<codigo>")
-# def delete_product(codigo):
-#     data = load_data()
-#     if any(m["codigo"] == codigo for m in data["movements"]):
-#         return (
-#             jsonify(
-#                 error="No se puede eliminar: el producto tiene movimientos asociados."
-#             ),
-#             400,
-#         )
-#     data["products"] = [p for p in data["products"] if p["codigo"] != codigo]
-#     save_data(data)
-#     return jsonify(ok=True)
-
-
-# @app.delete("/api/products/<codigo>")
-# def delete_product(codigo):
-#     data = load_data()
-
-#     producto = next((p for p in data["products"] if p["codigo"] == codigo), None)
-
-#     if not producto:
-#         return jsonify(error="Producto no encontrado."), 404
-
-#     # Eliminar referencia del archivo INI
-#     marca = producto.get("marca", "")
-#     variedad = producto.get("variedad", "")
-
-#     if marca and variedad:
-#         try:
-#             delete_ini_photo_map(marca, variedad)
-#         except Exception as e:
-#             return jsonify(error=f"Error al actualizar el INI: {str(e)}"), 500
-
-#     # Eliminar producto de la lista
-#     data["products"] = [p for p in data["products"] if p["codigo"] != codigo]
-
-#     # Guardar JSON
-#     save_file(data)
-
-#     return jsonify(ok=True)
-
-
 @app.delete("/api/products/<codigo>")
 def delete_product(codigo):
     data = load_data()
@@ -1575,33 +1072,6 @@ def delete_product(codigo):
         return jsonify(error=f"No se pudo eliminar el producto: {str(e)}"), 500
 
 
-# @app.post("/api/movements")
-# def add_movement():
-#     data = load_data()
-#     m = request.get_json(force=True)
-#     if m.get("tipo") not in ["INGRESO", "SALIDA"]:
-#         return jsonify(error="Tipo de movimiento inválido."), 400
-#     if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
-#         return jsonify(error="El código no existe en Productos."), 400
-#     try:
-#         qty = int(m.get("cantidad", 0))
-#     except:
-#         qty = 0
-#     if qty <= 0:
-#         return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
-#     item = {
-#         "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
-#         "tipo": m["tipo"],
-#         "codigo": m["codigo"],
-#         "cantidad": qty,
-#         "documento": m.get("documento", ""),
-#         "contacto": m.get("contacto", ""),
-#         "observaciones": m.get("observaciones", ""),
-#     }
-#     data["movements"].append(item)
-#     save_data(data)
-#     return jsonify(ok=True)
-
 @app.post("/api/movements")
 def add_movement():
     data = load_data()
@@ -1634,23 +1104,10 @@ def add_movement():
     data["movements"].append(item)
 
     # Guardar directamente en GitHub
-    save_file(
-        "backend/data/stock.json",
-        data,
-        "Agregar movimiento"
-    )
+    save_file("backend/data/stock.json", data, "Agregar movimiento")
 
     return jsonify(ok=True)
 
-
-# @app.delete("/api/movements/<int:index>")
-# def delete_movement(index):
-#     data = load_data()
-#     if index < 0 or index >= len(data["movements"]):
-#         return jsonify(error="Movimiento no encontrado."), 404
-#     data["movements"].pop(index)
-#     save_data(data)
-#     return jsonify(ok=True)
 
 @app.delete("/api/movements/<int:index>")
 def delete_movement(index):
@@ -1662,11 +1119,7 @@ def delete_movement(index):
     data["movements"].pop(index)
 
     # Guardar directamente en GitHub
-    save_file(
-        "backend/data/stock.json",
-        data,
-        "Eliminar movimiento"
-    )
+    save_file("backend/data/stock.json", data, "Eliminar movimiento")
 
     return jsonify(ok=True)
 

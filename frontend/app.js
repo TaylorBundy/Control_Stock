@@ -31,20 +31,20 @@ document.addEventListener("DOMContentLoaded", iniciarAplicacion);
 
 // Funcion para iniciar aplicacion
 function iniciarAplicacion() {
+  vistaActual = "dashboard";
   cerrarImagenesAlScroll();
   if (plataforma.includes("Android")) {
-    vistaActual = "dashboard";
     document.querySelector(
       "body > div.shell > aside > div.brand > div.brand-icon > img",
     ).src = "./Imagenes/logo2.avif";
     document
       .querySelector("body > div.shell > aside > nav > button:nth-child(5)")
       .classList.add("hide");
-    creaTop(destino);
-    window.onscroll = function () {
-      scrollFunction();
-    };
   }
+  creaTop(destino);
+  window.onscroll = function () {
+    scrollFunction();
+  };
 }
 
 // Funcion que se ejecuta al hacer scroll
@@ -620,6 +620,7 @@ function showView(view) {
     files: "Importar y exportar",
   };
   $("pageTitle").textContent = titles[view] || "Control de Stock";
+
   creaTop(vistaActual);
 }
 

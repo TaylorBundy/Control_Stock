@@ -522,6 +522,31 @@ dialog::backdrop {
   width: 100%;
   border-collapse: collapse;
 }
+.top {
+    position: fixed;
+    display: flex;
+    justify-content: right;
+    /* width: 100%; */
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+  }
+  #myBtn {
+    display: none;
+    position: relative;
+    /* right: 20px; */
+    padding: 20px;
+    border: 1px solid #333333eb;
+    border-radius: 50px;
+    /* background: #333333eb url("./Imagenes/top.avif") no-repeat center/cover; */
+    background: transparent url(./Imagenes/top.avif) no-repeat center / cover;
+    color: white;
+    font-size: 18px;
+    z-index: 10;
+  }
+  #myBtn:hover {
+    background-color: #555;
+  }
 @media (max-width: 1050px) {
   .stats {
     grid-template-columns: repeat(2, 1fr);
@@ -749,34 +774,55 @@ dialog::backdrop {
     min-width: 80px;
     max-width: 80px;
   } */
-   .marca-separador {
+  .marca-separador {
     border: 2px solid #777;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 0;
-}
-   .marca-container {
+  }
+  .marca-container {
     padding: 0 !important;
     border: none !important;
-}
+  }
   thead {
     display: none;
+  }
+  #productsBody .marca-separador tr,
+  #stockBody .marca-separador tr {
+    background: #306b56d6;
+  }
+  #productsBody .marca-separador tr:nth-child(even),
+  #stockBody .marca-separador tr:nth-child(even) {
+    background: #306b5694;
+  }
+  #movementsBody tr,
+  #dashStock tr {
+    background: #306b56d6;
+  }
+  #movementsBody tr:nth-child(even),
+  #dashStock tr:nth-child(even) {
+    background: #306b5694;
   }
   tr {
     display: block;
     /* background-color: #fbd0a9; */
-    background: #306b56d6;
+    /* background: #306b56d6; */
     margin-bottom: 5px;
     border: 1px solid #ccc;
     text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
     font-weight: bold;
     border-radius: 5px;
   }
-  tr:nth-child(even) {
-    /* background-color: #f9f9f9; */
-    /* background-color: #fbd0a994; */
+  /* .table-wrap tr {
+    background: unset;
+  } */
+  /* .marca-separador tr {
+    background: #306b56d6;
+  } */
+  /* .marca-separador tr:nth-child(even), */
+  /* .table-wrap tr:nth-child(even) {
     background: #306b5694;
-  }
+  } */
   tbody tr:hover {
     /* background: #fbfdfb; */
     background: #306b5694;
