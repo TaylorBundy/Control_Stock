@@ -222,8 +222,161 @@ function typeBadge(t) {
   return `<span class="badge ${t === "INGRESO" ? "in" : "out"}">${esc(t)}</span>`;
 }
 
-// Funcion que renderiza los productos
 function renderProducts() {
+  const q = $("productSearch").value.toLowerCase();
+
+  const rows = state.products.filter((p) =>
+    [p.codigo, p.marca, p.variedad].join(" ").toLowerCase().includes(q),
+  );
+
+  // Agrupar por marca
+  const grupos = {};
+
+  rows.forEach((p) => {
+    const marca = p.marca || "Sin marca";
+
+    if (!grupos[marca]) grupos[marca] = [];
+
+    grupos[marca].push(p);
+  });
+
+  $("productsBody").innerHTML =
+    Object.entries(grupos)
+      .map(
+        ([marca, productos]) => `
+        <tr>
+          <td colspan="8" class="marca-container">
+
+            <div class="marca-separador">
+
+              <div class="marca-titulo">
+                ${esc(marca)}
+              </div>
+
+              <table class="tabla-marca">
+                <tbody>
+                  ${productos
+                    .map(
+                      (p) => `
+                        <tr>
+                          <td><b>${esc(p.codigo)}</b></td>
+                          <td>${esc(p.marca)}</td>
+                          <td>${esc(p.variedad)}</td>
+                          <td>${esc(p.presentacion)}</td>
+                          <td>${fmt(p.peso)} Kg</td>
+                          <td class="foto-td">
+                            ${
+                              p.foto
+                                ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}">`
+                                : '<span class="no-photo">Sin foto</span>'
+                            }
+                          </td>
+                          <td>${esc(p.observaciones)}</td>
+                          <td>
+                            <div class="actions">
+                              <button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button>
+                              <button class="small-btn" data-delete="${esc(p.codigo)}">×</button>
+                            </div>
+                          </td>
+                        </tr>
+                      `,
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+
+            </div>
+
+          </td>
+        </tr>
+      `,
+      )
+      .join("") || empty(8);
+  if (plataforma.includes("Android")) {
+    $("productsBody").innerHTML =
+      Object.entries(grupos)
+        .map(
+          ([marca, productos]) => `
+        <tr>
+          <td colspan="8" class="marca-container">
+
+            <div class="marca-separador">
+
+              <div class="marca-titulo">
+                ${esc(marca)}
+              </div>
+
+              <table class="tabla-marca">
+                <tbody>
+                  ${productos
+                    .map(
+                      (p) => `
+                        <tr>
+                          <td data-label="Código"><b>${esc(p.codigo)}</b></td>
+                          <td data-label="Marca">${esc(p.marca)}</td>
+                          <td data-label="Variedad">${esc(p.variedad)}</td>
+                          <td id="presentacion-td" data-label="Presentacion">${esc(p.presentacion)}</td>
+                          <td data-label="Peso">${fmt(p.peso)} Kg</td>
+                          <td class="foto-td">
+                            ${
+                              p.foto
+                                ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}">`
+                                : '<span class="no-photo">Sin foto</span>'
+                            }
+                          </td>
+                          <td id="observaciones-td">${esc(p.observaciones)}</td>
+                          <td>
+                            <div class="actions">
+                              <button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button>
+                              <button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button>
+                            </div>
+                          </td>
+                        </tr>
+                      `,
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+
+            </div>
+
+          </td>
+        </tr>
+      `,
+        )
+        .join("") || empty(8);
+    presentacion.classList.add("hide");
+    document.querySelector("#observaciones-th").classList.add("hide");
+    //$("btnDelete").classList.add("hide");
+    document
+      .querySelectorAll("#btnDelete")
+      .forEach((td) => td.classList.add("hide"));
+    document
+      .querySelectorAll("#presentacion-td")
+      .forEach((td) => td.classList.add("hide"));
+    document
+      .querySelectorAll("#observaciones-td")
+      .forEach((td) => td.classList.add("hide"));
+  } else {
+    document.querySelectorAll(".foto-td").forEach((td) => {
+      td.addEventListener("click", () => {
+        const img = td.querySelector("img");
+
+        if (img) {
+          if (imagenExpandida) {
+            cerrarImagen();
+          } else {
+            expandirImagenUnica(img);
+          }
+        }
+      });
+    });
+  }
+
+  // Acá mantenés tus configuraciones de Android y eventos.
+}
+// Funcion que renderiza los productos
+function renderProducts2() {
   const q = $("productSearch").value.toLowerCase();
   const rows = state.products.filter((p) =>
     [p.codigo, p.marca, p.variedad].join(" ").toLowerCase().includes(q),
@@ -349,6 +502,14 @@ function renderStock() {
   const rows = state.stock.filter((p) =>
     [p.codigo, p.marca, p.variedad].join(" ").toLowerCase().includes(q),
   );
+  const grupos = {};
+  rows.forEach((p) => {
+    const marca = p.marca || "Sin marca";
+
+    if (!grupos[marca]) grupos[marca] = [];
+
+    grupos[marca].push(p);
+  });
   $("stockBody").innerHTML =
     rows
       .map(
@@ -357,11 +518,53 @@ function renderStock() {
       )
       .join("") || empty(9);
   if (plataforma.includes("Android")) {
+    // $("stockBody").innerHTML =
+    //   rows
+    //     .map(
+    //       (p) =>
+    //         `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td data-label="Ingresos">${fmt(p.ingresos)} Un</td><td data-label="Salidas">${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td><td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td></tr>`,
+    //     )
+    //     .join("") || empty(9);
     $("stockBody").innerHTML =
-      rows
+      Object.entries(grupos)
         .map(
-          (p) =>
-            `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td data-label="Ingresos">${fmt(p.ingresos)} Un</td><td data-label="Salidas">${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td><td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td></tr>`,
+          ([marca, productos]) => `
+        <tr>
+          <td colspan="8" class="marca-container">
+
+            <div class="marca-separador">
+
+              <div class="marca-titulo">
+                ${esc(marca)}
+              </div>
+
+              <table class="tabla-marca">
+                <tbody>
+                  ${productos
+                    .map(
+                      (p) => `
+                          <tr>
+                            <td data-label="Código"><b>${esc(p.codigo)}</b></td>
+                            <td data-label="Marca">${esc(p.marca)}</td>
+                            <td data-label="Variedad">${esc(p.variedad)}</td>
+                            <td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td>
+                            <td data-label="Peso">${fmt(p.peso)} Kg</td>
+                            <td data-label="Ingresos">${fmt(p.ingresos)} Un</td>
+                            <td data-label="Salidas">${fmt(p.salidas)} Un</td>
+                            <td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td>
+                            <td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td>
+                            <td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td>
+                          </tr>`,
+                    )
+                    .join("")}
+                  </tbody>
+                </table>
+
+              </div>
+
+            </td>
+          </tr>
+        `,
         )
         .join("") || empty(9);
     //presentacion.classList.add("hide");

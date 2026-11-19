@@ -484,6 +484,44 @@ dialog::backdrop {
   object-fit: cover;
   /* max-height: 90vh; */
 }
+/* .marca-separador {
+  border: 2px solid #777;
+}
+
+.marca-titulo td {
+  background: #e5e5e5;
+  padding: 10px;
+  border-bottom: 2px solid #777;
+}
+
+.marca-separador tr:last-child td {
+  border-bottom: 2px solid #777;
+} */
+.marca-container {
+  padding: 12px !important;
+  border: none !important;
+}
+
+.marca-separador {
+  border: 2px solid #777;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.marca-titulo {
+  background: #e5e5e5;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 2px solid #777;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
+.tabla-marca {
+  width: 100%;
+  border-collapse: collapse;
+}
 @media (max-width: 1050px) {
   .stats {
     grid-template-columns: repeat(2, 1fr);
@@ -711,6 +749,16 @@ dialog::backdrop {
     min-width: 80px;
     max-width: 80px;
   } */
+   .marca-separador {
+    border: 2px solid #777;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+   .marca-container {
+    padding: 0 !important;
+    border: none !important;
+}
   thead {
     display: none;
   }
@@ -722,6 +770,7 @@ dialog::backdrop {
     border: 1px solid #ccc;
     text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
     font-weight: bold;
+    border-radius: 5px;
   }
   tr:nth-child(even) {
     /* background-color: #f9f9f9; */
