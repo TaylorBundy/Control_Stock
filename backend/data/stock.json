@@ -518,15 +518,6 @@
     {
       "fecha": "2026-11-15",
       "tipo": "INGRESO",
-      "codigo": "CBS-001-500",
-      "cantidad": 6,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
-      "fecha": "2026-11-15",
-      "tipo": "INGRESO",
       "codigo": "CBS-002-1000",
       "cantidad": 6,
       "documento": "",
