@@ -6,7 +6,7 @@
       "variedad": "Hierbas Serranas",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/hierbas_serranas.avif",
+      "foto": "./Imagenes/Cbse/hierbas_serranas.avif",
       "observaciones": "probamos"
     },
     {
@@ -15,7 +15,7 @@
       "variedad": "Hierbas Serranas",
       "presentacion": "Pack",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/hierbas_serranas.avif",
+      "foto": "./Imagenes/Cbse/hierbas_serranas.avif",
       "observaciones": ""
     },
     {
@@ -24,7 +24,7 @@
       "variedad": "Hierbas Cuyanas",
       "presentacion": "Bolson",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/hierbasCuyanas.avif",
+      "foto": "./Imagenes/Cbse/hierbasCuyanas.avif",
       "observaciones": ""
     },
     {
@@ -33,7 +33,7 @@
       "variedad": "Hierbas Cuyanas",
       "presentacion": "Pack",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/hierbasCuyanas.avif",
+      "foto": "./Imagenes/Cbse/hierbasCuyanas.avif",
       "observaciones": ""
     },
     {
@@ -42,7 +42,7 @@
       "variedad": "Hierbas del Litoral",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/hierbas_litoral.avif",
+      "foto": "./Imagenes/Cbse/hierbas_litoral.avif",
       "observaciones": ""
     },
     {
@@ -51,7 +51,7 @@
       "variedad": "Hierbas del Litoral",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/hierbas_litoral.avif",
+      "foto": "./Imagenes/Cbse/hierbas_litoral.avif",
       "observaciones": ""
     },
     {
@@ -60,7 +60,7 @@
       "variedad": "Guarana",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/guarana.avif",
+      "foto": "./Imagenes/Cbse/guarana.avif",
       "observaciones": ""
     },
     {
@@ -69,7 +69,7 @@
       "variedad": "Guarana",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/guarana.avif",
+      "foto": "./Imagenes/Cbse/guarana.avif",
       "observaciones": ""
     },
     {
@@ -78,7 +78,7 @@
       "variedad": "Limon",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/limon.avif",
+      "foto": "./Imagenes/Cbse/limon.avif",
       "observaciones": ""
     },
     {
@@ -87,7 +87,7 @@
       "variedad": "Limon",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/limon.avif",
+      "foto": "./Imagenes/Cbse/limon.avif",
       "observaciones": ""
     },
     {
@@ -96,7 +96,7 @@
       "variedad": "Naranja",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/naranja.avif",
+      "foto": "./Imagenes/Cbse/naranja.avif",
       "observaciones": ""
     },
     {
@@ -105,7 +105,7 @@
       "variedad": "Naranja",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/naranja.avif",
+      "foto": "./Imagenes/Cbse/naranja.avif",
       "observaciones": ""
     },
     {
@@ -114,7 +114,7 @@
       "variedad": "Pomelo",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/pomelo.avif",
+      "foto": "./Imagenes/Cbse/pomelo.avif",
       "observaciones": ""
     },
     {
@@ -123,7 +123,7 @@
       "variedad": "Pomelo",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/pomelo.avif",
+      "foto": "./Imagenes/Cbse/pomelo.avif",
       "observaciones": ""
     },
     {
@@ -132,7 +132,7 @@
       "variedad": "Miel",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/CbSe/miel.avif",
+      "foto": "./Imagenes/Cbse/miel.avif",
       "observaciones": ""
     },
     {
@@ -141,7 +141,7 @@
       "variedad": "Miel",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "./Imagenes/CbSe/miel.avif",
+      "foto": "./Imagenes/Cbse/miel.avif",
       "observaciones": ""
     },
     {
@@ -150,7 +150,7 @@
       "variedad": "Frutos del Bosque",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_bosque.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
       "observaciones": ""
     },
     {
@@ -159,7 +159,7 @@
       "variedad": "Frutos del Bosque",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_bosque.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
       "observaciones": ""
     },
     {
@@ -168,7 +168,7 @@
       "variedad": "Frutos del Valle",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_valle.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
       "observaciones": ""
     },
     {
@@ -177,7 +177,7 @@
       "variedad": "Frutos del Valle",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_valle.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
       "observaciones": ""
     },
     {
@@ -186,7 +186,7 @@
       "variedad": "Frutos Tropicales",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_tropicales.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
       "observaciones": ""
     },
     {
@@ -195,7 +195,7 @@
       "variedad": "Frutos Tropicales",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_tropicales.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
       "observaciones": ""
     },
     {
@@ -204,7 +204,7 @@
       "variedad": "Silueta",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fsilueta.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
       "observaciones": ""
     },
     {
@@ -213,7 +213,7 @@
       "variedad": "Silueta",
       "presentacion": "",
       "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fsilueta.avif",
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
       "observaciones": ""
     },
     {
@@ -553,14 +553,14 @@
     }
   ],
   "photo_map": {
-    "cbse|hierbasserranas": "./Imagenes/CbSe/hierbas_serranas.avif",
-    "cbse|naranja": "./Imagenes/CbSe/naranja.avif",
-    "cbse|limon": "./Imagenes/CbSe/limon.avif",
-    "cbse|miel": "./Imagenes/CbSe/miel.avif",
-    "cbse|pomelo": "./Imagenes/CbSe/pomelo.avif",
-    "cbse|guarana": "./Imagenes/CbSe/guarana.avif",
-    "cbse|hierbascuyanas": "./Imagenes/CbSe/hierbasCuyanas.avif",
-    "cbse|hierbasdellitoral": "./Imagenes/CbSe/hierbas_litoral.avif",
+    "cbse|hierbasserranas": "./Imagenes/Cbse/hierbas_serranas.avif",
+    "cbse|naranja": "./Imagenes/Cbse/naranja.avif",
+    "cbse|limon": "./Imagenes/Cbse/limon.avif",
+    "cbse|miel": "./Imagenes/Cbse/miel.avif",
+    "cbse|pomelo": "./Imagenes/Cbse/pomelo.avif",
+    "cbse|guarana": "./Imagenes/Cbse/guarana.avif",
+    "cbse|hierbascuyanas": "./Imagenes/Cbse/hierbasCuyanas.avif",
+    "cbse|hierbasdellitoral": "./Imagenes/Cbse/hierbas_litoral.avif",
     "cbse|siluetanaranja": "./Imagenes/Cbse/siluetaNaranja.avif",
     "cbse|regulase": "./Imagenes/Cbse/regulase.avif",
     "cbse|endulife": "./Imagenes/Cbse/endulife.avif",
@@ -582,12 +582,12 @@
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
     "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
-    "cbse|cuyana": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fcuyana.avif",
-    "cbse|frutosdelbosque": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_bosque.avif",
-    "cbse|frutosdelvalle": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_del_valle.avif",
-    "cbse|frutostropicales": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Ffrutos_tropicales.avif",
-    "cbse|hierbaslitoral": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fhierbas_litoral.avif",
-    "cbse|silueta": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbSe%2Fsilueta.avif",
+    "cbse|cuyana": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fcuyana.avif",
+    "cbse|frutosdelbosque": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
+    "cbse|frutosdelvalle": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
+    "cbse|frutostropicales": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
+    "cbse|hierbaslitoral": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fhierbas_litoral.avif",
+    "cbse|silueta": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
     "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
