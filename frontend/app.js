@@ -9,6 +9,8 @@ let scrolll = "";
 const inicios = 85;
 const target = 20;
 let final = "";
+let modoLocal = false;
+let archivoLocal = null;
 //const TargetHeight = document.documentElement.offsetHeight - screen.height;
 const TargetHeight = document.documentElement.offsetHeight - window.innerHeight;
 let state = { products: [], movements: [], stock: [] };
@@ -28,6 +30,41 @@ const apiUrl = (path) => API_BASE + path;
 
 // Funcion que carga al cargar la pagina
 document.addEventListener("DOMContentLoaded", iniciarAplicacion);
+
+document
+  .getElementById("archivo-json")
+  .addEventListener("change", async (e) => {
+    const archivo = e.target.files[0];
+
+    if (!archivo) return;
+
+    try {
+      const texto = await archivo.text();
+
+      const data = JSON.parse(texto);
+      console.log(data);
+
+      data.products ??= [];
+      data.movements ??= [];
+      data.photo_map ??= {};
+
+      archivoLocal = data;
+      modoLocal = true;
+
+      await refresh();
+
+      console.log("Archivo local cargado:", archivo.name);
+    } catch (error) {
+      alert("Error leyendo el archivo JSON: " + error.message);
+    }
+  });
+
+async function volverOnline() {
+  modoLocal = false;
+  archivoLocal = null;
+
+  await refresh();
+}
 
 // Funcion para iniciar aplicacion
 function iniciarAplicacion() {
@@ -148,7 +185,31 @@ function showProductPhoto(path) {
   }
 }
 
-async function api(url, opts = {}) {
+function stockRows(data) {
+  return data.products.map((p) => {
+    const movimientos = data.movements.filter((m) => m.codigo === p.codigo);
+
+    const ins = movimientos
+      .filter((m) => m.tipo === "INGRESO")
+      .reduce((a, m) => a + Number(m.cantidad), 0);
+
+    const outs = movimientos
+      .filter((m) => m.tipo === "SALIDA")
+      .reduce((a, m) => a + Number(m.cantidad), 0);
+
+    const stock = ins - outs;
+
+    return {
+      ...p,
+      ingresos: ins,
+      salidas: outs,
+      stock: stock,
+      stock_kg: stock * Number(p.peso || 0),
+    };
+  });
+}
+
+async function api2(url, opts = {}) {
   const r = await fetch(apiUrl(url), {
     headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
     ...opts,
@@ -158,6 +219,67 @@ async function api(url, opts = {}) {
     d = await r.json();
   } catch {}
   if (!r.ok) throw Error(d.error || "Error de servidor");
+  return d;
+}
+
+async function api(url, opts = {}) {
+  // MODO LOCAL
+  // if (modoLocal) {
+  //   if (url === "/api/data") {
+  //     return structuredClone(archivoLocal);
+  //   }
+
+  //   throw Error("Esta operación todavía no está disponible en modo local");
+  // }
+  // if (modoLocal) {
+  //   if (url === "/api/data") {
+  //     const data = structuredClone(archivoLocal);
+
+  //     data.products ??= [];
+  //     data.movements ??= [];
+  //     data.photo_map ??= {};
+  //     data.stock ??= [];
+  //     console.log(data);
+
+  //     return data;
+  //   }
+
+  //   throw Error("Esta operación todavía no está disponible en modo local");
+  // }
+  if (modoLocal) {
+    if (url === "/api/data") {
+      const data = structuredClone(archivoLocal);
+
+      data.products ??= [];
+      data.movements ??= [];
+      data.photo_map ??= {};
+
+      data.stock = stockRows(data);
+
+      return data;
+    }
+
+    throw Error("Esta operación todavía no está disponible en modo local");
+  }
+
+  // MODO ONLINE (funcionamiento actual)
+  const r = await fetch(apiUrl(url), {
+    headers: {
+      "Content-Type": "application/json",
+      ...(opts.headers || {}),
+    },
+    ...opts,
+  });
+
+  let d = {};
+
+  try {
+    d = await r.json();
+    console.log(d);
+  } catch {}
+
+  if (!r.ok) throw Error(d.error || "Error de servidor");
+
   return d;
 }
 
@@ -205,7 +327,7 @@ function render() {
     recent
       .map(
         (m) =>
-          `<tr><td>${esc(m.fecha)}</td><td>${typeBadge(m.tipo)}</td><td>${esc(m.codigo)}</td><td>${fmt(m.cantidad)}</td><td>${esc(m.documento)}</td></tr>`,
+          `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td></tr>`,
       )
       .join("") || empty(5);
   renderProducts();
@@ -254,28 +376,40 @@ function renderProducts() {
               </div>
 
               <table class="tabla-marca">
+                <thead >
+                  <tr >
+                    <th class="codigoProductos">Código</th>
+                    <th class="marcaProductos">Marca</th>
+                    <th id="product-th" class="variedadProductos">variedad</th>
+                    <th id="presentation-th" class="presentacionProductos">Presentación</th>
+                    <th class="pesoProductos">Peso (kg)</th>
+                    <th class="foto-td">Foto</th>
+                    <th id="observaciones-th" class="observacionesProductos">Observaciones</th>
+                    <th></th>
+                  </tr>
+                </thead>
                 <tbody>
                   ${productos
                     .map(
                       (p) => `
                         <tr>
-                          <td><b>${esc(p.codigo)}</b></td>
-                          <td>${esc(p.marca)}</td>
-                          <td>${esc(p.variedad)}</td>
-                          <td>${esc(p.presentacion)}</td>
-                          <td>${fmt(p.peso)} Kg</td>
-                          <td class="foto-td">
+                          <td class="codigoProductos"><b>${esc(p.codigo)}</b></td>
+                          <td class="marcaProductos">${esc(p.marca)}</td>
+                          <td class="variedadProductos">${esc(p.variedad)}</td>
+                          <td class="presentacionProductos">${esc(p.presentacion)}</td>
+                          <td class="pesoProductos">${fmt(p.peso)} Kg</td>
+                          <td class="foto-td" title="Click para agrandar imagen!">
                             ${
                               p.foto
                                 ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}">`
                                 : '<span class="no-photo">Sin foto</span>'
                             }
                           </td>
-                          <td>${esc(p.observaciones)}</td>
-                          <td>
+                          <td class="observacionesProductos">${esc(p.observaciones)}</td>
+                          <td class="btnActions">
                             <div class="actions">
-                              <button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button>
-                              <button class="small-btn" data-delete="${esc(p.codigo)}">×</button>
+                              <button class="small-btn" title="Editar Producto:\nCódigo: ${p.codigo}\nMarca: ${p.marca}\nVariedad: ${p.variedad}\nPeso: ${p.peso} Kg" data-edit="${esc(p.codigo)}">Editar</button>
+                              <button class="small-btn" title="Eliminar Producto: ${p.codigo}" data-delete="${esc(p.codigo)}">×</button>
                             </div>
                           </td>
                         </tr>
@@ -363,6 +497,14 @@ function renderProducts() {
         const img = td.querySelector("img");
 
         if (img) {
+          if (!img.classList.contains("img-expandida")) {
+            //img.classList.add("img-zoom");
+            img.style.cursor = "zoom-out";
+            img.title = "Click para minimizar imagen!";
+          } else {
+            img.style.cursor = "zoom-in";
+            img.title = "Click para agrandar imagen!";
+          }
           if (imagenExpandida) {
             cerrarImagen();
           } else {
@@ -375,6 +517,7 @@ function renderProducts() {
 
   // Acá mantenés tus configuraciones de Android y eventos.
 }
+
 // Funcion que renderiza los productos
 function renderProducts2() {
   const q = $("productSearch").value.toLowerCase();
@@ -482,7 +625,7 @@ function renderMovements() {
     rows
       .map(
         (m) =>
-          `<tr><td>${esc(m.fecha)}</td><td>${typeBadge(m.tipo)}</td><td>${esc(m.codigo)}</td><td>${esc(productName(m.codigo))}</td><td>${fmt(m.cantidad)} Un</td><td>${esc(m.documento)}</td><td><button class="small-btn" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
+          `<tr><td>${esc(m.fecha)}</td><td>${typeBadge(m.tipo)}</td><td>${esc(m.codigo)}</td><td>${esc(productName(m.codigo))}</td><td>${fmt(m.cantidad)} Un</td><td>${esc(m.documento)}</td><td><button class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
       )
       .join("") || empty(7);
   if (plataforma.includes("Android")) {
@@ -490,7 +633,7 @@ function renderMovements() {
       rows
         .map(
           (m) =>
-            `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Producto">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td><td><button class="small-btn" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
+            `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Producto">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td><td class="btnActions"><button class="small-btn" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
         )
         .join("") || empty(7);
   }
@@ -510,11 +653,66 @@ function renderStock() {
 
     grupos[marca].push(p);
   });
+  // $("stockBody").innerHTML =
+  //   rows
+  //     .map(
+  //       (p) =>
+  //         `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)} Kg</td><td>${fmt(p.ingresos)} Un</td><td>${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)} Un</td><td>${fmt(p.stock_kg)} Kg</td></tr>`,
+  //     )
+  //     .join("") || empty(9);
   $("stockBody").innerHTML =
-    rows
+    Object.entries(grupos)
       .map(
-        (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td>${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)} Kg</td><td>${fmt(p.ingresos)} Un</td><td>${fmt(p.salidas)} Un</td><td class="${p.stock < 0 ? "negative" : ""}">${fmt(p.stock)} Un</td><td>${fmt(p.stock_kg)} Kg</td></tr>`,
+        ([marca, productos]) => `
+        <tr>
+          <td colspan="9" class="marca-container">
+
+            <div class="marca-separador">
+
+              <div class="marca-titulo">
+                ${esc(marca)}
+              </div>
+
+              <table class="tabla-marca">
+                <thead>
+                  <tr>
+                    <th class="codigoProductos">Código</th>
+                    <th >Marca</th>
+                    <th id="product-th">Variedad</th>
+                    <th id="presentation-th">Presentación</th>
+                    <th>Peso unit.</th>
+                    <th>Ingresos</th>
+                    <th>Salidas</th>
+                    <th>Stock</th>
+                    <th>Stock (kg)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${productos
+                    .map(
+                      (p) => `
+                          <tr>
+                            <td data-label="Código"><b>${esc(p.codigo)}</b></td>
+                            <td data-label="Marca">${esc(p.marca)}</td>
+                            <td data-label="Variedad">${esc(p.variedad)}</td>
+                            <td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td>
+                            <td data-label="Peso">${fmt(p.peso)} Kg</td>
+                            <td data-label="Ingresos">${fmt(p.ingresos)} Un</td>
+                            <td data-label="Salidas">${fmt(p.salidas)} Un</td>
+                            <td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td>
+                            <td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td>
+                            <!-- <td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td> -->
+                          </tr>`,
+                    )
+                    .join("")}
+                  </tbody>
+                </table>
+
+              </div>
+
+            </td>
+          </tr>
+        `,
       )
       .join("") || empty(9);
   if (plataforma.includes("Android")) {

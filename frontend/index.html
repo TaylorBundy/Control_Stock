@@ -54,7 +54,9 @@
       <aside class="sidebar">
         <!-- <img class="logo" src="./Imagenes/logo.avif" alt="Logo" /> -->
         <div class="brand">
-          <div class="brand-icon"><img class="logo" src="./Imagenes/logo.avif" alt="Logo" /></div>
+          <div class="brand-icon">
+            <img class="logo" src="./Imagenes/logo.avif" alt="Logo" />
+          </div>
           <div><b>Control de Stock</b><small>YERBAS</small></div>
         </div>
         <nav>
@@ -89,6 +91,16 @@
             ><button class="primary" id="quickMovement">
               ＋ Nuevo movimiento
             </button>
+            <input
+              type="file"
+              id="archivo-json"
+              accept=".json,application/json"
+              hidden
+            />
+            <button onclick="document.getElementById('archivo-json').click()">
+              Abrir JSON local
+            </button>
+            <button onclick="volverOnline()">Volver al servidor</button>
           </div>
         </header>
         <section id="dashboard" class="view active">
@@ -172,15 +184,19 @@
           <div class="panel">
             <div class="table-wrap">
               <table class="table-variety">
-                <thead>
+                <thead style="display: none">
                   <tr>
-                    <th>Código</th>
-                    <th>Marca</th>
-                    <th id="product-th">variedad</th>
-                    <th id="presentation-th">Presentación</th>
-                    <th>Peso (kg)</th>
-                    <th>Foto</th>
-                    <th id="observaciones-th">Observaciones</th>
+                    <th class="codigoProductos">Código</th>
+                    <th class="marcaProductos">Marca</th>
+                    <th id="product-th" class="variedadProductos">variedad</th>
+                    <th id="presentation-th" class="presentacionProductos">
+                      Presentación
+                    </th>
+                    <th class="pesoProductos">Peso (kg)</th>
+                    <th class="foto-td">Foto</th>
+                    <th id="observaciones-th" class="observacionesProductos">
+                      Observaciones
+                    </th>
                     <th></th>
                   </tr>
                 </thead>
@@ -227,10 +243,10 @@
           <div class="panel">
             <div class="table-wrap">
               <table class="table-variety">
-                <thead>
+                <thead style="display: none">
                   <tr>
-                    <th>Código</th>
-                    <th>Marca</th>
+                    <th class="codigoProductos">Código</th>
+                    <th >Marca</th>
                     <th id="product-th">Variedad</th>
                     <th id="presentation-th">Presentación</th>
                     <th>Peso unit.</th>
@@ -330,7 +346,14 @@
             <span class="eyebrow">CATÁLOGO</span>
             <h2 id="productDialogTitle">Nuevo producto</h2>
           </div>
-          <button type="button" class="close" value="cancel" onclick="closeProduct()">×</button>
+          <button
+            type="button"
+            class="close"
+            value="cancel"
+            onclick="closeProduct()"
+          >
+            ×
+          </button>
         </div>
         <input type="hidden" id="originalCode" />
         <div class="form-grid">
@@ -381,7 +404,13 @@
           </label>
         </div>
         <div class="dialog-actions">
-          <button type="button" class="secondary" value="cancel" onclick="closeProduct()">Cancelar</button
+          <button
+            type="button"
+            class="secondary"
+            value="cancel"
+            onclick="closeProduct()"
+          >
+            Cancelar</button
           ><button class="primary" id="saveProduct" value="default">
             Guardar producto
           </button>
@@ -395,7 +424,14 @@
             <span class="eyebrow">INVENTARIO</span>
             <h2>Registrar movimiento</h2>
           </div>
-          <button type="button" class="close" value="cancel" onclick="closeProduct()">×</button>
+          <button
+            type="button"
+            class="close"
+            value="cancel"
+            onclick="closeProduct()"
+          >
+            ×
+          </button>
         </div>
         <div class="form-grid">
           <label>Fecha<input id="mFecha" type="date" required /></label
@@ -422,7 +458,12 @@
           </label>
         </div>
         <div class="dialog-actions">
-          <button type="button" class="secondary" value="cancel" onclick="closeProduct()">
+          <button
+            type="button"
+            class="secondary"
+            value="cancel"
+            onclick="closeProduct()"
+          >
             Cancelar
           </button>
           <button class="primary" id="saveMovement" value="default">
