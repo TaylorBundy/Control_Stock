@@ -7,7 +7,7 @@
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/CbSe/hierbas_serranas.avif",
-      "observaciones": ""
+      "observaciones": "probamos"
     },
     {
       "codigo": "CBS-002-1000",
@@ -346,7 +346,7 @@
       "codigo": "PIP-003-500",
       "marca": "PIPORE",
       "variedad": "roja",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
       "observaciones": ""
