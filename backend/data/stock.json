@@ -512,6 +512,15 @@
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/peperina.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "UN-001-500",
+      "marca": "UNION",
+      "variedad": "Roja",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
