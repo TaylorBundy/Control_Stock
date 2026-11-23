@@ -10,29 +10,11 @@
       "observaciones": "probamos"
     },
     {
-      "codigo": "CBS-002-1000",
-      "marca": "CBSé",
-      "variedad": "Hierbas Serranas",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/hierbas_serranas.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-003-500",
       "marca": "CBSé",
       "variedad": "Hierbas Cuyanas",
       "presentacion": "Bolson",
       "peso": 0.5,
-      "foto": "./Imagenes/Cbse/hierbasCuyanas.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CBS-004-1000",
-      "marca": "CBSé",
-      "variedad": "Hierbas Cuyanas",
-      "presentacion": "Pack",
-      "peso": 1.0,
       "foto": "./Imagenes/Cbse/hierbasCuyanas.avif",
       "observaciones": ""
     },
@@ -46,15 +28,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-006-1000",
-      "marca": "CBSé",
-      "variedad": "Hierbas del Litoral",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/hierbas_litoral.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-007-500",
       "marca": "CBSé",
       "variedad": "Guarana",
@@ -64,29 +37,11 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-008-1000",
-      "marca": "CBSé",
-      "variedad": "Guarana",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/guarana.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-009-500",
       "marca": "CBSé",
       "variedad": "Limon",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/Cbse/limon.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CBS-010-1000",
-      "marca": "CBSé",
-      "variedad": "Limon",
-      "presentacion": "",
-      "peso": 1.0,
       "foto": "./Imagenes/Cbse/limon.avif",
       "observaciones": ""
     },
@@ -421,15 +376,6 @@
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cachamate/cachamate_comun_500.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CHA-002-1000",
-      "marca": "CACHAMATE",
-      "variedad": "comun_1000",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cachamate/cachamate_comun_1000.avif",
       "observaciones": ""
     },
     {
