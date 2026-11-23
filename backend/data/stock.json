@@ -10,15 +10,6 @@
       "observaciones": "probamos"
     },
     {
-      "codigo": "CBS-002-1000",
-      "marca": "CBSé",
-      "variedad": "Hierbas Serranas",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/hierbas_serranas.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-003-500",
       "marca": "CBSé",
       "variedad": "Hierbas Cuyanas",
