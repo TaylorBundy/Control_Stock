@@ -175,7 +175,7 @@
       "codigo": "PIP-002-1000",
       "marca": "PIPORE",
       "variedad": "verde",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 1.0,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
       "observaciones": ""
@@ -193,7 +193,7 @@
       "codigo": "PIP-004-1000",
       "marca": "PIPORE",
       "variedad": "roja",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 1.0,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
       "observaciones": ""
@@ -211,7 +211,7 @@
       "codigo": "ROS-002-1000",
       "marca": "ROSAMONTE",
       "variedad": "suave",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 1.0,
       "foto": "./Imagenes/Rosamonte/suave.avif",
       "observaciones": ""
@@ -229,7 +229,7 @@
       "codigo": "ROS-004-1000",
       "marca": "ROSAMONTE",
       "variedad": "comun",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 1.0,
       "foto": "./Imagenes/Rosamonte/comun.avif",
       "observaciones": ""
@@ -238,7 +238,7 @@
       "codigo": "AMA-001-500",
       "marca": "AMANDA",
       "variedad": "comun",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Amanda/amanda.avif",
       "observaciones": ""
@@ -271,7 +271,7 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-003-500",
+      "codigo": "VER-002-500",
       "marca": "VERDEFLOR",
       "variedad": "menta_500",
       "presentacion": "Pack",
@@ -280,7 +280,7 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-005-500",
+      "codigo": "VER-003-500",
       "marca": "VERDEFLOR",
       "variedad": "boldo_500",
       "presentacion": "Pack",
@@ -289,7 +289,7 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-007-500",
+      "codigo": "VER-004-500",
       "marca": "VERDEFLOR",
       "variedad": "cedron",
       "presentacion": "Pack",
@@ -298,7 +298,7 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-009-500",
+      "codigo": "VER-005-500",
       "marca": "VERDEFLOR",
       "variedad": "peperina",
       "presentacion": "Pack",
