@@ -692,7 +692,7 @@ dialog::backdrop {
   cursor: pointer;
 }
 #btnEliminar {
-  background: transparent url(./Imagenes/iconos/borrar.avif) no-repeat center /
+  background: transparent url(./Imagenes/Iconos/borrar.avif) no-repeat center /
     cover;
   width: 26px;
   height: 28px;
@@ -700,7 +700,7 @@ dialog::backdrop {
   border: none;
 }
 #btnEliminar2 {
-  background: transparent url(./Imagenes/iconos/borrar-rojo.avif) no-repeat
+  background: transparent url(./Imagenes/Iconos/borrar-rojo.avif) no-repeat
     center / cover;
   width: 26px;
   height: 28px;
@@ -708,7 +708,7 @@ dialog::backdrop {
   border: none;
 }
 #btnEditar {
-  background: transparent url(./Imagenes/iconos/editar.avif) no-repeat center /
+  background: transparent url(./Imagenes/Iconos/editar.avif) no-repeat center /
     cover;
   width: 26px;
   height: 28px;
