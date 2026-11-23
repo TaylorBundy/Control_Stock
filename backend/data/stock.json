@@ -73,29 +73,11 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-016-1000",
-      "marca": "CBSé",
-      "variedad": "Miel",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/miel.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-017-500",
       "marca": "CBSé",
       "variedad": "Frutos del Bosque",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CBS-018-1000",
-      "marca": "CBSé",
-      "variedad": "Frutos del Bosque",
-      "presentacion": "",
-      "peso": 1.0,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
       "observaciones": ""
     },
@@ -109,29 +91,11 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-020-1000",
-      "marca": "CBSé",
-      "variedad": "Frutos del Valle",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-021-500",
       "marca": "CBSé",
       "variedad": "Frutos Tropicales",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CBS-022-1000",
-      "marca": "CBSé",
-      "variedad": "Frutos Tropicales",
-      "presentacion": "",
-      "peso": 1.0,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
       "observaciones": ""
     },
@@ -145,29 +109,11 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-024-1000",
-      "marca": "CBSé",
-      "variedad": "Silueta",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-025-500",
       "marca": "CBSé",
       "variedad": "Silueta Naranja",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/Cbse/siluetaNaranja.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CBS-026-1000",
-      "marca": "CBSé",
-      "variedad": "Silueta Naranja",
-      "presentacion": "",
-      "peso": 1.0,
       "foto": "./Imagenes/Cbse/siluetaNaranja.avif",
       "observaciones": ""
     },
