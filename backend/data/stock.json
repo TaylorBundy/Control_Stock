@@ -559,6 +559,15 @@
       "documento": "",
       "contacto": "",
       "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-23",
+      "tipo": "SALIDA",
+      "codigo": "UN-001-500",
+      "cantidad": 30,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
     }
   ],
   "photo_map": {
