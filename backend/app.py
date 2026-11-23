@@ -1049,7 +1049,19 @@ def delete_product(codigo):
         # Guardar JSON conservando todos los demás datos
         save_file("backend/data/stock.json", data, "Eliminar producto: " + codigo)
 
-        return jsonify(ok=True)
+        # return jsonify(ok=True)
+        return (
+            jsonify(
+                {
+                    "ok": True,
+                    "estado": "completado",
+                    "mensaje": "Producto eliminado correctamente.",
+                    "codigo": codigo,
+                    "servidor": "online",
+                }
+            ),
+            200,
+        )
 
     except Exception as e:
         return jsonify(error=f"No se pudo eliminar el producto: {str(e)}"), 500

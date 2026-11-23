@@ -869,9 +869,21 @@ $("productsBody").onclick = async (e) => {
   if (edit) openProduct(state.products.find((p) => p.codigo === edit));
   if (del && confirm("¿Eliminar este producto?"))
     try {
-      await api("/api/products/" + encodeURIComponent(del), {
+      // await api("/api/products/" + encodeURIComponent(del), {
+      //   method: "DELETE",
+      // });
+      const response = await api("/api/products/" + encodeURIComponent(del), {
         method: "DELETE",
       });
+      const resultado = await response.json();
+
+      if (response.ok && resultado.ok) {
+        console.log("Estado:", resultado.estado);
+        console.log("Servidor:", resultado.servidor);
+        console.log("Mensaje:", resultado.mensaje);
+      } else {
+        console.error("Error:", resultado.mensaje);
+      }
       await refresh();
       toast("Producto eliminado");
     } catch (err) {
