@@ -318,15 +318,6 @@
   ],
   "movements": [
     {
-      "fecha": "2026-11-20",
-      "tipo": "INGRESO",
-      "codigo": "CBS-001-500",
-      "cantidad": 6,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
       "fecha": "2026-11-21",
       "tipo": "INGRESO",
       "codigo": "CBS-007-500",
@@ -381,6 +372,7 @@
     "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
     "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "union|roja": "./Imagenes/Union/roja.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
     "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
@@ -392,7 +384,6 @@
     "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
-    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
-    "union|roja": "./Imagenes/Union/roja.avif"
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif"
   }
 }
