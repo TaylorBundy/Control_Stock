@@ -338,19 +338,6 @@ function stockRows(data) {
   });
 }
 
-// async function api2(url, opts = {}) {
-//   const r = await fetch(apiUrl(url), {
-//     headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
-//     ...opts,
-//   });
-//   let d = {};
-//   try {
-//     d = await r.json();
-//   } catch {}
-//   if (!r.ok) throw Error(d.error || "Error de servidor");
-//   return d;
-// }
-
 // Funcion principal que llama a la api
 async function api(url, opts = {}) {
   // MODO LOCAL
