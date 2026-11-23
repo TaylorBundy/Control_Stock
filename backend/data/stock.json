@@ -109,15 +109,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-024-1000",
-      "marca": "CBSé",
-      "variedad": "Silueta",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-025-500",
       "marca": "CBSé",
       "variedad": "Silueta Naranja",
