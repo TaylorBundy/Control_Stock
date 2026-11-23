@@ -100,15 +100,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-022-1000",
-      "marca": "CBSé",
-      "variedad": "Frutos Tropicales",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-023-500",
       "marca": "CBSé",
       "variedad": "Silueta",
