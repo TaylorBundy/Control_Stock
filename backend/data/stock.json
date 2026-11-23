@@ -19,7 +19,7 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-005-500",
+      "codigo": "CBS-003-500",
       "marca": "CBSé",
       "variedad": "Hierbas del Litoral",
       "presentacion": "Pack",
@@ -28,7 +28,7 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-007-500",
+      "codigo": "CBS-004-500",
       "marca": "CBSé",
       "variedad": "Guarana",
       "presentacion": "Pack",
@@ -37,127 +37,127 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-009-500",
+      "codigo": "CBS-005-500",
       "marca": "CBSé",
       "variedad": "Limon",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/limon.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-011-500",
+      "codigo": "CBS-006-500",
       "marca": "CBSé",
       "variedad": "Naranja",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/naranja.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-013-500",
+      "codigo": "CBS-007-500",
       "marca": "CBSé",
       "variedad": "Pomelo",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/pomelo.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-015-500",
+      "codigo": "CBS-008-500",
       "marca": "CBSé",
       "variedad": "Miel",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/miel.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-017-500",
+      "codigo": "CBS-009-500",
       "marca": "CBSé",
       "variedad": "Frutos del Bosque",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-019-500",
+      "codigo": "CBS-010-500",
       "marca": "CBSé",
       "variedad": "Frutos del Valle",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-021-500",
+      "codigo": "CBS-011-500",
       "marca": "CBSé",
       "variedad": "Frutos Tropicales",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-023-500",
+      "codigo": "CBS-012-500",
       "marca": "CBSé",
       "variedad": "Silueta",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-025-500",
+      "codigo": "CBS-013-500",
       "marca": "CBSé",
       "variedad": "Silueta Naranja",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/siluetaNaranja.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-027-500",
+      "codigo": "CBS-014-500",
       "marca": "CBSé",
       "variedad": "Regulase",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/regulase.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-029-500",
+      "codigo": "CBS-015-500",
       "marca": "CBSé",
       "variedad": "Endulife",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/endulife.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-031-500",
+      "codigo": "CBS-016-500",
       "marca": "CBSé",
       "variedad": "Jengibre",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/jengibre.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-033-500",
+      "codigo": "CBS-017-500",
       "marca": "CBSé",
       "variedad": "Etiqueta Negra",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/etiquetaNegra.avif",
       "observaciones": ""
     },
     {
-      "codigo": "CBS-035-500",
+      "codigo": "CBS-018-500",
       "marca": "CBSé",
       "variedad": "Mateando",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Cbse/mateando.avif",
       "observaciones": ""
