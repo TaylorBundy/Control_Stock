@@ -91,15 +91,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-020-1000",
-      "marca": "CBSé",
-      "variedad": "Frutos del Valle",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-021-500",
       "marca": "CBSé",
       "variedad": "Frutos Tropicales",
