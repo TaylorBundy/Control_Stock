@@ -127,29 +127,11 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-028-1000",
-      "marca": "CBSé",
-      "variedad": "Regulase",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/regulase.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-029-500",
       "marca": "CBSé",
       "variedad": "Endulife",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/Cbse/endulife.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CBS-030-1000",
-      "marca": "CBSé",
-      "variedad": "Endulife",
-      "presentacion": "",
-      "peso": 1.0,
       "foto": "./Imagenes/Cbse/endulife.avif",
       "observaciones": ""
     },
@@ -163,15 +145,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-032-1000",
-      "marca": "CBSé",
-      "variedad": "Jengibre",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/jengibre.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-033-500",
       "marca": "CBSé",
       "variedad": "Etiqueta Negra",
@@ -181,29 +154,11 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-034-1000",
-      "marca": "CBSé",
-      "variedad": "Etiqueta Negra",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "./Imagenes/Cbse/etiquetaNegra.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-035-500",
       "marca": "CBSé",
       "variedad": "Mateando",
       "presentacion": "",
       "peso": 0.5,
-      "foto": "./Imagenes/Cbse/mateando.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "CBS-036-1000",
-      "marca": "CBSé",
-      "variedad": "Mateando",
-      "presentacion": "",
-      "peso": 1.0,
       "foto": "./Imagenes/Cbse/mateando.avif",
       "observaciones": ""
     },
@@ -284,7 +239,7 @@
       "marca": "AMANDA",
       "variedad": "comun",
       "presentacion": "",
-      "peso": 1.0,
+      "peso": 0.5,
       "foto": "./Imagenes/Amanda/amanda.avif",
       "observaciones": ""
     },
@@ -292,8 +247,8 @@
       "codigo": "AMA-002-1000",
       "marca": "AMANDA",
       "variedad": "comun",
-      "presentacion": "",
-      "peso": 0.5,
+      "presentacion": "Pack",
+      "peso": 1.0,
       "foto": "./Imagenes/Amanda/amanda.avif",
       "observaciones": ""
     },
@@ -316,30 +271,12 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-002-1000",
-      "marca": "VERDEFLOR",
-      "variedad": "naranja_1000",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "./Imagenes/Verdeflor/naranja1000.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "VER-003-500",
       "marca": "VERDEFLOR",
       "variedad": "menta_500",
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/menta500.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "VER-004-1000",
-      "marca": "VERDEFLOR",
-      "variedad": "menta_1000",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "./Imagenes/Verdeflor/menta1000.avif",
       "observaciones": ""
     },
     {
@@ -352,29 +289,11 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-006-1000",
-      "marca": "VERDEFLOR",
-      "variedad": "boldo_1000",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "./Imagenes/Verdeflor/boldo1000.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "VER-007-500",
       "marca": "VERDEFLOR",
       "variedad": "cedron",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "./Imagenes/Verdeflor/cedron.avif",
-      "observaciones": ""
-    },
-    {
-      "codigo": "VER-008-1000",
-      "marca": "VERDEFLOR",
-      "variedad": "cedron",
-      "presentacion": "Pack",
-      "peso": 1.0,
       "foto": "./Imagenes/Verdeflor/cedron.avif",
       "observaciones": ""
     },
@@ -398,15 +317,6 @@
     }
   ],
   "movements": [
-    {
-      "fecha": "2026-11-15",
-      "tipo": "INGRESO",
-      "codigo": "CBS-002-1000",
-      "cantidad": 6,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
     {
       "fecha": "2026-11-20",
       "tipo": "INGRESO",
