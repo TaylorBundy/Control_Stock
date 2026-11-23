@@ -1031,6 +1031,8 @@ def upload_photo_to_github(image, repo_path, message):
     return response.json()
 
 
+# Nueva funcion para eliminar los productos, pero unicamente borrandolo
+# del apartado "products" del archivo JSON
 @app.delete("/api/products/<codigo>")
 def delete_product(codigo):
     data = load_data()
@@ -1040,36 +1042,58 @@ def delete_product(codigo):
     if not producto:
         return jsonify(error="Producto no encontrado."), 404
 
-    marca = producto.get("marca", "")
-    variedad = producto.get("variedad", "")
-
     try:
-        # Eliminar referencia del INI
-        if marca and variedad:
-            delete_ini_photo_map(marca, variedad)
-
-        # Eliminar producto completo del JSON
+        # Eliminar únicamente el producto seleccionado
         data["products"] = [p for p in data["products"] if p["codigo"] != codigo]
 
-        # Eliminar referencia del photo_map
-        photo_map = data.setdefault("photo_map", {})
-
-        photo_key = f"{marca}|{variedad}".lower()
-
-        for key in list(photo_map.keys()):
-            if key.strip().lower() == photo_key:
-                del photo_map[key]
-
-        # Guardar JSON
-        # save_file(data)
-        save_file(
-            "backend/data/stock.json", data, "Eliminar producto: " + producto["codigo"]
-        )
+        # Guardar JSON conservando todos los demás datos
+        save_file("backend/data/stock.json", data, "Eliminar producto: " + codigo)
 
         return jsonify(ok=True)
 
     except Exception as e:
         return jsonify(error=f"No se pudo eliminar el producto: {str(e)}"), 500
+
+
+# @app.delete("/api/products/<codigo>")
+# def delete_product(codigo):
+#     data = load_data()
+
+#     producto = next((p for p in data["products"] if p["codigo"] == codigo), None)
+
+#     if not producto:
+#         return jsonify(error="Producto no encontrado."), 404
+
+#     marca = producto.get("marca", "")
+#     variedad = producto.get("variedad", "")
+
+#     try:
+#         # Eliminar referencia del INI
+#         if marca and variedad:
+#             delete_ini_photo_map(marca, variedad)
+
+#         # Eliminar producto completo del JSON
+#         data["products"] = [p for p in data["products"] if p["codigo"] != codigo]
+
+#         # Eliminar referencia del photo_map
+#         photo_map = data.setdefault("photo_map", {})
+
+#         photo_key = f"{marca}|{variedad}".lower()
+
+#         for key in list(photo_map.keys()):
+#             if key.strip().lower() == photo_key:
+#                 del photo_map[key]
+
+#         # Guardar JSON
+#         # save_file(data)
+#         save_file(
+#             "backend/data/stock.json", data, "Eliminar producto: " + producto["codigo"]
+#         )
+
+#         return jsonify(ok=True)
+
+#     except Exception as e:
+#         return jsonify(error=f"No se pudo eliminar el producto: {str(e)}"), 500
 
 
 @app.post("/api/movements")
