@@ -312,43 +312,25 @@
       "variedad": "Roja",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Union/roja.avif",
       "observaciones": ""
     }
   ],
   "movements": [
     {
-      "fecha": "2026-11-20",
-      "tipo": "INGRESO",
-      "codigo": "CBS-001-500",
-      "cantidad": 6,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
-      "fecha": "2026-11-21",
-      "tipo": "INGRESO",
-      "codigo": "CBS-007-500",
-      "cantidad": 5,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
-      "fecha": "2026-11-23",
-      "tipo": "INGRESO",
-      "codigo": "UN-001-500",
-      "cantidad": 100,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
       "fecha": "2026-11-23",
       "tipo": "SALIDA",
       "codigo": "UN-001-500",
       "cantidad": 30,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-23",
+      "tipo": "INGRESO",
+      "codigo": "CBS-001-500",
+      "cantidad": 100,
       "documento": "",
       "contacto": "",
       "observaciones": ""
@@ -381,6 +363,7 @@
     "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
     "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "union|roja": "./Imagenes/Union/roja.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
     "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
