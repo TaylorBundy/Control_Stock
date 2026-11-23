@@ -869,21 +869,31 @@ $("productsBody").onclick = async (e) => {
   if (edit) openProduct(state.products.find((p) => p.codigo === edit));
   if (del && confirm("¿Eliminar este producto?"))
     try {
+      const resultado = await api("/api/products/" + encodeURIComponent(del), {
+        method: "DELETE",
+      });
+
+      console.log("Estado del servidor:", resultado.estado);
+      console.log("Operación:", resultado.operacion);
+      console.log("Resultado:", resultado.mensaje);
       // await api("/api/products/" + encodeURIComponent(del), {
       //   method: "DELETE",
       // });
-      const response = await api("/api/products/" + encodeURIComponent(del), {
-        method: "DELETE",
-      });
-      const resultado = await response.json();
+      // const response = await api("/api/products/" + encodeURIComponent(del), {
+      //   method: "DELETE",
+      // });
+      // const response = await fetch(`${apiUrl}/api/products/${del}`, {
+      //   method: "DELETE",
+      // });
+      // const resultado = await response.json();
 
-      if (response.ok && resultado.ok) {
-        console.log("Estado:", resultado.estado);
-        console.log("Servidor:", resultado.servidor);
-        console.log("Mensaje:", resultado.mensaje);
-      } else {
-        console.error("Error:", resultado.mensaje);
-      }
+      // if (response.ok && resultado.ok) {
+      //   console.log("Estado:", resultado.estado);
+      //   console.log("Servidor:", resultado.servidor);
+      //   console.log("Mensaje:", resultado.mensaje);
+      // } else {
+      //   console.error("Error:", resultado.mensaje);
+      // }
       await refresh();
       toast("Producto eliminado");
     } catch (err) {
