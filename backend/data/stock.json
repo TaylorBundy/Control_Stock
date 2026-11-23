@@ -82,15 +82,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "CBS-018-1000",
-      "marca": "CBSé",
-      "variedad": "Frutos del Bosque",
-      "presentacion": "",
-      "peso": 1.0,
-      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "CBS-019-500",
       "marca": "CBSé",
       "variedad": "Frutos del Valle",
