@@ -271,15 +271,6 @@
       "observaciones": ""
     },
     {
-      "codigo": "VER-002-1000",
-      "marca": "VERDEFLOR",
-      "variedad": "naranja_1000",
-      "presentacion": "Pack",
-      "peso": 1.0,
-      "foto": "./Imagenes/Verdeflor/naranja1000.avif",
-      "observaciones": ""
-    },
-    {
       "codigo": "VER-003-500",
       "marca": "VERDEFLOR",
       "variedad": "menta_500",
