@@ -89,7 +89,11 @@
           </div>
           <div class="top-actions">
             <span class="server-status">● Servidor conectado</span
-            ><button class="primary" id="quickMovement">
+            ><button
+              title="Registrar un nuevo movimiento en el Stock.!"
+              class="primary"
+              id="quickMovement"
+            >
               ＋ Nuevo movimiento
             </button>
             <input
@@ -184,7 +188,11 @@
             <input
               id="productSearch"
               placeholder="Buscar por código, marca o variedad…"
-            /><button class="primary" id="newProduct">
+            /><button
+              title="Agregar producto.!"
+              class="primary"
+              id="newProduct"
+            >
               ＋ Agregar producto
             </button>
           </div>
@@ -217,7 +225,11 @@
             <input
               id="movementSearch"
               placeholder="Buscar movimiento…"
-            /><button class="primary" id="newMovement">
+            /><button
+              title="Registrar un nuevo movimiento en el Stock.!"
+              class="primary"
+              id="newMovement"
+            >
               ＋ Registrar movimiento
             </button>
           </div>
@@ -226,13 +238,13 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Código</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Referencia</th>
-                    <th></th>
+                    <th class="fechaMovimientos">Fecha</th>
+                    <th class="tipoMovimientos">Tipo</th>
+                    <th class="codigoMovimientos">Código</th>
+                    <th class="productoMovimientos">Producto</th>
+                    <th class="cantidadMovimientos">Cantidad</th>
+                    <th class="referenciaMovimientos">Referencia</th>
+                    <th class="btnMovimientos"></th>
                   </tr>
                 </thead>
                 <tbody id="movementsBody"></tbody>

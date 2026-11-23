@@ -421,7 +421,10 @@ function renderProducts() {
             <div class="marca-separador">
 
               <div class="marca-titulo">
-                ${esc(marca)}
+                ${esc(marca)} - 
+                <span class="cantidad-productos">
+                  ${productos.length} productos
+                </span>
               </div>
 
               <table class="tabla-marca">
@@ -487,6 +490,9 @@ function renderProducts() {
 
               <div class="marca-titulo">
                 ${esc(marca)}
+                <span class="cantidad-productos">
+                  ${productos.length} productos
+                </span>
               </div>
 
               <table class="tabla-marca">
@@ -658,6 +664,7 @@ function cerrarImagenesAlScroll() {
   });
 }
 
+let elCodigoBusca;
 // Funcion que renderiza los movimientos
 function renderMovements() {
   const q = $("movementSearch").value.toLowerCase();
@@ -674,7 +681,7 @@ function renderMovements() {
     rows
       .map(
         (m) =>
-          `<tr><td>${esc(m.fecha)}</td><td>${typeBadge(m.tipo)}</td><td>${esc(m.codigo)}</td><td>${esc(productName(m.codigo))}</td><td>${fmt(m.cantidad)} Un</td><td>${esc(m.documento)}</td><td><button class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
+          `<tr><td title="Fecha registrada: ${m.fecha}">${esc(m.fecha)}</td><td title="Tipo de registro: ${m.tipo}">${typeBadge(m.tipo)}</td><td title="Código del producto: ${m.codigo}">${esc(m.codigo)}</td><td title="Nombre del producto: ${productName(m.codigo)}">${esc(productName(m.codigo))}</td><td title="Cantidad de unidades: ${m.cantidad}">${fmt(m.cantidad)} Un</td><td>${esc(m.documento)}</td><td><div class="btnMovements"><button class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}">Eliminar</button></div></td></tr>`,
       )
       .join("") || empty(7);
   if (plataforma.includes("Android")) {
@@ -682,10 +689,17 @@ function renderMovements() {
       rows
         .map(
           (m) =>
-            `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Producto">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td><td class="btnActions"><button class="small-btn" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
+            `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Producto">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td><td class="btnActions"><button class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
         )
         .join("") || empty(7);
   }
+  document.querySelectorAll(".small-btn").forEach((td) => {
+    td.addEventListener("click", () => {
+      const datosObtenidos = td.title;
+      elCodigoBusca = datosObtenidos.split(":")[3];
+      console.log(datosObtenidos.split(":"));
+    });
+  });
 }
 
 // Funcion que renderiza el stock
@@ -720,6 +734,9 @@ function renderStock() {
 
               <div class="marca-titulo">
                 ${esc(marca)}
+                <span class="cantidad-productos">
+                  ${productos.length} productos
+                </span>
               </div>
 
               <table class="tabla-marca">
@@ -783,6 +800,9 @@ function renderStock() {
 
               <div class="marca-titulo">
                 ${esc(marca)}
+                <span class="cantidad-productos">
+                  ${productos.length} productos
+                </span>
               </div>
 
               <table class="tabla-marca">
@@ -1142,14 +1162,65 @@ $("saveMovement").onclick = async (e) => {
 
 $("movementsBody").onclick = async (e) => {
   const i = e.target.dataset.mdelete;
-  if (i !== undefined && confirm("¿Eliminar este movimiento?"))
-    try {
-      await api("/api/movements/" + i, { method: "DELETE" });
-      await refresh();
-      toast("Movimiento eliminado");
-    } catch (err) {
-      toast(err.message);
+  let confirmar;
+  if (i) {
+    console.log(i);
+    console.log("productos:", state.products);
+    console.log("movimientos:", state.movements);
+    console.log(elCodigoBusca);
+    const acaelCodigo = elCodigoBusca.trim();
+    const m = state.movements[i];
+    const p = state.products.find((p) => p.codigo === acaelCodigo);
+    if (!p) {
+      confirmar = await mostrarModal({
+        titulo: "Producto no encontrado en lista de productos",
+        contenido: `
+        <p>¿Desea eliminar el movimiento?</p>
+
+        <div class="producto-info">
+          <p>Fecha: ${m.fecha}</p>
+          <p>Cantidad: ${m.cantidad}</p>
+          <p>Tipo: ${m.tipo}</p>
+        </div>
+
+        <p>Esta acción no se puede deshacer.</p>
+      `,
+        confirmar: "Eliminar",
+        tipo: "danger",
+      });
+    } else {
+      //console.log("producto encontrado:", p);
+      //console.log("movimiento encontrado:", m);
+      // const p = state.products.find((p) => p.codigo === i);
+      confirmar = await mostrarModal({
+        titulo: "Eliminar movimiento",
+        contenido: `
+        <p>¿Estás seguro de eliminar este movimiento?</p>
+
+        <div class="producto-info">
+          <b>Marca: ${p.marca}</b>
+          <p>Código: ${p.codigo}</p>
+          <p>Fecha: ${m.fecha}</p>
+          <p>Cantidad: ${m.cantidad}</p>
+          <p>Tipo: ${m.tipo}</p>
+        </div>
+
+        <p>Esta acción no se puede deshacer.</p>
+      `,
+        confirmar: "Eliminar",
+        tipo: "danger",
+      });
     }
+  }
+  if (!confirmar) return;
+  //if (i !== undefined && confirm("¿Eliminar este movimiento?"))
+  try {
+    await api("/api/movements/" + i, { method: "DELETE" });
+    await refresh();
+    toast("Movimiento eliminado");
+  } catch (err) {
+    toast(err.message);
+  }
 };
 
 $("importExcel").onclick = async () => {

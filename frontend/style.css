@@ -287,8 +287,22 @@ td {
 /* tbody tr:last-child td {
   border-bottom: 0;
 } */
+.fechaMovimientos,
+.tipoMovimientos,
+.codigoMovimientos,
+.cantidadMovimientos,
+.btnMovimientos {
+  width: 10%;
+}
+.productoMovimientos {
+  width: 20%;
+}
 #movementsBody tr td {
   width: 100px;
+}
+.btnMovements {
+  display: flex;
+  justify-content: center;
 }
 #movementsBody tr {
   /* background: #fbfdfb; */
@@ -339,7 +353,9 @@ td {
   height: 70px;
 }
 .badge {
-  display: inline-block;
+  /* display: inline-block; */
+  display: flex;
+  justify-content: center;
   border-radius: 20px;
   padding: 4px 8px;
   font-size: 10px;
@@ -577,6 +593,15 @@ dialog::backdrop {
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 12px;
+}
+
+.cantidad-productos {
+  font-size: 12px;
+  font-weight: normal;
+  background: #555;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
 .marca-titulo {
