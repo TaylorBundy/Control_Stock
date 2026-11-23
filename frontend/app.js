@@ -44,8 +44,11 @@ function mostrarModal({
 
     $("modalTitle").textContent = titulo;
     $("modalBody").innerHTML = contenido;
-    $("modalConfirm").textContent = confirmar;
-    $("modalCancel").textContent = cancelar;
+    //$("modalConfirm").textContent = confirmar;
+    $("modalConfirm").innerHTML =
+      `<img class="agregar" src="./Imagenes/Iconos/confirmar.avif" alt="Logo"/> ${confirmar}`;
+    $("modalCancel").innerHTML =
+      `<img class="agregar" src="./Imagenes/Iconos/cancelar.avif" alt="Logo"/> ${cancelar}`; //cancelar;
 
     $("modalConfirm").className =
       tipo === "danger" ? "btn-danger" : "btn-primary";

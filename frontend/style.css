@@ -717,7 +717,12 @@ dialog::backdrop {
 }
 #newProduct,
 #quickMovement,
-#newMovement {
+#newMovement,
+#saveProduct,
+#cancelar,
+#saveMovement,
+#modalCancel,
+#modalConfirm {
   /* background: transparent url(./Imagenes/iconos/agregar-producto.avif) no-repeat center / cover; */
   display: flex;
   justify-content: center;
