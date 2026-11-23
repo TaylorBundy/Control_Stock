@@ -369,9 +369,23 @@ td {
   background: #fff0e8;
   color: #b55b2d;
 }
+.positiveTR {
+  border: 3px solid blue;
+}
+.negativeTR {
+  border: 2px solid red;
+}
+.positive {
+  border: 2px solid blue;
+  /* color: blue; */
+  /* font-weight: bold; */
+  /* font-size: 14.5px; */
+  /* text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.6); */
+}
 .negative {
   color: #bd583e;
   font-weight: 700;
+  border: 2px solid red;
 }
 .btnActions {
   width: 50px;
@@ -649,8 +663,72 @@ dialog::backdrop {
   color: white;
   font-size: 18px;
   z-index: 10;
+  cursor: pointer;
 }
 #myBtn:hover {
+  background-color: #555;
+}
+.bottom {
+  position: fixed;
+  display: flex;
+  justify-content: right;
+  /* width: 100%; */
+  right: 20px;
+  bottom: 20px;
+  z-index: 10;
+}
+#myBtn2 {
+  display: none;
+  position: relative;
+  /* right: 20px; */
+  padding: 20px;
+  border: 1px solid #333333eb;
+  border-radius: 50px;
+  /* background: #333333eb url("./Imagenes/top.avif") no-repeat center/cover; */
+  background: transparent url(./Imagenes/bottom.avif) no-repeat center / cover;
+  color: white;
+  font-size: 18px;
+  z-index: 10;
+  cursor: pointer;
+}
+#btnEliminar {
+  background: transparent url(./Imagenes/iconos/borrar.avif) no-repeat center /
+    cover;
+  width: 26px;
+  height: 28px;
+  background-size: contain;
+  border: none;
+}
+#btnEliminar2 {
+  background: transparent url(./Imagenes/iconos/borrar-rojo.avif) no-repeat
+    center / cover;
+  width: 26px;
+  height: 28px;
+  background-size: contain;
+  border: none;
+}
+#btnEditar {
+  background: transparent url(./Imagenes/iconos/editar.avif) no-repeat center /
+    cover;
+  width: 26px;
+  height: 28px;
+  background-size: contain;
+  border: none;
+}
+#newProduct,
+#quickMovement,
+#newMovement {
+  /* background: transparent url(./Imagenes/iconos/agregar-producto.avif) no-repeat center / cover; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.agregar {
+  width: 28px;
+  height: 28px;
+  margin-right: 5px;
+}
+#myBtn2:hover {
   background-color: #555;
 }
 @media (max-width: 1050px) {
@@ -839,7 +917,7 @@ dialog::backdrop {
     font-size: 9px;
   }
   .product-thumb {
-    width: 50%;
+    width: fit-content;
     /* height: unset; */
     margin: auto;
     /* object-fit: contain;
@@ -1005,7 +1083,7 @@ dialog::backdrop {
     /* top: 50%; */
     /* left: 50%; */
     /* transform: translate(-50%, -50%) scale(1.1); */
-    transform: translate(0%, 0%) scale(0.4);
+    transform: translate(0%, 0%) scale(0.6);
     animation: zoomCentro 0.8s ease-out forwards;
     z-index: 9999;
     /* max-width: 50%; */
@@ -1045,6 +1123,9 @@ dialog::backdrop {
   }
   .marca-container .tabla-marca tbody > :only-child {
     grid-column: 1 / -1;
+  }
+  .marca-container .tabla-marca tbody > :only-child > .foto-td > img {
+    width: auto;
   }
   .main {
     padding: 10px 5px;

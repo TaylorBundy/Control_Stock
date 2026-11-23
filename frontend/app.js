@@ -126,6 +126,7 @@ function iniciarAplicacion() {
       .classList.add("hide");
   }
   creaTop(destino);
+  creaBottom(destino);
   window.onscroll = function () {
     scrollFunction();
   };
@@ -149,7 +150,27 @@ function creaTop(contenedor) {
     var nodo1 = document.querySelector(".top");
     var nodoButton = document.createElement("button");
     nodoButton.id = "myBtn";
+    nodoButton.title = "Click para subir";
     nodoButton.addEventListener("click", topFunction);
+    nodo1.appendChild(nodoButton);
+  }
+}
+
+//definimos la funcion que crea el boton de top para dispositivos moviles
+function creaBottom(contenedor) {
+  document.querySelectorAll(".bottom").forEach((nodo) => nodo.remove());
+  const laSeccion = document.getElementById(vistaActual);
+  contenedor = laSeccion;
+  if (contenedor === undefined) alert("No existe el bloque destino");
+  else {
+    var nodoTop = document.createElement("div");
+    nodoTop.className = "bottom";
+    contenedor.appendChild(nodoTop);
+    var nodo1 = document.querySelector(".bottom");
+    var nodoButton = document.createElement("button");
+    nodoButton.id = "myBtn2";
+    nodoButton.title = "Click para bajar";
+    nodoButton.addEventListener("click", bottomFunction);
     nodo1.appendChild(nodoButton);
   }
 }
@@ -158,11 +179,16 @@ function creaTop(contenedor) {
 function scrollFunction() {
   const mybutton = document.getElementById("myBtn");
   const topp = document.querySelector(".top");
+  const mybutton2 = document.getElementById("myBtn2");
+  const topp2 = document.querySelector(".bottom");
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     scrolll = window.scrollY;
     mybutton.style.display = "block";
+    mybutton2.style.display = "block";
     if (isBottomOfPage()) {
-      topp.style.bottom = 20 + "px";
+      topp.style.bottom = 60 + "px";
+      topp2.style.bottom = 20 + "px";
+      mybutton2.style.display = "none";
     } else if (
       scrolll <=
       Math.max(document.documentElement.scrollHeight) - window.innerHeight
@@ -171,12 +197,30 @@ function scrollFunction() {
       if (final > target && final <= inicios) {
         topp.style.bottom = Math.max(target, final) + "px";
       } else {
-        topp.style.bottom = 20 + "px";
+        topp.style.bottom = 60 + "px";
       }
     }
   } else {
     mybutton.style.display = "none";
+    mybutton2.style.display = "none";
   }
+
+  //   if (isBottomOfPage()) {
+  //     topp2.style.bottom = 20 + "px";
+  //   } else if (
+  //     scrolll <=
+  //     Math.max(document.documentElement.scrollHeight) - window.innerHeight
+  //   ) {
+  //     final = inicios - (TargetHeight - scrolll);
+  //     if (final > target && final <= inicios) {
+  //       topp2.style.bottom = Math.max(target, final) + "px";
+  //     } else {
+  //       topp2.style.bottom = 20 + "px";
+  //     }
+
+  // } else {
+  //   mybutton2.style.display = "none";
+  // }
 }
 
 //funcion para determinar si llegamos al final de la pagina
@@ -206,6 +250,40 @@ function topFunction() {
       window.requestAnimationFrame(topFunction);
       window.scrollTo(0, currentScroll - currentScroll / 8); // Efecto suave manual
     }
+  }
+}
+
+// When the user clicks on the button, scroll to the bottom of the document
+// function bottomFunction() {
+//   //const mybutton = document.getElementById("myBtn");
+//   //document.body.scrollTop = 0; // For Safari
+//   //document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+//   if ("scrollTo" in window) {
+//     // Verifica si el navegador soporta scrollTo
+//     window.scrollTo({
+//       bottom: 0,
+//       behavior: "smooth",
+//     });
+//   } else {
+//     // Fallback para navegadores más antiguos
+//     let currentScroll =
+//       document.documentElement.scrollTop || document.body.scrollTop;
+//     if (currentScroll > 0) {
+//       window.requestAnimationFrame(bottomFunction);
+//       window.scrollTo(0, currentScroll - currentScroll / 8); // Efecto suave manual
+//     }
+//   }
+// }
+function bottomFunction() {
+  const bottom = document.documentElement.scrollHeight;
+
+  if ("scrollTo" in window) {
+    window.scrollTo({
+      top: bottom,
+      behavior: "smooth",
+    });
+  } else {
+    window.scrollTo(0, bottom);
   }
 }
 
@@ -460,8 +538,8 @@ function renderProducts() {
                           <td class="observacionesProductos">${esc(p.observaciones)}</td>
                           <td class="btnActions">
                             <div class="actions">
-                              <button class="small-btn" title="Editar Producto:\nCódigo: ${p.codigo}\nMarca: ${p.marca}\nVariedad: ${p.variedad}\nPeso: ${p.peso} Kg" data-edit="${esc(p.codigo)}">Editar</button>
-                              <button class="small-btn" title="Eliminar Producto: ${p.codigo}" data-delete="${esc(p.codigo)}">×</button>
+                              <button id="btnEditar" class="small-btn" title="Editar Producto:\nCódigo: ${p.codigo}\nMarca: ${p.marca}\nVariedad: ${p.variedad}\nPeso: ${p.peso} Kg" data-edit="${esc(p.codigo)}"></button>
+                              <button id="btnEliminar" class="small-btn" title="Eliminar Producto: ${p.codigo}" data-delete="${esc(p.codigo)}"></button>
                             </div>
                           </td>
                         </tr>
@@ -514,9 +592,9 @@ function renderProducts() {
                             }
                           </td>
                           <td id="observaciones-td">${esc(p.observaciones)}</td>
-                          <td>
+                          <td style="justify-content:center">
                             <div class="actions">
-                              <button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button>
+                              <button class="small-btn" data-edit="${esc(p.codigo)}">✏️ Editar</button>
                               <button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button>
                             </div>
                           </td>
@@ -681,7 +759,7 @@ function renderMovements() {
     rows
       .map(
         (m) =>
-          `<tr><td title="Fecha registrada: ${m.fecha}">${esc(m.fecha)}</td><td title="Tipo de registro: ${m.tipo}">${typeBadge(m.tipo)}</td><td title="Código del producto: ${m.codigo}">${esc(m.codigo)}</td><td title="Nombre del producto: ${productName(m.codigo)}">${esc(productName(m.codigo))}</td><td title="Cantidad de unidades: ${m.cantidad}">${fmt(m.cantidad)} Un</td><td>${esc(m.documento)}</td><td><div class="btnMovements"><button class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}">Eliminar</button></div></td></tr>`,
+          `<tr><td title="Fecha registrada: ${m.fecha}">${esc(m.fecha)}</td><td title="Tipo de registro: ${m.tipo}">${typeBadge(m.tipo)}</td><td title="Código del producto: ${m.codigo}">${esc(m.codigo)}</td><td title="Nombre del producto: ${productName(m.codigo)}">${esc(productName(m.codigo))}</td><td title="Cantidad de unidades: ${m.cantidad}">${fmt(m.cantidad)} Un</td><td>${esc(m.documento)}</td><td><div class="btnMovements"><button id="btnEliminar2" class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}"></button></div></td></tr>`,
       )
       .join("") || empty(7);
   if (plataforma.includes("Android")) {
@@ -689,7 +767,7 @@ function renderMovements() {
       rows
         .map(
           (m) =>
-            `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Producto">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td><td class="btnActions"><button class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}">Eliminar</button></td></tr>`,
+            `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Producto">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td><td class="btnActions"><button class="small-btn" title="Eliminar movimiento:\nIndice: ${m.index}\nCódigo: ${m.codigo}" data-mdelete="${m.index}">🗑️ Eliminar</button></td></tr>`,
         )
         .join("") || empty(7);
   }
@@ -757,16 +835,16 @@ function renderStock() {
                   ${productos
                     .map(
                       (p) => `
-                          <tr>
-                            <td data-label="Código"><b>${esc(p.codigo)}</b></td>
-                            <td data-label="Marca">${esc(p.marca)}</td>
-                            <td data-label="Variedad">${esc(p.variedad)}</td>
-                            <td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td>
-                            <td data-label="Peso">${fmt(p.peso)} Kg</td>
-                            <td data-label="Ingresos">${fmt(p.ingresos)} Un</td>
-                            <td data-label="Salidas">${fmt(p.salidas)} Un</td>
-                            <td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td>
-                            <td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td>
+                          <tr class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}">
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Código"><b>${esc(p.codigo)}</b></td>
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Marca">${esc(p.marca)}</td>
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Variedad">${esc(p.variedad)}</td>
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td>
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Peso">${fmt(p.peso)} Kg</td>
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Ingresos">${fmt(p.ingresos)} Un</td>
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Salidas">${fmt(p.salidas)} Un</td>
+                            <td class="${p.stock < 0 ? "negative" : p.stock > 0 ? "positive" : ""}" data-label="Stock">${fmt(p.stock)} Un</td>
+                            <td class="${p.stock < 0 ? "negativeTR" : p.stock > 0 ? "positiveTR" : ""}" data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td>
                             <!-- <td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td> -->
                           </tr>`,
                     )
@@ -810,7 +888,7 @@ function renderStock() {
                   ${productos
                     .map(
                       (p) => `
-                          <tr>
+                          <tr class="${p.stock < 0 ? "negative" : p.stock > 0 ? "positive" : ""}">
                             <td data-label="Código"><b>${esc(p.codigo)}</b></td>
                             <td data-label="Marca">${esc(p.marca)}</td>
                             <td data-label="Variedad">${esc(p.variedad)}</td>
@@ -818,7 +896,7 @@ function renderStock() {
                             <td data-label="Peso">${fmt(p.peso)} Kg</td>
                             <td data-label="Ingresos">${fmt(p.ingresos)} Un</td>
                             <td data-label="Salidas">${fmt(p.salidas)} Un</td>
-                            <td class="${p.stock < 0 ? "negative" : ""}" data-label="Stock">${fmt(p.stock)} Un</td>
+                            <td data-label="Stock">${fmt(p.stock)} Un</td>
                             <td data-label="Stock (kg)">${fmt(p.stock_kg)} Kg</td>
                             <td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td>
                           </tr>`,
@@ -889,6 +967,7 @@ function showView(view) {
   $("pageTitle").textContent = titles[view] || "Control de Stock";
 
   creaTop(vistaActual);
+  creaBottom(vistaActual);
 }
 
 document
