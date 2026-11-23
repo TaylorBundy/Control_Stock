@@ -47,6 +47,7 @@
     <meta name="theme-color" content="#111111" />
     <!-- <link rel="manifest" href="./manifest.json" /> -->
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./mensajes.css" />
     <!-- <meta name="theme-color" content="#111111" /> -->
   </head>
   <body>
@@ -97,10 +98,16 @@
               accept=".json,application/json"
               hidden
             />
-            <button onclick="document.getElementById('archivo-json').click()">
+            <button
+              id="btnJSON"
+              class="primary"
+              onclick="document.getElementById('archivo-json').click()"
+            >
               Abrir JSON local
             </button>
-            <button onclick="volverOnline()">Volver al servidor</button>
+            <button id="btnSERVER" class="primary" onclick="volverOnline()">
+              Volver al servidor
+            </button>
           </div>
         </header>
         <section id="dashboard" class="view active">
@@ -246,7 +253,7 @@
                 <thead style="display: none">
                   <tr>
                     <th class="codigoProductos">Código</th>
-                    <th >Marca</th>
+                    <th>Marca</th>
                     <th id="product-th">Variedad</th>
                     <th id="presentation-th">Presentación</th>
                     <th>Peso unit.</th>
@@ -472,6 +479,22 @@
         </div>
       </form>
     </dialog>
+    <div id="customModal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 id="modalTitle">Confirmar acción</h3>
+          <button id="modalClose" class="modal-close">&times;</button>
+        </div>
+
+        <div id="modalBody" class="modal-body"></div>
+
+        <div class="modal-actions">
+          <button id="modalCancel" class="btn-secondary">Cancelar</button>
+
+          <button id="modalConfirm" class="btn-danger">Confirmar</button>
+        </div>
+      </div>
+    </div>
     <div id="toast" class="toast"></div>
     <script src="./config.js"></script>
     <script src="./app.js"></script>

@@ -31,6 +31,51 @@ const apiUrl = (path) => API_BASE + path;
 // Funcion que carga al cargar la pagina
 document.addEventListener("DOMContentLoaded", iniciarAplicacion);
 
+// Funcion para mostrar mensajes personalizados
+function mostrarModal({
+  titulo = "Confirmar acción",
+  contenido = "",
+  confirmar = "Confirmar",
+  cancelar = "Cancelar",
+  tipo = "danger",
+} = {}) {
+  return new Promise((resolve) => {
+    const modal = $("customModal");
+
+    $("modalTitle").textContent = titulo;
+    $("modalBody").innerHTML = contenido;
+    $("modalConfirm").textContent = confirmar;
+    $("modalCancel").textContent = cancelar;
+
+    $("modalConfirm").className =
+      tipo === "danger" ? "btn-danger" : "btn-primary";
+
+    modal.classList.add("active");
+
+    function cerrar(resultado) {
+      modal.classList.remove("active");
+
+      $("modalConfirm").removeEventListener("click", aceptar);
+      $("modalCancel").removeEventListener("click", rechazar);
+      $("modalClose").removeEventListener("click", rechazar);
+
+      resolve(resultado);
+    }
+
+    function aceptar() {
+      cerrar(true);
+    }
+
+    function rechazar() {
+      cerrar(false);
+    }
+
+    $("modalConfirm").addEventListener("click", aceptar);
+    $("modalCancel").addEventListener("click", rechazar);
+    $("modalClose").addEventListener("click", rechazar);
+  });
+}
+
 document
   .getElementById("archivo-json")
   .addEventListener("change", async (e) => {
@@ -71,6 +116,8 @@ function iniciarAplicacion() {
   vistaActual = "dashboard";
   cerrarImagenesAlScroll();
   if (plataforma.includes("Android")) {
+    document.querySelector("#btnJSON").classList.add("hide");
+    document.querySelector("#btnSERVER").classList.add("hide");
     document.querySelector(
       "body > div.shell > aside > div.brand > div.brand-icon > img",
     ).src = "./Imagenes/logo2.avif";
@@ -162,6 +209,7 @@ function topFunction() {
   }
 }
 
+// Funcion para mostrar mensajes informativos en la parte inferior derecha
 function toast(msg) {
   const t = $("toast");
   t.textContent = msg;
@@ -209,19 +257,20 @@ function stockRows(data) {
   });
 }
 
-async function api2(url, opts = {}) {
-  const r = await fetch(apiUrl(url), {
-    headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
-    ...opts,
-  });
-  let d = {};
-  try {
-    d = await r.json();
-  } catch {}
-  if (!r.ok) throw Error(d.error || "Error de servidor");
-  return d;
-}
+// async function api2(url, opts = {}) {
+//   const r = await fetch(apiUrl(url), {
+//     headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
+//     ...opts,
+//   });
+//   let d = {};
+//   try {
+//     d = await r.json();
+//   } catch {}
+//   if (!r.ok) throw Error(d.error || "Error de servidor");
+//   return d;
+// }
 
+// Funcion principal que llama a la api
 async function api(url, opts = {}) {
   // MODO LOCAL
   // if (modoLocal) {
@@ -519,67 +568,67 @@ function renderProducts() {
 }
 
 // Funcion que renderiza los productos
-function renderProducts2() {
-  const q = $("productSearch").value.toLowerCase();
-  const rows = state.products.filter((p) =>
-    [p.codigo, p.marca, p.variedad].join(" ").toLowerCase().includes(q),
-  );
-  $("productsBody").innerHTML =
-    rows
-      .map(
-        (p) =>
-          `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td id="product-td">${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
-      )
-      .join("") || empty(8);
-  if (plataforma.includes("Android")) {
-    $("productsBody").innerHTML =
-      rows
-        .map(
-          (p) =>
-            `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad" id="product-td">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td data-label="Observaciones" id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
-        )
-        .join("") || empty(8);
-    presentacion.classList.add("hide");
-    document.querySelector("#observaciones-th").classList.add("hide");
-    //$("btnDelete").classList.add("hide");
-    document
-      .querySelectorAll("#btnDelete")
-      .forEach((td) => td.classList.add("hide"));
-    document
-      .querySelectorAll("#presentacion-td")
-      .forEach((td) => td.classList.add("hide"));
-    document
-      .querySelectorAll("#observaciones-td")
-      .forEach((td) => td.classList.add("hide"));
-    document.querySelectorAll(".foto-td").forEach((td) => {
-      td.addEventListener("click", () => {
-        const img = td.querySelector("img");
+// function renderProducts2() {
+//   const q = $("productSearch").value.toLowerCase();
+//   const rows = state.products.filter((p) =>
+//     [p.codigo, p.marca, p.variedad].join(" ").toLowerCase().includes(q),
+//   );
+//   $("productsBody").innerHTML =
+//     rows
+//       .map(
+//         (p) =>
+//           `<tr><td><b>${esc(p.codigo)}</b></td><td>${esc(p.marca)}</td><td id="product-td">${esc(p.variedad)}</td><td id="presentacion-td">${esc(p.presentacion)}</td><td>${fmt(p.peso)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+//       )
+//       .join("") || empty(8);
+//   if (plataforma.includes("Android")) {
+//     $("productsBody").innerHTML =
+//       rows
+//         .map(
+//           (p) =>
+//             `<tr><td data-label="Código"><b>${esc(p.codigo)}</b></td><td data-label="Marca">${esc(p.marca)}</td><td data-label="Variedad" id="product-td">${esc(p.variedad)}</td><td data-label="Presentación" id="presentacion-td">${esc(p.presentacion)}</td><td data-label="Peso">${fmt(p.peso)} Kg</td><td id="foto-td" class="foto-td">${p.foto ? `<img class="product-thumb" src="${esc(photoSrc(p.foto))}" alt="${esc(p.variedad)}" loading="lazy" onerror="this.outerHTML='<span class=&quot;no-photo&quot;>No encontrada</span>'">` : '<span class="no-photo">Sin foto</span>'}</td><td data-label="Observaciones" id="observaciones-td">${esc(p.observaciones)}</td><td><div class="actions"><button class="small-btn" data-edit="${esc(p.codigo)}">Editar</button><button id="btnDelete" class="small-btn" data-delete="${esc(p.codigo)}">×</button></div></td></tr>`,
+//         )
+//         .join("") || empty(8);
+//     presentacion.classList.add("hide");
+//     document.querySelector("#observaciones-th").classList.add("hide");
+//     //$("btnDelete").classList.add("hide");
+//     document
+//       .querySelectorAll("#btnDelete")
+//       .forEach((td) => td.classList.add("hide"));
+//     document
+//       .querySelectorAll("#presentacion-td")
+//       .forEach((td) => td.classList.add("hide"));
+//     document
+//       .querySelectorAll("#observaciones-td")
+//       .forEach((td) => td.classList.add("hide"));
+//     document.querySelectorAll(".foto-td").forEach((td) => {
+//       td.addEventListener("click", () => {
+//         const img = td.querySelector("img");
 
-        if (img) {
-          if (imagenExpandida) {
-            cerrarImagen();
-          } else {
-            expandirImagenUnica(img);
-          }
-        }
-      });
-    });
-  } else {
-    document.querySelectorAll(".foto-td").forEach((td) => {
-      td.addEventListener("click", () => {
-        const img = td.querySelector("img");
+//         if (img) {
+//           if (imagenExpandida) {
+//             cerrarImagen();
+//           } else {
+//             expandirImagenUnica(img);
+//           }
+//         }
+//       });
+//     });
+//   } else {
+//     document.querySelectorAll(".foto-td").forEach((td) => {
+//       td.addEventListener("click", () => {
+//         const img = td.querySelector("img");
 
-        if (img) {
-          if (imagenExpandida) {
-            cerrarImagen();
-          } else {
-            expandirImagenUnica(img);
-          }
-        }
-      });
-    });
-  }
-}
+//         if (img) {
+//           if (imagenExpandida) {
+//             cerrarImagen();
+//           } else {
+//             expandirImagenUnica(img);
+//           }
+//         }
+//       });
+//     });
+//   }
+// }
 
 // Funcion que expande la imagen y cierra la anterior si hay una abierta
 function expandirImagenUnica(img) {
@@ -866,39 +915,121 @@ $("newMovement").onclick = () => openMovement();
 $("productsBody").onclick = async (e) => {
   const edit = e.target.dataset.edit,
     del = e.target.dataset.delete;
-  if (edit) openProduct(state.products.find((p) => p.codigo === edit));
-  if (del && confirm("¿Eliminar este producto?"))
+  // if (edit) openProduct(state.products.find((p) => p.codigo === edit));
+  // if (del && confirm(`¿Eliminar este producto?\nProducto: ${p.codigo}`))
+  if (edit) {
+    const p = state.products.find((p) => p.codigo === edit);
+    openProduct(p);
+  }
+
+  if (del) {
+    const p = state.products.find((p) => p.codigo === del);
+
+    if (!p) return;
+
+    const confirmar = await mostrarModal({
+      titulo: "Eliminar producto",
+      contenido: `
+        <p>¿Estás seguro de eliminar este producto?</p>
+
+        <div class="producto-info">
+          <b>Marca: ${p.marca}</b>
+          <p>Código: ${p.codigo}</p>
+          <p>Variedad: ${p.variedad}</p>
+          <p>Presentación: ${p.presentacion}</p>
+        </div>
+
+        <p>Esta acción no se puede deshacer.</p>
+      `,
+      confirmar: "Eliminar",
+      tipo: "danger",
+    });
+
+    if (!confirmar) return;
+
     try {
-      const resultado = await api("/api/products/" + encodeURIComponent(del), {
+      await api("/api/products/" + encodeURIComponent(del), {
         method: "DELETE",
       });
 
-      console.log("Estado del servidor:", resultado.estado);
-      console.log("Operación:", resultado.operacion);
-      console.log("Resultado:", resultado.mensaje);
-      // await api("/api/products/" + encodeURIComponent(del), {
-      //   method: "DELETE",
-      // });
-      // const response = await api("/api/products/" + encodeURIComponent(del), {
-      //   method: "DELETE",
-      // });
-      // const response = await fetch(`${apiUrl}/api/products/${del}`, {
-      //   method: "DELETE",
-      // });
-      // const resultado = await response.json();
-
-      // if (response.ok && resultado.ok) {
-      //   console.log("Estado:", resultado.estado);
-      //   console.log("Servidor:", resultado.servidor);
-      //   console.log("Mensaje:", resultado.mensaje);
-      // } else {
-      //   console.error("Error:", resultado.mensaje);
-      // }
       await refresh();
       toast("Producto eliminado");
     } catch (err) {
       toast(err.message);
     }
+  }
+
+  // if (del) {
+  //   const p = state.products.find((p) => p.codigo === del);
+
+  //   const confirmar = await mostrarModal({
+  //     titulo: "Eliminar producto",
+  //     contenido: `
+  //       <p>¿Estás seguro de eliminar este producto?</p>
+
+  //       <div class="producto-info">
+  //         <b>${p.marca}</b>
+  //         <p>Código: ${p.codigo}</p>
+  //         <p>Variedad: ${p.variedad}</p>
+  //         <p>Presentación: ${p.presentacion}</p>
+  //       </div>
+
+  //       <p>Esta acción no se puede deshacer.</p>
+  //     `,
+  //     confirmar: "Eliminar",
+  //     tipo: "danger",
+  //   });
+
+  //   if (
+  //     p &&
+  //     confirm(
+  //       `¿Eliminar este producto?
+
+  //       Código: ${p.codigo}
+  //       Marca: ${p.marca}
+  //       Variedad: ${p.variedad}
+  //       Presentación: ${p.presentacion}
+  //       Precio: $${p.precio}
+
+  //       Esta acción no se puede deshacer.`,
+  //     )
+  //   ) {
+  //     try {
+  //       const resultado = await api(
+  //         "/api/products/" + encodeURIComponent(del),
+  //         {
+  //           method: "DELETE",
+  //         },
+  //       );
+
+  //       console.log("Estado del servidor:", resultado.estado);
+  //       console.log("Operación:", resultado.operacion);
+  //       console.log("Resultado:", resultado.mensaje);
+  //       // await api("/api/products/" + encodeURIComponent(del), {
+  //       //   method: "DELETE",
+  //       // });
+  //       // const response = await api("/api/products/" + encodeURIComponent(del), {
+  //       //   method: "DELETE",
+  //       // });
+  //       // const response = await fetch(`${apiUrl}/api/products/${del}`, {
+  //       //   method: "DELETE",
+  //       // });
+  //       // const resultado = await response.json();
+
+  //       // if (response.ok && resultado.ok) {
+  //       //   console.log("Estado:", resultado.estado);
+  //       //   console.log("Servidor:", resultado.servidor);
+  //       //   console.log("Mensaje:", resultado.mensaje);
+  //       // } else {
+  //       //   console.error("Error:", resultado.mensaje);
+  //       // }
+  //       await refresh();
+  //       toast("Producto eliminado");
+  //     } catch (err) {
+  //       toast(err.message);
+  //     }
+  //   }
+  // }
 };
 
 $("pPhotoFile").onchange = () => {

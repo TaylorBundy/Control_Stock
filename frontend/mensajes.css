@@ -1,0 +1,104 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 400px;
+  /* background: var(--card-bg, #fff); */
+  background: #173e30;
+  color: white;
+  /* color: var(--text, #222); */
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+  animation: modalShow 0.2s ease;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.modal-header h3 {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  background: #5dc978;
+  border-radius: 5px;
+}
+.producto-info b {
+  display: flex;
+  border-bottom: 1px solid;
+}
+.producto-info p {
+  border-bottom: 1px solid;
+}
+/* .modal-close {
+  border: 0;
+  background: none;
+  font-size: 25px;
+  cursor: pointer;
+} */
+.modal-close {
+  position: absolute;
+  border: 0;
+  background: none;
+  font-size: 25px;
+  cursor: pointer;
+  /* width: 10%; */
+  right: 0;
+  z-index: 999;
+}
+
+.modal-body {
+  margin: 20px 0;
+  border: 1px solid #5dc978;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+/* .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+} */
+.modal-actions {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+  background: #5dc978;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.modal-actions button {
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

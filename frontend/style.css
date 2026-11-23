@@ -225,11 +225,11 @@ body {
   color: #bb6c34;
 }
 #movements .panel {
-    margin-bottom: 18px;
-    overflow: hidden;
-    border: 2px solid #777;
-    border-radius: 5px;
-    padding: 5px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 2px solid #777;
+  border-radius: 5px;
+  padding: 5px;
 }
 #movements table {
   border-collapse: separate;
@@ -287,32 +287,34 @@ td {
 /* tbody tr:last-child td {
   border-bottom: 0;
 } */
- #movementsBody tr td {
+#movementsBody tr td {
   width: 100px;
- }
- #movementsBody tr {
+}
+#movementsBody tr {
   /* background: #fbfdfb; */
   background: #306b56d6;
 }
- #movementsBody tr:hover {
+#movementsBody tr:hover {
   background: #173e3061;
   font-weight: bold;
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
- }
- #movementsBody tr:nth-child(even) {
+}
+#movementsBody tr:nth-child(even) {
   background: #306b5694;
- }
- #movementsBody tr:nth-child(even):hover {
+}
+#movementsBody tr:nth-child(even):hover {
   background: #173e3061;
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
- }
-#productsBody .marca-separador tr:hover, #stockBody .marca-separador tr:hover {
+}
+#productsBody .marca-separador tr:hover,
+#stockBody .marca-separador tr:hover {
   background: #173e3061;
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   /* transform: scale(1.002); */
   font-weight: bold;
 }
-#productsBody .marca-separador tr:nth-child(even):hover, #stockBody .marca-separador tr:nth-child(even):hover {
+#productsBody .marca-separador tr:nth-child(even):hover,
+#stockBody .marca-separador tr:nth-child(even):hover {
   background: #173e3061;
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   /* transform: scale(1.002); */
@@ -365,11 +367,13 @@ td {
 }
 .small-btn {
   border: 1px solid var(--line);
-  background: white;
+  /* background: white; */
   border-radius: 6px;
   padding: 5px 8px;
   cursor: pointer;
-  color: #476253;
+  /* color: #476253; */
+  background: var(--green);
+  color: white;
 }
 .toolbar {
   display: flex;
@@ -877,11 +881,13 @@ dialog::backdrop {
     background: #306b5694;
   }
   #movementsBody tr,
-  #dashStock tr, #dashMovements tr {
+  #dashStock tr,
+  #dashMovements tr {
     background: #306b56d6;
   }
   #movementsBody tr:nth-child(even),
-  #dashStock tr:nth-child(even), #dashMovements tr:nth-child(even) {
+  #dashStock tr:nth-child(even),
+  #dashMovements tr:nth-child(even) {
     background: #306b5694;
   }
   tr {
@@ -1021,9 +1027,9 @@ dialog::backdrop {
   #movementsBody tr td {
     /* width: 100px; */
     width: unset;
-}
-.btnActions {
-  justify-content: center;
-  padding: 5px;
-}
+  }
+  .btnActions {
+    justify-content: center;
+    padding: 5px;
+  }
 }
