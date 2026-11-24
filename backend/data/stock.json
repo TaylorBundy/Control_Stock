@@ -419,15 +419,6 @@
     {
       "fecha": "2026-11-24",
       "tipo": "INGRESO",
-      "codigo": "PIP-002-1000",
-      "cantidad": 276,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
-      "fecha": "2026-11-24",
-      "tipo": "INGRESO",
       "codigo": "PIP-004-1000",
       "cantidad": 186,
       "documento": "",
