@@ -332,6 +332,15 @@
       "peso": 0.5,
       "foto": "",
       "observaciones": ""
+    },
+    {
+      "codigo": "PLA-001-1000",
+      "marca": "PLAYADITO",
+      "variedad": "comun",
+      "presentacion": "",
+      "peso": 1.0,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
