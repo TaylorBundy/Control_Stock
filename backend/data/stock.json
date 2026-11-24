@@ -370,6 +370,15 @@
       "documento": "",
       "contacto": "",
       "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CBS-006-500",
+      "cantidad": 840,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
     }
   ],
   "photo_map": {
