@@ -482,15 +482,6 @@
     {
       "fecha": "2026-11-24",
       "tipo": "INGRESO",
-      "codigo": "ROS-003-500",
-      "cantidad": 700,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
-      "fecha": "2026-11-24",
-      "tipo": "INGRESO",
       "codigo": "ROS-001-500",
       "cantidad": 960,
       "documento": "",
