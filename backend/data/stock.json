@@ -455,15 +455,6 @@
     {
       "fecha": "2026-11-24",
       "tipo": "INGRESO",
-      "codigo": "PIP-004-1000",
-      "cantidad": 186,
-      "documento": "",
-      "contacto": "",
-      "observaciones": ""
-    },
-    {
-      "fecha": "2026-11-24",
-      "tipo": "INGRESO",
       "codigo": "ROS-003-500",
       "cantidad": 700,
       "documento": "",
