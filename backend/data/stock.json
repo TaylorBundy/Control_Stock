@@ -314,6 +314,15 @@
       "peso": 0.5,
       "foto": "./Imagenes/Union/roja.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "NAT-001-500",
+      "marca": "NATURA",
+      "variedad": "suave",
+      "presentacion": "",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
