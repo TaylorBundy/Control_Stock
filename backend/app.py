@@ -1337,26 +1337,32 @@ def add_movement_original():
 # Luego hace backup en googleDrive
 @app.post("/api/movements")
 def add_movement():
-    # data = load_data()
-    data = load_movements()
 
-    movimientos = data["movements"]
+    # 1. Leer productos y movimientos por separado
+    products_data = load_products()
+    movements_data = load_movements()
+
+    movimientos = movements_data["movements"]
     m = request.get_json(force=True)
 
+    # 2. Validar tipo de movimiento
     if m.get("tipo") not in ["INGRESO", "SALIDA"]:
         return jsonify(error="Tipo de movimiento inválido."), 400
 
-    if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
+    # 3. Validar existencia del producto
+    if not any(p["codigo"] == m.get("codigo") for p in products_data["products"]):
         return jsonify(error="El código no existe en Productos."), 400
 
+    # 4. Validar cantidad
     try:
         qty = int(m.get("cantidad", 0))
-    except:
+    except (ValueError, TypeError):
         qty = 0
 
     if qty <= 0:
         return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
 
+    # 5. Crear movimiento
     item = {
         "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
         "tipo": m["tipo"],
@@ -1367,19 +1373,26 @@ def add_movement():
         "observaciones": m.get("observaciones", ""),
     }
 
-    data["movements"].append(item)
+    movimientos.append(item)
 
-    # 1. Guardar JSON en GitHub
-    save_file("backend/data/movements.json", data, "Agregar movimiento")
+    # 6. Guardar movimientos.json en GitHub
+    save_file("backend/data/movements.json", movements_data, "Agregar movimiento")
 
-    # 2. Generar backup automático
+    # 7. Generar backup automático
     try:
-        json_content = json.dumps(data, ensure_ascii=False, indent=2)
+        # Obtener stock.json actualizado desde GitHub
+        products_content = json.dumps(products_data, ensure_ascii=False, indent=2)
+
+        # Obtener movements.json actualizado
+        movements_content = json.dumps(movements_data, ensure_ascii=False, indent=2)
 
         # Obtener contenido del INI
         ini_content = leer_archivo_ini()
 
-        resultado = enviar_backup(json_content, ini_content, origen="automatico")
+        # Enviar backup
+        resultado = enviar_backup(
+            products_content, movements_content, ini_content, origen="automatico"
+        )
 
         app.logger.info(f"Backup automático realizado: {resultado.get('carpeta')}")
 
@@ -1387,6 +1400,60 @@ def add_movement():
         app.logger.error(f"Error en backup automático: {e}")
 
     return jsonify(ok=True)
+
+
+# @app.post("/api/movements")
+# def add_movement():
+#     # data = load_data()
+#     data = load_movements()
+
+#     movimientos = data["movements"]
+#     m = request.get_json(force=True)
+
+#     if m.get("tipo") not in ["INGRESO", "SALIDA"]:
+#         return jsonify(error="Tipo de movimiento inválido."), 400
+
+#     if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
+#         return jsonify(error="El código no existe en Productos."), 400
+
+#     try:
+#         qty = int(m.get("cantidad", 0))
+#     except:
+#         qty = 0
+
+#     if qty <= 0:
+#         return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
+
+#     item = {
+#         "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
+#         "tipo": m["tipo"],
+#         "codigo": m["codigo"],
+#         "cantidad": qty,
+#         "documento": m.get("documento", ""),
+#         "contacto": m.get("contacto", ""),
+#         "observaciones": m.get("observaciones", ""),
+#     }
+
+#     data["movements"].append(item)
+
+#     # 1. Guardar JSON en GitHub
+#     save_file("backend/data/movements.json", data, "Agregar movimiento")
+
+#     # 2. Generar backup automático
+#     try:
+#         json_content = json.dumps(data, ensure_ascii=False, indent=2)
+
+#         # Obtener contenido del INI
+#         ini_content = leer_archivo_ini()
+
+#         resultado = enviar_backup(json_content, ini_content, origen="automatico")
+
+#         app.logger.info(f"Backup automático realizado: {resultado.get('carpeta')}")
+
+#     except Exception as e:
+#         app.logger.error(f"Error en backup automático: {e}")
+
+#     return jsonify(ok=True)
 
 
 @app.delete("/api/movements/<int:index>")

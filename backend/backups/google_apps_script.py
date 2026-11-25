@@ -2,7 +2,7 @@ import os
 import requests
 
 
-def enviar_backup(json_content, ini_content, origen="manual"):
+def enviar_backup(json_content, movements_content, ini_content, origen="manual"):
     """
     Envía los archivos JSON e INI a Google Apps Script.
     """
@@ -27,7 +27,11 @@ def enviar_backup(json_content, ini_content, origen="manual"):
     payload = {
         "token": secret,
         "origen": origen,
-        "files": {"json": json_content, "ini": ini_content},
+        "files": {
+            "json": json_content,
+            "movements": movements_content,
+            "ini": ini_content,
+        },
     }
 
     try:
