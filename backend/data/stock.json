@@ -514,6 +514,15 @@
       "documento": "",
       "contacto": "",
       "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-25",
+      "tipo": "INGRESO",
+      "codigo": "PLA-001-1000",
+      "cantidad": 100,
+      "documento": "",
+      "contacto": "",
+      "observaciones": "probamos evento del boton que solo nos permita 1 click"
     }
   ],
   "photo_map": {
@@ -550,6 +559,7 @@
     "union|roja": "./Imagenes/Union/roja.avif",
     "natura|suave": "./Imagenes/Natura/suave.avif",
     "buenas y santas|hierbasreales": "./Imagenes/BuenasSantas/hierbasReales.avif",
+    "playadito|comun": "./Imagenes/Playadito/comun.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
     "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
@@ -561,7 +571,6 @@
     "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
-    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
-    "playadito|comun": "./Imagenes/Playadito/comun.avif"
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif"
   }
 }
