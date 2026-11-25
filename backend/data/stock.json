@@ -350,6 +350,15 @@
       "peso": 0.5,
       "foto": "./Imagenes/Cachamate/rosa.avif",
       "observaciones": ""
+    },
+    {
+      "codigo": "CHA-003-500",
+      "marca": "CACHAMATE",
+      "variedad": "verde",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
