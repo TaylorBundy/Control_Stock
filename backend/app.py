@@ -1399,7 +1399,7 @@ def delete_movement(index):
     data["movements"].pop(index)
 
     # Guardar directamente en GitHub
-    save_file("backend/data/stock.json", data, "Eliminar movimiento")
+    save_file("backend/data/movements.json", data, "Eliminar movimiento")
 
     return jsonify(ok=True)
 
