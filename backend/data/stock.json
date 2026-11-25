@@ -273,7 +273,7 @@
     {
       "codigo": "VER-002-500",
       "marca": "VERDEFLOR",
-      "variedad": "menta_500",
+      "variedad": "menta",
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/menta500.avif",
@@ -542,6 +542,7 @@
     "verdeflor|boldo1000": "./Imagenes/Verdeflor/boldo1000.avif",
     "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
     "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
+    "verdeflor|naranja": "./Imagenes/Verdeflor/naranja500.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "cachamate|amarilla": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "union|roja": "./Imagenes/Union/roja.avif",
