@@ -565,6 +565,57 @@
         </div>
       </div>
     </div>
+
+    <!-- MODAL DE AUTORIZACIÓN BACKUP -->
+    <div id="modalBackupAuth" class="modal-backup">
+      <div class="modal-backup-content">
+        <div class="modal-backup-header">
+          <i class="fa-solid fa-shield-halved"></i>
+          <h3>Autorización requerida</h3>
+          <button type="button" id="cerrarBackupAuth" aria-label="Cerrar">
+            &times;
+          </button>
+        </div>
+
+        <p>Ingresá tus credenciales para realizar el backup.</p>
+
+        <form id="formBackupAuth">
+          <div class="backup-input-group">
+            <label for="backupUser">Usuario</label>
+            <input
+              type="text"
+              id="backupUser"
+              autocomplete="username"
+              placeholder="Ingresar usuario"
+              required
+            />
+          </div>
+
+          <div class="backup-input-group">
+            <label for="backupPassword">Contraseña</label>
+            <input
+              type="password"
+              id="backupPassword"
+              autocomplete="current-password"
+              placeholder="Ingresar contraseña"
+              required
+            />
+          </div>
+
+          <p id="backupAuthError" class="backup-auth-error"></p>
+
+          <div class="backup-modal-actions">
+            <button type="button" id="cancelarBackupAuth">Cancelar</button>
+
+            <button type="submit" id="confirmarBackupAuth">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              Confirmar Backup
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <div id="toast" class="toast"></div>
     <script src="./config.js"></script>
     <script src="./app.js"></script>

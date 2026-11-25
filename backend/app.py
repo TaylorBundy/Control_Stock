@@ -10,6 +10,7 @@ import requests
 from urllib.parse import quote
 from flask import Response, abort
 from backups.google_apps_script import enviar_backup
+import hmac
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE / "data")))
@@ -195,18 +196,46 @@ def save_file(path, content, message=None):
 
 
 # Funcion para hacer backup manualmente en GoogleDrive
+
+
 @app.post("/api/backup")
 def realizar_backup_manual():
+
     try:
-        # 1. Obtener JSON actual
+        credentials = request.get_json(silent=True) or {}
+
+        usuario = credentials.get("usuario", "")
+        password = credentials.get("password", "")
+
+        usuario_correcto = os.getenv("BACKUP_USER", "")
+        password_correcto = os.getenv("BACKUP_PASSWORD", "")
+
+        # Verificar que las variables estén configuradas
+        if not usuario_correcto or not password_correcto:
+            app.logger.error("Credenciales BACKUP no configuradas")
+            return (
+                jsonify(ok=False, error="Autenticación no configurada en el servidor."),
+                500,
+            )
+
+        # Validar credenciales
+        if not (
+            isinstance(usuario, str)
+            and isinstance(password, str)
+            and hmac.compare_digest(usuario, usuario_correcto)
+            and hmac.compare_digest(password, password_correcto)
+        ):
+            return jsonify(ok=False, error="Usuario o contraseña incorrectos."), 401
+
+        # Obtener JSON
         data = load_data()
 
         json_content = json.dumps(data, ensure_ascii=False, indent=2)
 
-        # 2. Leer INI completo
+        # Obtener INI
         ini_content = leer_archivo_ini()
 
-        # 3. Enviar ambos archivos a Google Drive
+        # Ejecutar backup
         resultado = enviar_backup(json_content, ini_content, origen="manual")
 
         return (
@@ -217,9 +246,36 @@ def realizar_backup_manual():
         )
 
     except Exception as e:
-        app.logger.error(f"Error al realizar backup manual: {e}")
+        app.logger.error(f"Error en backup manual: {e}")
 
         return jsonify(ok=False, error="No se pudo realizar el backup."), 500
+
+
+# @app.post("/api/backup")
+# def realizar_backup_manual():
+#     try:
+#         # 1. Obtener JSON actual
+#         data = load_data()
+
+#         json_content = json.dumps(data, ensure_ascii=False, indent=2)
+
+#         # 2. Leer INI completo
+#         ini_content = leer_archivo_ini()
+
+#         # 3. Enviar ambos archivos a Google Drive
+#         resultado = enviar_backup(json_content, ini_content, origen="manual")
+
+#         return (
+#             jsonify(
+#                 ok=True, mensaje="Backup realizado correctamente.", backup=resultado
+#             ),
+#             200,
+#         )
+
+#     except Exception as e:
+#         app.logger.error(f"Error al realizar backup manual: {e}")
+
+#         return jsonify(ok=False, error="No se pudo realizar el backup."), 500
 
 
 def update_ini_photo_map(marca, variedad, foto):

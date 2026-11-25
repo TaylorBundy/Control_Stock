@@ -774,6 +774,144 @@ dialog::backdrop {
   background-color: #555;
 }
 
+/* MODAL BACKUP */
+
+.modal-backup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.modal-backup.active {
+  display: flex;
+}
+
+.modal-backup-content {
+  background: var(--bg-card, #fff);
+  color: var(--text-color, #222);
+  width: 100%;
+  max-width: 380px;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  animation: backupModalIn 0.2s ease;
+}
+
+.modal-backup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.modal-backup-header > i {
+  color: #16a34a;
+  font-size: 22px;
+}
+
+.modal-backup-header h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 18px;
+}
+
+.modal-backup-header button {
+  border: none;
+  background: transparent;
+  font-size: 25px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.modal-backup-content > p {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-bottom: 20px;
+}
+
+.backup-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.backup-input-group label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.backup-input-group input {
+  padding: 11px;
+  border: 1px solid #aaa;
+  border-radius: 7px;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.backup-input-group input:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.15);
+}
+
+.backup-auth-error {
+  color: #dc2626;
+  font-size: 12px;
+  min-height: 16px;
+  margin: 5px 0;
+}
+
+.backup-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.backup-modal-actions button {
+  padding: 10px 13px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#cancelarBackupAuth {
+  background: #e5e7eb;
+  color: #333;
+}
+
+#confirmarBackupAuth {
+  background: #16a34a;
+  color: white;
+}
+
+#confirmarBackupAuth:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes backupModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 1050px) {
   .stats {
     grid-template-columns: repeat(2, 1fr);

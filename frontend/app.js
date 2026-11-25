@@ -4,7 +4,8 @@ const btnGuardarMovimiento = document.querySelector("#saveMovement");
 const cantidadMovimientos = document.querySelector("#cantMovimientos");
 const btnBackup = document.querySelector("#quickBackup");
 
-btnBackup.addEventListener("click", realizarBackup);
+//btnBackup.addEventListener("click", realizarBackup);
+btnBackup.addEventListener("click", abrirModalBackup);
 let guardandoMovimiento = false;
 let imagenExpandida = false;
 let vistaActual;
@@ -33,6 +34,97 @@ const esc = (s) =>
   );
 const API_BASE = (window.API_BASE || "").replace(/\/$/, "");
 const apiUrl = (path) => API_BASE + path;
+
+const modalBackupAuth = document.querySelector("#modalBackupAuth");
+const formBackupAuth = document.querySelector("#formBackupAuth");
+
+const backupUser = document.querySelector("#backupUser");
+const backupPassword = document.querySelector("#backupPassword");
+
+const backupAuthError = document.querySelector("#backupAuthError");
+const btnConfirmarBackup = document.querySelector("#confirmarBackupAuth");
+
+// Abrir modal
+function abrirModalBackup() {
+  formBackupAuth.reset();
+  backupAuthError.textContent = "";
+
+  modalBackupAuth.classList.add("active");
+
+  backupUser.focus();
+}
+
+// Cerrar modal
+function cerrarModalBackup() {
+  modalBackupAuth.classList.remove("active");
+  formBackupAuth.reset();
+  backupAuthError.textContent = "";
+}
+
+// Eventos de cierre
+document
+  .querySelector("#cerrarBackupAuth")
+  .addEventListener("click", cerrarModalBackup);
+
+document
+  .querySelector("#cancelarBackupAuth")
+  .addEventListener("click", cerrarModalBackup);
+
+// Abrir desde el botón principal
+// document
+//   .querySelector("#btnBackup")
+//   .addEventListener("click", abrirModalBackup);
+
+// Enviar credenciales y ejecutar backup
+formBackupAuth.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  backupAuthError.textContent = "";
+
+  const usuario = backupUser.value.trim();
+  const password = backupPassword.value;
+
+  btnConfirmarBackup.disabled = true;
+  btnConfirmarBackup.textContent = "Verificando...";
+
+  try {
+    const resultado = await api("/api/backup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usuario,
+        password,
+      }),
+    });
+
+    if (!resultado.ok) {
+      throw new Error(resultado.error || "No se pudo realizar el backup.");
+    }
+
+    cerrarModalBackup();
+
+    // alert(
+    //   "Backup realizado correctamente.\n\n" +
+    //     "Carpeta: " +
+    //     resultado.backup.carpeta,
+    // );
+    toast(
+      "Backup realizado correctamente en Google Drive.\n\n" +
+        "Carpeta: " +
+        resultado.backup.carpeta,
+    );
+  } catch (error) {
+    console.error("Error en backup:", error);
+
+    backupAuthError.textContent = error.message;
+  } finally {
+    btnConfirmarBackup.disabled = false;
+    btnConfirmarBackup.innerHTML =
+      '<i class="fa-solid fa-cloud-arrow-up"></i> Confirmar Backup';
+  }
+});
 
 // Funcion que carga al cargar la pagina
 document.addEventListener("DOMContentLoaded", iniciarAplicacion);
