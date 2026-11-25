@@ -1081,7 +1081,7 @@ def add_product():
 # Funcion para editar productos
 @app.put("/api/products/<codigo>")
 def edit_product(codigo):
-    data = load_data()
+    data = load_products()
     p = request.get_json(force=True)
 
     item = next((x for x in data["products"] if x["codigo"] == codigo), None)
@@ -1147,7 +1147,7 @@ def edit_product(codigo):
 
 @app.post("/api/products/<codigo>/photo")
 def upload_product_photo(codigo):
-    data = load_data()
+    data = load_products()
 
     product = next((p for p in data["products"] if p["codigo"] == codigo), None)
 
@@ -1290,7 +1290,7 @@ def upload_photo_to_github(image, repo_path, message):
 # del apartado "products" del archivo JSON
 @app.delete("/api/products/<codigo>")
 def delete_product(codigo):
-    data = load_data()
+    data = load_products()
 
     producto = next((p for p in data["products"] if p["codigo"] == codigo), None)
 
