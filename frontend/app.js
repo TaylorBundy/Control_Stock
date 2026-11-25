@@ -676,7 +676,7 @@ function renderMovements() {
   const rows = state.movements
     .map((m, i) => ({ ...m, index: i }))
     .filter((m) =>
-      [m.fecha, m.tipo, m.codigo, m.documento, m.contacto]
+      [m.fecha, m.tipo, m.codigo, m.documento, m.contacto, m.peso]
         .join(" ")
         .toLowerCase()
         .includes(q),
@@ -864,7 +864,7 @@ function renderStock() {
 
 function productName(code) {
   let p = state.products.find((x) => x.codigo === code);
-  return p ? `${p.marca} ${p.variedad}` : "";
+  return p ? `${p.marca} ${p.variedad} - ${p.peso} Kg` : "";
 }
 
 function fillProductSelect() {
