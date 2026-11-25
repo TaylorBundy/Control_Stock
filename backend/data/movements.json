@@ -215,6 +215,15 @@
       "documento": "",
       "contacto": "",
       "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-25",
+      "tipo": "INGRESO",
+      "codigo": "CBS-001-500",
+      "cantidad": 777,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
     }
   ]
 }
