@@ -270,15 +270,16 @@ def realizar_backup_manual():
         usuario_correcto = os.getenv("BACKUP_USER", "")
         password_correcto = os.getenv("BACKUP_PASSWORD", "")
 
-        # Verificar que las variables estén configuradas
+        # 1. Verificar configuración de credenciales
         if not usuario_correcto or not password_correcto:
             app.logger.error("Credenciales BACKUP no configuradas")
+
             return (
                 jsonify(ok=False, error="Autenticación no configurada en el servidor."),
                 500,
             )
 
-        # Validar credenciales
+        # 2. Validar credenciales
         if not (
             isinstance(usuario, str)
             and isinstance(password, str)
@@ -287,17 +288,28 @@ def realizar_backup_manual():
         ):
             return jsonify(ok=False, error="Usuario o contraseña incorrectos."), 401
 
-        # Obtener JSON
-        data = load_data()
+        # 3. Leer productos
+        products_data = load_products()
 
-        json_content = json.dumps(data, ensure_ascii=False, indent=2)
+        # 4. Leer movimientos
+        movements_data = load_movements()
 
-        # Obtener INI
+        # 5. Convertir ambos JSON a texto
+        stock_content = json.dumps(products_data, ensure_ascii=False, indent=2)
+
+        movements_content = json.dumps(movements_data, ensure_ascii=False, indent=2)
+
+        # 6. Leer archivo INI
         ini_content = leer_archivo_ini()
 
-        # Ejecutar backup
-        resultado = enviar_backup(json_content, ini_content, origen="manual")
+        # 7. Ejecutar backup
+        resultado = enviar_backup(
+            stock_content, movements_content, ini_content, origen="manual"
+        )
 
+        app.logger.info(f"Backup manual realizado: {resultado.get('carpeta')}")
+
+        # 8. Responder al frontend
         return (
             jsonify(
                 ok=True, mensaje="Backup realizado correctamente.", backup=resultado
@@ -306,9 +318,63 @@ def realizar_backup_manual():
         )
 
     except Exception as e:
+
         app.logger.error(f"Error en backup manual: {e}")
 
         return jsonify(ok=False, error="No se pudo realizar el backup."), 500
+
+
+# @app.post("/api/backup")
+# def realizar_backup_manual():
+
+#     try:
+#         credentials = request.get_json(silent=True) or {}
+
+#         usuario = credentials.get("usuario", "")
+#         password = credentials.get("password", "")
+
+#         usuario_correcto = os.getenv("BACKUP_USER", "")
+#         password_correcto = os.getenv("BACKUP_PASSWORD", "")
+
+#         # Verificar que las variables estén configuradas
+#         if not usuario_correcto or not password_correcto:
+#             app.logger.error("Credenciales BACKUP no configuradas")
+#             return (
+#                 jsonify(ok=False, error="Autenticación no configurada en el servidor."),
+#                 500,
+#             )
+
+#         # Validar credenciales
+#         if not (
+#             isinstance(usuario, str)
+#             and isinstance(password, str)
+#             and hmac.compare_digest(usuario, usuario_correcto)
+#             and hmac.compare_digest(password, password_correcto)
+#         ):
+#             return jsonify(ok=False, error="Usuario o contraseña incorrectos."), 401
+
+#         # Obtener JSON
+#         data = load_data()
+
+#         json_content = json.dumps(data, ensure_ascii=False, indent=2)
+
+#         # Obtener INI
+#         ini_content = leer_archivo_ini()
+
+#         # Ejecutar backup
+#         resultado = enviar_backup(json_content, ini_content, origen="manual")
+
+#         return (
+#             jsonify(
+#                 ok=True, mensaje="Backup realizado correctamente.", backup=resultado
+#             ),
+#             200,
+#         )
+
+#     except Exception as e:
+#         app.logger.error(f"Error en backup manual: {e}")
+
+#         return jsonify(ok=False, error="No se pudo realizar el backup."), 500
 
 
 # @app.post("/api/backup")
@@ -957,7 +1023,8 @@ def github_image():
 # Funcion para agregar productos al JSON de github
 @app.post("/api/products")
 def add_product():
-    data = load_data()
+    # data = load_data()
+    data = load_products()
     p = request.get_json(force=True)
 
     required = ["codigo", "marca", "variedad", "peso"]
@@ -1296,41 +1363,41 @@ def delete_product(codigo):
 #         return jsonify(error=f"No se pudo eliminar el producto: {str(e)}"), 500
 
 
-@app.post("/api/movementsOriginal")
-def add_movement_original():
-    data = load_data()
-    m = request.get_json(force=True)
+# @app.post("/api/movementsOriginal")
+# def add_movement_original():
+#     data = load_data()
+#     m = request.get_json(force=True)
 
-    if m.get("tipo") not in ["INGRESO", "SALIDA"]:
-        return jsonify(error="Tipo de movimiento inválido."), 400
+#     if m.get("tipo") not in ["INGRESO", "SALIDA"]:
+#         return jsonify(error="Tipo de movimiento inválido."), 400
 
-    if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
-        return jsonify(error="El código no existe en Productos."), 400
+#     if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
+#         return jsonify(error="El código no existe en Productos."), 400
 
-    try:
-        qty = int(m.get("cantidad", 0))
-    except:
-        qty = 0
+#     try:
+#         qty = int(m.get("cantidad", 0))
+#     except:
+#         qty = 0
 
-    if qty <= 0:
-        return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
+#     if qty <= 0:
+#         return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
 
-    item = {
-        "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
-        "tipo": m["tipo"],
-        "codigo": m["codigo"],
-        "cantidad": qty,
-        "documento": m.get("documento", ""),
-        "contacto": m.get("contacto", ""),
-        "observaciones": m.get("observaciones", ""),
-    }
+#     item = {
+#         "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
+#         "tipo": m["tipo"],
+#         "codigo": m["codigo"],
+#         "cantidad": qty,
+#         "documento": m.get("documento", ""),
+#         "contacto": m.get("contacto", ""),
+#         "observaciones": m.get("observaciones", ""),
+#     }
 
-    data["movements"].append(item)
+#     data["movements"].append(item)
 
-    # Guardar directamente en GitHub
-    save_file("backend/data/stock.json", data, "Agregar movimiento")
+#     # Guardar directamente en GitHub
+#     save_file("backend/data/stock.json", data, "Agregar movimiento")
 
-    return jsonify(ok=True)
+#     return jsonify(ok=True)
 
 
 # Funcion para agregar movimientos al JSON de github
