@@ -1337,7 +1337,7 @@ def add_movement_original():
 # Luego hace backup en googleDrive
 @app.post("/api/movements")
 def add_movement():
-    data = load_data()
+    # data = load_data()
     data = load_movements()
 
     movimientos = data["movements"]
@@ -1370,7 +1370,7 @@ def add_movement():
     data["movements"].append(item)
 
     # 1. Guardar JSON en GitHub
-    save_file("backend/data/stock.json", data, "Agregar movimiento")
+    save_file("backend/data/movements.json", data, "Agregar movimiento")
 
     # 2. Generar backup automático
     try:
