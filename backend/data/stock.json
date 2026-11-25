@@ -282,7 +282,7 @@
     {
       "codigo": "VER-003-500",
       "marca": "VERDEFLOR",
-      "variedad": "boldo_500",
+      "variedad": "boldo",
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/boldo500.avif",
@@ -543,6 +543,7 @@
     "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
     "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
     "verdeflor|naranja": "./Imagenes/Verdeflor/naranja500.avif",
+    "verdeflor|menta": "./Imagenes/Verdeflor/menta500.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "cachamate|amarilla": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "union|roja": "./Imagenes/Union/roja.avif",
