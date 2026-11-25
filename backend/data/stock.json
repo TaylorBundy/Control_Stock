@@ -1,4 +1,357 @@
 {
+  "products": [
+    {
+      "codigo": "CBS-001-500",
+      "marca": "CBSé",
+      "variedad": "Hierbas Serranas",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/hierbas_serranas.avif",
+      "observaciones": "probamos"
+    },
+    {
+      "codigo": "CBS-002-500",
+      "marca": "CBSé",
+      "variedad": "Hierbas Cuyanas",
+      "presentacion": "Bolson",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/hierbasCuyanas.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-003-500",
+      "marca": "CBSé",
+      "variedad": "Hierbas del Litoral",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/hierbas_litoral.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-004-500",
+      "marca": "CBSé",
+      "variedad": "Guarana",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/guarana.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-005-500",
+      "marca": "CBSé",
+      "variedad": "Limon",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/limon.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-006-500",
+      "marca": "CBSé",
+      "variedad": "Naranja",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/naranja.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-007-500",
+      "marca": "CBSé",
+      "variedad": "Pomelo",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/pomelo.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-008-500",
+      "marca": "CBSé",
+      "variedad": "Miel",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/miel.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-009-500",
+      "marca": "CBSé",
+      "variedad": "Frutos del Bosque",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-010-500",
+      "marca": "CBSé",
+      "variedad": "Frutos del Valle",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-011-500",
+      "marca": "CBSé",
+      "variedad": "Frutos Tropicales",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-012-500",
+      "marca": "CBSé",
+      "variedad": "Silueta",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-013-500",
+      "marca": "CBSé",
+      "variedad": "Silueta Naranja",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/siluetaNaranja.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-014-500",
+      "marca": "CBSé",
+      "variedad": "Regulase",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/regulase.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-015-500",
+      "marca": "CBSé",
+      "variedad": "Endulife",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/endulife.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-016-500",
+      "marca": "CBSé",
+      "variedad": "Jengibre",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/jengibre.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-017-500",
+      "marca": "CBSé",
+      "variedad": "Etiqueta Negra",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/etiquetaNegra.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CBS-018-500",
+      "marca": "CBSé",
+      "variedad": "Mateando",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cbse/mateando.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-001-500",
+      "marca": "PIPORE",
+      "variedad": "verde",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-002-1000",
+      "marca": "PIPORE",
+      "variedad": "verde",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-003-500",
+      "marca": "PIPORE",
+      "variedad": "roja",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PIP-004-1000",
+      "marca": "PIPORE",
+      "variedad": "roja",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-001-500",
+      "marca": "ROSAMONTE",
+      "variedad": "suave",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Rosamonte/suave.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-002-1000",
+      "marca": "ROSAMONTE",
+      "variedad": "suave",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "./Imagenes/Rosamonte/suave.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-003-500",
+      "marca": "ROSAMONTE",
+      "variedad": "comun",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Rosamonte/comun.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "ROS-004-1000",
+      "marca": "ROSAMONTE",
+      "variedad": "comun",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "./Imagenes/Rosamonte/comun.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "AMA-001-500",
+      "marca": "AMANDA",
+      "variedad": "comun",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Amanda/amanda.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "AMA-002-1000",
+      "marca": "AMANDA",
+      "variedad": "comun",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "./Imagenes/Amanda/amanda.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CHA-001-500",
+      "marca": "CACHAMATE",
+      "variedad": "amarilla",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-001-500",
+      "marca": "VERDEFLOR",
+      "variedad": "naranja",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/naranja500.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-002-500",
+      "marca": "VERDEFLOR",
+      "variedad": "menta",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/menta500.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-003-500",
+      "marca": "VERDEFLOR",
+      "variedad": "boldo",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/boldo500.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-004-500",
+      "marca": "VERDEFLOR",
+      "variedad": "cedron",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/cedron.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "VER-005-500",
+      "marca": "VERDEFLOR",
+      "variedad": "peperina",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Verdeflor/peperina.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "UN-001-500",
+      "marca": "UNION",
+      "variedad": "Roja",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Union/roja.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "NAT-001-500",
+      "marca": "NATURA",
+      "variedad": "suave",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Natura/suave.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "BYS-001-500",
+      "marca": "BUENAS Y SANTAS",
+      "variedad": "hierbas reales",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/BuenasSantas/hierbasReales.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "PLA-001-1000",
+      "marca": "PLAYADITO",
+      "variedad": "comun",
+      "presentacion": "Pack",
+      "peso": 1.0,
+      "foto": "./Imagenes/Playadito/comun.avif",
+      "observaciones": ""
+    },
+    {
+      "codigo": "CHA-002-500",
+      "marca": "CACHAMATE",
+      "variedad": "rosa",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "./Imagenes/Cachamate/rosa.avif",
+      "observaciones": ""
+    }
+  ],
   "movements": [
     {
       "fecha": "2026-11-24",
@@ -167,9 +520,58 @@
       "tipo": "INGRESO",
       "codigo": "CBS-001-500",
       "cantidad": 666,
-      "documento": "",
+      "documento": "probamos backup",
       "contacto": "",
       "observaciones": ""
     }
-  ]
+  ],
+  "photo_map": {
+    "cbse|hierbasserranas": "./Imagenes/Cbse/hierbas_serranas.avif",
+    "cbse|naranja": "./Imagenes/Cbse/naranja.avif",
+    "cbse|limon": "./Imagenes/Cbse/limon.avif",
+    "cbse|miel": "./Imagenes/Cbse/miel.avif",
+    "cbse|pomelo": "./Imagenes/Cbse/pomelo.avif",
+    "cbse|guarana": "./Imagenes/Cbse/guarana.avif",
+    "cbse|hierbascuyanas": "./Imagenes/Cbse/hierbasCuyanas.avif",
+    "cbse|hierbasdellitoral": "./Imagenes/Cbse/hierbas_litoral.avif",
+    "cbse|siluetanaranja": "./Imagenes/Cbse/siluetaNaranja.avif",
+    "cbse|regulase": "./Imagenes/Cbse/regulase.avif",
+    "cbse|endulife": "./Imagenes/Cbse/endulife.avif",
+    "cbse|jengibre": "./Imagenes/Cbse/jengibre.avif",
+    "cbse|etiquetanegra": "./Imagenes/Cbse/etiquetaNegra.avif",
+    "cbse|mateando": "./Imagenes/Cbse/mateando.avif",
+    "rosamonte|suave": "./Imagenes/Rosamonte/suave.avif",
+    "rosamonte|comun": "./Imagenes/Rosamonte/comun.avif",
+    "amanda|comun": "./Imagenes/Amanda/amanda.avif",
+    "verdeflor|naranja500": "./Imagenes/Verdeflor/naranja500.avif",
+    "verdeflor|naranja1000": "./Imagenes/Verdeflor/naranja1000.avif",
+    "verdeflor|menta500": "./Imagenes/Verdeflor/menta500.avif",
+    "verdeflor|menta1000": "./Imagenes/Verdeflor/menta1000.avif",
+    "verdeflor|boldo500": "./Imagenes/Verdeflor/boldo500.avif",
+    "verdeflor|boldo1000": "./Imagenes/Verdeflor/boldo1000.avif",
+    "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
+    "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
+    "verdeflor|naranja": "./Imagenes/Verdeflor/naranja500.avif",
+    "verdeflor|menta": "./Imagenes/Verdeflor/menta500.avif",
+    "verdeflor|boldo": "./Imagenes/Verdeflor/boldo500.avif",
+    "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "cachamate|amarilla": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "cachamate|rosa": "./Imagenes/Cachamate/rosa.avif",
+    "union|roja": "./Imagenes/Union/roja.avif",
+    "natura|suave": "./Imagenes/Natura/suave.avif",
+    "buenas y santas|hierbasreales": "./Imagenes/BuenasSantas/hierbasReales.avif",
+    "playadito|comun": "./Imagenes/Playadito/comun.avif",
+    "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
+    "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
+    "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
+    "cbse|frutosdelbosque": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_bosque.avif",
+    "cbse|frutosdelvalle": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_del_valle.avif",
+    "cbse|frutostropicales": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Ffrutos_tropicales.avif",
+    "cbse|hierbaslitoral": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fhierbas_litoral.avif",
+    "cbse|silueta": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCbse%2Fsilueta.avif",
+    "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
+    "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
+    "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif"
+  }
 }
