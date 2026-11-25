@@ -2,6 +2,9 @@ const plataforma = navigator.userAgent;
 const presentacion = document.getElementById("presentation-th");
 const btnGuardarMovimiento = document.querySelector("#saveMovement");
 const cantidadMovimientos = document.querySelector("#cantMovimientos");
+const btnBackup = document.querySelector("#quickBackup");
+
+btnBackup.addEventListener("click", realizarBackup);
 let guardandoMovimiento = false;
 let imagenExpandida = false;
 let vistaActual;
@@ -36,13 +39,15 @@ document.addEventListener("DOMContentLoaded", iniciarAplicacion);
 
 // Funcion para hacer backup manualmente en googleDrive ejecutado desde el boton
 async function realizarBackup() {
-  const btnBackup = document.querySelector("#quickBackup");
+  //const btnBackup = document.querySelector("#quickBackup");
 
   try {
     // Evitar múltiples ejecuciones simultáneas
     if (btnBackup) {
       btnBackup.disabled = true;
-      btnBackup.textContent = "Generando backup...";
+      btnBackup.title = "Realizando backup en GoogleDrive. Espere.!";
+      btnBackup.classList.add("btnBackupWait");
+      btnBackup.innerHTML = `<img class="agregar" src="./Imagenes/Iconos/backup_wait.avif" alt="Logo"/> Generando backup...`; //"Generando backup...";
     }
 
     // Solicitar backup al backend
@@ -56,7 +61,12 @@ async function realizarBackup() {
 
     console.log("Backup realizado:", resultado.backup);
 
-    alert(
+    // alert(
+    //   "Backup realizado correctamente en Google Drive.\n\n" +
+    //     "Carpeta: " +
+    //     resultado.backup.carpeta,
+    // );
+    toast(
       "Backup realizado correctamente en Google Drive.\n\n" +
         "Carpeta: " +
         resultado.backup.carpeta,
@@ -69,7 +79,9 @@ async function realizarBackup() {
     // Reactivar botón
     if (btnBackup) {
       btnBackup.disabled = false;
-      btnBackup.textContent = "Realizar Backup";
+      btnBackup.title = "Realizar backup en GoogleDrive";
+      btnBackup.classList.remove("btnBackupWait");
+      btnBackup.innerHTML = `<img class="agregar" src="./Imagenes/Iconos/backup.avif" alt="Logo"/> Realizar Backup`; //"Realizar Backup";
     }
   }
 }

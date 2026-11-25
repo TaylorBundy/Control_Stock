@@ -735,6 +735,14 @@ dialog::backdrop {
     center / cover !important;
   cursor: wait;
 }
+.btnBackupWait {
+  /* background: transparent url(./Imagenes/Iconos/backup_wait.avif) no-repeat
+    center / cover !important; */
+  cursor: wait;
+  /* width: 28px;
+  height: 28px;
+  margin-right: 5px; */
+}
 #btnEditar {
   background: transparent url(./Imagenes/Iconos/editar.avif) no-repeat center /
     cover;
