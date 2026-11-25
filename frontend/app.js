@@ -1296,27 +1296,6 @@ function openMovement() {
   $("movementDialog").showModal();
 }
 
-// $("saveMovement").onclick = async (e) => {
-//   e.preventDefault();
-//   const m = {
-//     fecha: $("mFecha").value,
-//     tipo: $("mTipo").value,
-//     codigo: $("mCodigo").value,
-//     cantidad: $("mCantidad").value,
-//     documento: $("mDocumento").value,
-//     contacto: $("mContacto").value,
-//     observaciones: $("mObservaciones").value,
-//   };
-//   try {
-//     await api("/api/movements", { method: "POST", body: JSON.stringify(m) });
-//     $("movementDialog").close();
-//     await refresh();
-//     toast("Movimiento registrado");
-//   } catch (err) {
-//     toast(err.message);
-//   }
-// };
-
 // Funcion del boton guardar movimientos
 btnGuardarMovimiento.addEventListener("click", async (e) => {
   e.preventDefault();
