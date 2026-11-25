@@ -593,6 +593,7 @@ function typeBadge(t) {
   return `<span class="badge ${t === "INGRESO" ? "in" : "out"}">${esc(t)}</span>`;
 }
 
+// Funcion que renderiza productos
 function renderProducts() {
   const q = $("productSearch").value.toLowerCase();
 
