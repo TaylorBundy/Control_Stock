@@ -520,7 +520,7 @@
       "tipo": "INGRESO",
       "codigo": "CBS-001-500",
       "cantidad": 666,
-      "documento": "",
+      "documento": "probamos backup",
       "contacto": "",
       "observaciones": ""
     }
