@@ -341,6 +341,15 @@
       "peso": 1.0,
       "foto": "",
       "observaciones": ""
+    },
+    {
+      "codigo": "CHA-002-500",
+      "marca": "CACHAMATE",
+      "variedad": "rosa",
+      "presentacion": "Pack",
+      "peso": 0.5,
+      "foto": "",
+      "observaciones": ""
     }
   ],
   "movements": [
@@ -534,6 +543,7 @@
     "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
     "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "cachamate|amarilla": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "union|roja": "./Imagenes/Union/roja.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
