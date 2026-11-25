@@ -337,7 +337,7 @@
       "codigo": "PLA-001-1000",
       "marca": "PLAYADITO",
       "variedad": "comun",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 1.0,
       "foto": "",
       "observaciones": ""
@@ -549,6 +549,7 @@
     "cachamate|amarilla": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "union|roja": "./Imagenes/Union/roja.avif",
     "natura|suave": "./Imagenes/Natura/suave.avif",
+    "buenas y santas|hierbasreales": "./Imagenes/BuenasSantas/hierbasReales.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
     "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
@@ -560,7 +561,6 @@
     "pipore|roja": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Froja.avif",
     "pipore|verde": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FPipore%2Fverde.avif",
     "rosamonte|rosamonte": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte.avif",
-    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif",
-    "buenas y santas|hierbas reales": "./Imagenes/BuenasSantas/hierbasReales.avif"
+    "rosamonte|rosamontesuave": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FRosamonte%2Frosamonte_suave.avif"
   }
 }
