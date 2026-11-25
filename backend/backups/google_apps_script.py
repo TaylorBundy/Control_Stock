@@ -108,7 +108,17 @@ def enviar_backup(stock_content, movements_content, ini_content, origen="manual"
 
         response.raise_for_status()
 
-        resultado = response.json()
+        # resultado = response.json()
+        try:
+            resultado = response.json()
+
+        except ValueError:
+            raise RuntimeError(
+                "Respuesta inválida de Google Apps Script. "
+                f"HTTP: {response.status_code}. "
+                f"Content-Type: {response.headers.get('Content-Type')}. "
+                f"Respuesta: {response.text[:1000]}"
+            )
 
         if not resultado.get("ok"):
             raise RuntimeError(
