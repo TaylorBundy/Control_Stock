@@ -1,5 +1,8 @@
 const plataforma = navigator.userAgent;
 const presentacion = document.getElementById("presentation-th");
+const btnGuardarMovimiento = document.querySelector("#saveMovement");
+const cantidadMovimientos = document.querySelector("#cantMovimientos");
+let guardandoMovimiento = false;
 let imagenExpandida = false;
 let vistaActual;
 let destino;
@@ -45,6 +48,11 @@ function mostrarModal({
     $("modalTitle").textContent = titulo;
     $("modalBody").innerHTML = contenido;
     //$("modalConfirm").textContent = confirmar;
+    if (titulo.includes("movimiento")) {
+      $("modalConfirm").title = "Eliminar movimiento";
+    } else if (titulo.includes("producto")) {
+      $("modalConfirm").title = "Eliminar producto";
+    }
     $("modalConfirm").innerHTML =
       `<img class="agregar" src="./Imagenes/Iconos/confirmar.avif" alt="Logo"/> ${confirmar}`;
     $("modalCancel").innerHTML =
@@ -444,9 +452,9 @@ function render() {
     recent
       .map(
         (m) =>
-          `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td></tr>`,
+          `<tr><td data-label="Fecha">${esc(m.fecha)}</td><td data-label="Tipo">${typeBadge(m.tipo)}</td><td data-label="Código">${esc(m.codigo)}</td><td title="Nombre del producto: ${productName(m.codigo)}">${esc(productName(m.codigo))}</td><td data-label="Cantidad">${fmt(m.cantidad)} Un</td><td data-label="Referencia">${esc(m.documento)}</td></tr>`,
       )
-      .join("") || empty(5);
+      .join("") || empty(6);
   renderProducts();
   renderMovements();
   renderStock();
@@ -673,6 +681,9 @@ let elCodigoBusca;
 // Funcion que renderiza los movimientos
 function renderMovements() {
   const q = $("movementSearch").value.toLowerCase();
+  const movimientos = state.movements;
+  console.log(state.movements.length);
+  cantidadMovimientos.textContent = `${movimientos.length} Movimientos`;
   const rows = state.movements
     .map((m, i) => ({ ...m, index: i }))
     .filter((m) =>
@@ -1107,6 +1118,13 @@ $("saveProduct").onclick = async (e) => {
     foto: $("pFoto").value,
     observaciones: $("pObservaciones").value,
   };
+  guardandoMovimiento = true;
+  $("saveProduct").classList.remove("primary");
+  $("saveProduct").classList.add("disabled");
+  $("saveProduct").disabled = true;
+  $("newProduct").disabled = true;
+  $("newProduct").classList.remove("primary");
+  $("newProduct").classList.add("disabled");
   try {
     const old = $("originalCode").value;
     await api(
@@ -1130,6 +1148,14 @@ $("saveProduct").onclick = async (e) => {
     toast(photoFile ? "Producto y fotografía guardados" : "Producto guardado");
   } catch (err) {
     toast(err.message);
+  } finally {
+    guardandoMovimiento = false;
+    $("saveProduct").classList.remove("disabled");
+    $("saveProduct").classList.add("primary");
+    $("saveProduct").disabled = false;
+    $("newProduct").disabled = false;
+    $("newProduct").classList.remove("disabled");
+    $("newProduct").classList.add("primary");
   }
 };
 
@@ -1145,7 +1171,29 @@ function openMovement() {
   $("movementDialog").showModal();
 }
 
-$("saveMovement").onclick = async (e) => {
+// $("saveMovement").onclick = async (e) => {
+//   e.preventDefault();
+//   const m = {
+//     fecha: $("mFecha").value,
+//     tipo: $("mTipo").value,
+//     codigo: $("mCodigo").value,
+//     cantidad: $("mCantidad").value,
+//     documento: $("mDocumento").value,
+//     contacto: $("mContacto").value,
+//     observaciones: $("mObservaciones").value,
+//   };
+//   try {
+//     await api("/api/movements", { method: "POST", body: JSON.stringify(m) });
+//     $("movementDialog").close();
+//     await refresh();
+//     toast("Movimiento registrado");
+//   } catch (err) {
+//     toast(err.message);
+//   }
+// };
+
+// Funcion del boton guardar movimientos
+btnGuardarMovimiento.addEventListener("click", async (e) => {
   e.preventDefault();
   const m = {
     fecha: $("mFecha").value,
@@ -1156,15 +1204,36 @@ $("saveMovement").onclick = async (e) => {
     contacto: $("mContacto").value,
     observaciones: $("mObservaciones").value,
   };
+  if (guardandoMovimiento) return;
+
+  guardandoMovimiento = true;
+  btnGuardarMovimiento.classList.remove("primary");
+  btnGuardarMovimiento.classList.add("disabled");
+  btnGuardarMovimiento.disabled = true;
+
+  $("newMovement").disabled = true;
+  $("newMovement").classList.remove("primary");
+  $("newMovement").classList.add("disabled");
+
   try {
+    // Aquí va tu código actual para guardar el movimiento
     await api("/api/movements", { method: "POST", body: JSON.stringify(m) });
     $("movementDialog").close();
     await refresh();
     toast("Movimiento registrado");
-  } catch (err) {
+  } catch (error) {
     toast(err.message);
+    console.error("Error al guardar el movimiento:", error);
+  } finally {
+    guardandoMovimiento = false;
+    btnGuardarMovimiento.classList.remove("disabled");
+    btnGuardarMovimiento.classList.add("primary");
+    btnGuardarMovimiento.disabled = false;
+    $("newMovement").disabled = false;
+    $("newMovement").classList.remove("disabled");
+    $("newMovement").classList.add("primary");
   }
-};
+});
 
 $("movementsBody").onclick = async (e) => {
   const i = e.target.dataset.mdelete;
@@ -1218,6 +1287,10 @@ $("movementsBody").onclick = async (e) => {
       });
     }
   }
+  //$("btnEliminar2").classList.add("btnEliminardisabled");
+  document.querySelectorAll(".small-btn").forEach((td) => {
+    td.classList.add("btnEliminardisabled");
+  });
   if (!confirmar) return;
   //if (i !== undefined && confirm("¿Eliminar este movimiento?"))
   try {
@@ -1226,6 +1299,11 @@ $("movementsBody").onclick = async (e) => {
     toast("Movimiento eliminado");
   } catch (err) {
     toast(err.message);
+  } finally {
+    //$("btnEliminar2").classList.remove("btnEliminardisabled");
+    document.querySelectorAll(".small-btn").forEach((td) => {
+      td.classList.remove("btnEliminardisabled");
+    });
   }
 };
 

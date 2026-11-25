@@ -9,6 +9,7 @@ import base64
 import requests
 from urllib.parse import quote
 from flask import Response, abort
+from backups.google_apps_script import enviar_backup
 
 BASE = Path(__file__).resolve().parent
 DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE / "data")))
@@ -31,6 +32,30 @@ def health():
     return jsonify(status="ok")
 
 
+# Funcion que lee el archivo INI
+def leer_archivo_ini():
+    """
+    Lee el contenido completo de LISTADOS YERBAS.ini
+    ubicado dentro de la carpeta backend.
+    """
+
+    ruta_ini = Path(__file__).resolve().parent / "LISTADOS YERBAS.ini"
+
+    if not ruta_ini.exists():
+        raise FileNotFoundError(f"No se encontró el archivo: {ruta_ini}")
+
+    try:
+        # Leer archivo completo
+        contenido = ruta_ini.read_text(encoding="utf-8-sig")
+
+    except UnicodeDecodeError:
+        # Compatibilidad con archivos ANSI de Windows
+        contenido = ruta_ini.read_text(encoding="cp1252")
+
+    return contenido
+
+
+# Funcion que lee los datos del JSON
 def load_data():
     try:
         url = (
@@ -81,6 +106,7 @@ def save_data(data):
     tmp.replace(DATA_FILE)
 
 
+# Funcion para guardar
 def save_file(path, content, message=None):
     """
     Guarda o actualiza cualquier archivo directamente en GitHub.
@@ -1108,8 +1134,8 @@ def delete_product(codigo):
 #         return jsonify(error=f"No se pudo eliminar el producto: {str(e)}"), 500
 
 
-@app.post("/api/movements")
-def add_movement():
+@app.post("/api/movementsOriginal")
+def add_movement_original():
     data = load_data()
     m = request.get_json(force=True)
 
@@ -1141,6 +1167,57 @@ def add_movement():
 
     # Guardar directamente en GitHub
     save_file("backend/data/stock.json", data, "Agregar movimiento")
+
+    return jsonify(ok=True)
+
+
+@app.post("/api/movements")
+def add_movement():
+    data = load_data()
+    m = request.get_json(force=True)
+
+    if m.get("tipo") not in ["INGRESO", "SALIDA"]:
+        return jsonify(error="Tipo de movimiento inválido."), 400
+
+    if not any(p["codigo"] == m.get("codigo") for p in data["products"]):
+        return jsonify(error="El código no existe en Productos."), 400
+
+    try:
+        qty = int(m.get("cantidad", 0))
+    except:
+        qty = 0
+
+    if qty <= 0:
+        return jsonify(error="La cantidad debe ser un entero mayor que cero."), 400
+
+    item = {
+        "fecha": m.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
+        "tipo": m["tipo"],
+        "codigo": m["codigo"],
+        "cantidad": qty,
+        "documento": m.get("documento", ""),
+        "contacto": m.get("contacto", ""),
+        "observaciones": m.get("observaciones", ""),
+    }
+
+    data["movements"].append(item)
+
+    # 1. Guardar JSON en GitHub
+    save_file("backend/data/stock.json", data, "Agregar movimiento")
+
+    # 2. Generar backup automático
+    try:
+        json_content = json.dumps(data, ensure_ascii=False, indent=2)
+
+        # Obtener contenido del INI
+        ini_content = leer_archivo_ini()
+
+        resultado = enviar_backup(json_content, ini_content, origen="automatico")
+
+        app.logger.info(f"Backup automático realizado: {resultado.get('carpeta')}")
+
+    except Exception as e:
+        app.logger.error(f"Error en backup automático: {e}")
 
     return jsonify(ok=True)
 

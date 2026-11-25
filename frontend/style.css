@@ -158,6 +158,10 @@ body {
   font-size: 11px;
   color: #32815a;
 }
+.disabled {
+  background: grey;
+  cursor: wait;
+}
 .primary,
 .secondary,
 .ghost {
@@ -206,6 +210,7 @@ body {
 }
 .stat {
   padding: 18px 20px;
+  border: 1px solid #5dc978;
 }
 .stat span {
   color: var(--muted);
@@ -256,6 +261,12 @@ body {
   font-size: 12px;
   margin: 4px 0 0;
 }
+#cantMovimientos {
+  padding: 5px;
+}
+#movements > div.panel > div.table-wrap {
+  margin-top: 5px;
+}
 .table-wrap {
   width: 100%;
   overflow: auto;
@@ -276,6 +287,14 @@ th {
   border: 1px solid #055619;
   /* border-top: 1px solid var(--line); */
   /* border-bottom: 1px solid var(--line); */
+}
+#dashStock > tr,
+#dashMovements > tr {
+  background: #306b56d6;
+}
+#dashStock > tr:nth-child(even),
+#dashMovements > tr:nth-child(even) {
+  background: #306b5694;
 }
 td {
   padding: 12px 15px;
@@ -321,14 +340,18 @@ td {
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 #productsBody .marca-separador tr:hover,
-#stockBody .marca-separador tr:hover {
+#stockBody .marca-separador tr:hover,
+#dashStock > tr:hover,
+#dashMovements > tr:hover {
   background: #173e3061;
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   /* transform: scale(1.002); */
   font-weight: bold;
 }
 #productsBody .marca-separador tr:nth-child(even):hover,
-#stockBody .marca-separador tr:nth-child(even):hover {
+#stockBody .marca-separador tr:nth-child(even):hover,
+#dashStock > tr:nth-child(even):hover,
+#dashMovements > tr:nth-child(even):hover {
   background: #173e3061;
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   /* transform: scale(1.002); */
@@ -707,6 +730,11 @@ dialog::backdrop {
   background-size: contain;
   border: none;
 }
+.btnEliminardisabled {
+  background: transparent url(./Imagenes/Iconos/borrar-gris.avif) no-repeat
+    center / cover !important;
+  cursor: wait;
+}
 #btnEditar {
   background: transparent url(./Imagenes/Iconos/editar.avif) no-repeat center /
     cover;
@@ -736,6 +764,7 @@ dialog::backdrop {
 #myBtn2:hover {
   background-color: #555;
 }
+
 @media (max-width: 1050px) {
   .stats {
     grid-template-columns: repeat(2, 1fr);
