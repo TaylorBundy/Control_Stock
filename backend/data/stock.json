@@ -523,6 +523,15 @@
       "documento": "",
       "contacto": "",
       "observaciones": "probamos boton"
+    },
+    {
+      "fecha": "2026-11-25",
+      "tipo": "INGRESO",
+      "codigo": "CBS-001-500",
+      "cantidad": 5,
+      "documento": "",
+      "contacto": "",
+      "observaciones": "sgsgs"
     }
   ],
   "photo_map": {
