@@ -56,6 +56,66 @@ def leer_archivo_ini():
     return contenido
 
 
+import requests
+import json
+import base64
+
+
+# Funcion para leer los archivos JSON desde github
+def load_github_json(nombre_archivo, datos_iniciales):
+    try:
+        url = (
+            f"https://api.github.com/repos/"
+            f"{GITHUB_OWNER}/{GITHUB_REPO}/contents/"
+            f"backend/data/{nombre_archivo}"
+        )
+
+        headers = {
+            "Authorization": f"Bearer {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        }
+
+        response = requests.get(
+            url, headers=headers, params={"ref": GITHUB_BRANCH}, timeout=30
+        )
+
+        response.raise_for_status()
+
+        contenido = response.json()
+
+        archivo = base64.b64decode(contenido["content"]).decode("utf-8")
+
+        return json.loads(archivo)
+
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            return datos_iniciales.copy()
+
+        raise Exception(f"Error leyendo {nombre_archivo} desde GitHub: {e}")
+
+
+# Funcion para leer productos desde el archivo stock.json desde github
+def load_products():
+    data = load_github_json("stock.json", {"products": [], "photo_map": {}})
+
+    data.setdefault("products", [])
+    data.setdefault("photo_map", {})
+
+    apply_photo_map(data)
+
+    return data
+
+
+# Funcion para leer movimientos desde el archivo movements.json desde github
+def load_movements():
+    data = load_github_json("movements.json", {"movements": []})
+
+    data.setdefault("movements", [])
+
+    return data
+
+
 # Funcion que lee los datos del JSON
 def load_data():
     try:
@@ -809,9 +869,25 @@ def parse_workbook(file_obj):
     return {"products": products, "movements": movements}
 
 
+# @app.get("/api/data")
+# def api_data():
+#     data = load_data()
+#     return jsonify({**data, "stock": stock_rows(data)})
 @app.get("/api/data")
 def api_data():
-    data = load_data()
+    # Leer productos
+    products_data = load_products()
+
+    # Leer movimientos
+    movements_data = load_movements()
+
+    # Combinar ambos resultados
+    data = {
+        "products": products_data["products"],
+        "photo_map": products_data["photo_map"],
+        "movements": movements_data["movements"],
+    }
+
     return jsonify({**data, "stock": stock_rows(data)})
 
 
@@ -1262,6 +1338,9 @@ def add_movement_original():
 @app.post("/api/movements")
 def add_movement():
     data = load_data()
+    data = load_movements()
+
+    movimientos = data["movements"]
     m = request.get_json(force=True)
 
     if m.get("tipo") not in ["INGRESO", "SALIDA"]:

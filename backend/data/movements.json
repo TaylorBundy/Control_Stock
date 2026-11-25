@@ -1,0 +1,175 @@
+{
+  "movements": [
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CBS-009-500",
+      "cantidad": 672,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CBS-004-500",
+      "cantidad": 600,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CBS-005-500",
+      "cantidad": 480,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CBS-007-500",
+      "cantidad": 720,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CBS-008-500",
+      "cantidad": 360,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CBS-006-500",
+      "cantidad": 840,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "CHA-001-500",
+      "cantidad": 120,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "NAT-001-500",
+      "cantidad": 120,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "PIP-002-1000",
+      "cantidad": 276,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "PIP-004-1000",
+      "cantidad": 186,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "ROS-003-500",
+      "cantidad": 700,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "ROS-001-500",
+      "cantidad": 960,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "AMA-001-500",
+      "cantidad": 600,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "PIP-001-500",
+      "cantidad": 600,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "PIP-003-500",
+      "cantidad": 500,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "BYS-001-500",
+      "cantidad": 200,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "PLA-001-1000",
+      "cantidad": 300,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-24",
+      "tipo": "INGRESO",
+      "codigo": "VER-002-500",
+      "cantidad": 300,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-25",
+      "tipo": "INGRESO",
+      "codigo": "CBS-001-500",
+      "cantidad": 666,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
+    }
+  ]
+}
