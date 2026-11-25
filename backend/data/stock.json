@@ -319,7 +319,7 @@
       "codigo": "NAT-001-500",
       "marca": "NATURA",
       "variedad": "suave",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
       "foto": "",
       "observaciones": ""
@@ -544,6 +544,7 @@
     "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
     "verdeflor|naranja": "./Imagenes/Verdeflor/naranja500.avif",
     "verdeflor|menta": "./Imagenes/Verdeflor/menta500.avif",
+    "verdeflor|boldo": "./Imagenes/Verdeflor/boldo500.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "cachamate|amarilla": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "union|roja": "./Imagenes/Union/roja.avif",
