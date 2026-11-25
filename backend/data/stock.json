@@ -514,15 +514,6 @@
       "documento": "",
       "contacto": "",
       "observaciones": ""
-    },
-    {
-      "fecha": "2026-11-25",
-      "tipo": "INGRESO",
-      "codigo": "PLA-001-1000",
-      "cantidad": 100,
-      "documento": "",
-      "contacto": "",
-      "observaciones": "probamos evento del boton que solo nos permita 1 click"
     }
   ],
   "photo_map": {
