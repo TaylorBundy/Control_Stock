@@ -1391,7 +1391,7 @@ def add_movement():
 
 @app.delete("/api/movements/<int:index>")
 def delete_movement(index):
-    data = load_data()
+    data = load_movements()
 
     if index < 0 or index >= len(data["movements"]):
         return jsonify(error="Movimiento no encontrado."), 404
