@@ -409,26 +409,6 @@ function topFunction() {
 }
 
 // When the user clicks on the button, scroll to the bottom of the document
-// function bottomFunction() {
-//   //const mybutton = document.getElementById("myBtn");
-//   //document.body.scrollTop = 0; // For Safari
-//   //document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-//   if ("scrollTo" in window) {
-//     // Verifica si el navegador soporta scrollTo
-//     window.scrollTo({
-//       bottom: 0,
-//       behavior: "smooth",
-//     });
-//   } else {
-//     // Fallback para navegadores más antiguos
-//     let currentScroll =
-//       document.documentElement.scrollTop || document.body.scrollTop;
-//     if (currentScroll > 0) {
-//       window.requestAnimationFrame(bottomFunction);
-//       window.scrollTo(0, currentScroll - currentScroll / 8); // Efecto suave manual
-//     }
-//   }
-// }
 function bottomFunction() {
   const bottom = document.documentElement.scrollHeight;
 
