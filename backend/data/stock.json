@@ -264,7 +264,7 @@
     {
       "codigo": "VER-001-500",
       "marca": "VERDEFLOR",
-      "variedad": "naranja_500",
+      "variedad": "naranja",
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/naranja500.avif",
@@ -273,7 +273,7 @@
     {
       "codigo": "VER-002-500",
       "marca": "VERDEFLOR",
-      "variedad": "menta_500",
+      "variedad": "menta",
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/menta500.avif",
@@ -282,7 +282,7 @@
     {
       "codigo": "VER-003-500",
       "marca": "VERDEFLOR",
-      "variedad": "boldo_500",
+      "variedad": "boldo",
       "presentacion": "Pack",
       "peso": 0.5,
       "foto": "./Imagenes/Verdeflor/boldo500.avif",
@@ -319,27 +319,27 @@
       "codigo": "NAT-001-500",
       "marca": "NATURA",
       "variedad": "suave",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Natura/suave.avif",
       "observaciones": ""
     },
     {
       "codigo": "BYS-001-500",
       "marca": "BUENAS Y SANTAS",
       "variedad": "hierbas reales",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/BuenasSantas/hierbasReales.avif",
       "observaciones": ""
     },
     {
       "codigo": "PLA-001-1000",
       "marca": "PLAYADITO",
       "variedad": "comun",
-      "presentacion": "",
+      "presentacion": "Pack",
       "peso": 1.0,
-      "foto": "",
+      "foto": "./Imagenes/Playadito/comun.avif",
       "observaciones": ""
     },
     {
@@ -348,7 +348,7 @@
       "variedad": "rosa",
       "presentacion": "Pack",
       "peso": 0.5,
-      "foto": "",
+      "foto": "./Imagenes/Cachamate/rosa.avif",
       "observaciones": ""
     }
   ],
@@ -514,6 +514,15 @@
       "documento": "",
       "contacto": "",
       "observaciones": ""
+    },
+    {
+      "fecha": "2026-11-25",
+      "tipo": "INGRESO",
+      "codigo": "CBS-001-500",
+      "cantidad": 666,
+      "documento": "",
+      "contacto": "",
+      "observaciones": ""
     }
   ],
   "photo_map": {
@@ -542,9 +551,16 @@
     "verdeflor|boldo1000": "./Imagenes/Verdeflor/boldo1000.avif",
     "verdeflor|cedron": "./Imagenes/Verdeflor/cedron.avif",
     "verdeflor|peperina": "./Imagenes/Verdeflor/peperina.avif",
+    "verdeflor|naranja": "./Imagenes/Verdeflor/naranja500.avif",
+    "verdeflor|menta": "./Imagenes/Verdeflor/menta500.avif",
+    "verdeflor|boldo": "./Imagenes/Verdeflor/boldo500.avif",
     "cachamate|comun500": "./Imagenes/Cachamate/cachamate_comun_500.avif",
     "cachamate|amarilla": "./Imagenes/Cachamate/cachamate_comun_500.avif",
+    "cachamate|rosa": "./Imagenes/Cachamate/rosa.avif",
     "union|roja": "./Imagenes/Union/roja.avif",
+    "natura|suave": "./Imagenes/Natura/suave.avif",
+    "buenas y santas|hierbasreales": "./Imagenes/BuenasSantas/hierbasReales.avif",
+    "playadito|comun": "./Imagenes/Playadito/comun.avif",
     "amanda|amanda": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FAmanda%2Famanda.avif",
     "cachamate|cachamatecomun1000": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_1000.avif",
     "cachamate|cachamatecomun500": "https://control-stock-yerbas-api.onrender.com/api/github-image?path=frontend%2FImagenes%2FCachamate%2Fcachamate_comun_500.avif",
