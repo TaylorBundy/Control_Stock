@@ -105,6 +105,17 @@ def enviar_backup(stock_content, movements_content, ini_content, origen="manual"
 
     try:
         response = requests.post(url, json=payload, timeout=60, allow_redirects=True)
+        app_logger = None  # No hace falta esta variable; usamos print.
+
+        print("BACKUP - HTTP:", response.status_code)
+        print("BACKUP - URL FINAL:", response.url)
+        print("BACKUP - REDIRECCIONES:")
+
+        for r in response.history:
+            print("  ", r.status_code, "->", r.url)
+
+        print("BACKUP - CONTENT TYPE:", response.headers.get("Content-Type"))
+        print("BACKUP - RESPUESTA:", response.text[:1500])
 
         response.raise_for_status()
 
