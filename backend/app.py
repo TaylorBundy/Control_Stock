@@ -194,6 +194,34 @@ def save_file(path, content, message=None):
     }
 
 
+# Funcion para hacer backup manualmente en GoogleDrive
+@app.post("/api/backup")
+def realizar_backup_manual():
+    try:
+        # 1. Obtener JSON actual
+        data = load_data()
+
+        json_content = json.dumps(data, ensure_ascii=False, indent=2)
+
+        # 2. Leer INI completo
+        ini_content = leer_archivo_ini()
+
+        # 3. Enviar ambos archivos a Google Drive
+        resultado = enviar_backup(json_content, ini_content, origen="manual")
+
+        return (
+            jsonify(
+                ok=True, mensaje="Backup realizado correctamente.", backup=resultado
+            ),
+            200,
+        )
+
+    except Exception as e:
+        app.logger.error(f"Error al realizar backup manual: {e}")
+
+        return jsonify(ok=False, error="No se pudo realizar el backup."), 500
+
+
 def update_ini_photo_map(marca, variedad, foto):
     import os
     import requests
@@ -794,6 +822,7 @@ def github_image():
     )
 
 
+# Funcion para agregar productos al JSON de github
 @app.post("/api/products")
 def add_product():
     data = load_data()
@@ -850,6 +879,7 @@ def add_product():
         )
 
 
+# Funcion para editar productos
 @app.put("/api/products/<codigo>")
 def edit_product(codigo):
     data = load_data()
@@ -1171,6 +1201,8 @@ def add_movement_original():
     return jsonify(ok=True)
 
 
+# Funcion para agregar movimientos al JSON de github
+# Luego hace backup en googleDrive
 @app.post("/api/movements")
 def add_movement():
     data = load_data()

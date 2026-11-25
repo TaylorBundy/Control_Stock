@@ -34,6 +34,46 @@ const apiUrl = (path) => API_BASE + path;
 // Funcion que carga al cargar la pagina
 document.addEventListener("DOMContentLoaded", iniciarAplicacion);
 
+// Funcion para hacer backup manualmente en googleDrive ejecutado desde el boton
+async function realizarBackup() {
+  const btnBackup = document.querySelector("#quickBackup");
+
+  try {
+    // Evitar múltiples ejecuciones simultáneas
+    if (btnBackup) {
+      btnBackup.disabled = true;
+      btnBackup.textContent = "Generando backup...";
+    }
+
+    // Solicitar backup al backend
+    const resultado = await api("/api/backup", {
+      method: "POST",
+    });
+
+    if (!resultado.ok) {
+      throw new Error(resultado.error || "No se pudo realizar el backup.");
+    }
+
+    console.log("Backup realizado:", resultado.backup);
+
+    alert(
+      "Backup realizado correctamente en Google Drive.\n\n" +
+        "Carpeta: " +
+        resultado.backup.carpeta,
+    );
+  } catch (error) {
+    console.error("Error en backup:", error);
+
+    alert("No se pudo realizar el backup.\n\n" + error.message);
+  } finally {
+    // Reactivar botón
+    if (btnBackup) {
+      btnBackup.disabled = false;
+      btnBackup.textContent = "Realizar Backup";
+    }
+  }
+}
+
 // Funcion para mostrar mensajes personalizados
 function mostrarModal({
   titulo = "Confirmar acción",
