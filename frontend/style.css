@@ -343,7 +343,7 @@ td {
 #stockBody .marca-separador tr:hover,
 #dashStock > tr:hover,
 #dashMovements > tr:hover {
-  background: #173e3061;
+  /* background: #173e3061; */
   text-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
   /* transform: scale(1.002); */
   font-weight: bold;
@@ -1194,10 +1194,10 @@ dialog::backdrop {
   /* .table-wrap tr:nth-child(even) {
     background: #306b5694;
   } */
-  tbody tr:hover {
-    /* background: #fbfdfb; */
-    background: #306b5694;
-  }
+  /* tbody tr:hover { */
+  /* background: #fbfdfb; */
+  /* background: #306b5694; */
+  /* } */
   td {
     display: flex;
     justify-content: space-between;
